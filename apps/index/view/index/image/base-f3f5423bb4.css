@@ -1,20 +1,20 @@
 @charset "utf-8";
 
-a:hover,html {
+a:hover, html {
 	color: #333
 }
 
-a,fieldset,img,ins {
+a, fieldset, img, ins {
 	text-decoration: none
 }
 
-.ellipsis,.recommend-item-title {
+.ellipsis, .recommend-item-title {
 	text-overflow: ellipsis;
 	overflow: hidden
 }
 
-.feature-item:hover,.recommend-item:hover {
-	box-shadow: 0 0 20px rgba(0,0,0,.2)
+.feature-item:hover, .recommend-item:hover {
+	box-shadow: 0 0 20px rgba(0, 0, 0, .2)
 }
 
 html {
@@ -22,36 +22,41 @@ html {
 	-ms-text-size-adjust: 100%
 }
 
-*html {
+* html {
 	background-image: url(about:blank);
 	background-attachment: fixed
 }
 
-article,aside,blockquote,body,button,code,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,input,legend,li,menu,nav,ol,p,pre,section,td,textarea,th,ul {
+article, aside, blockquote, body, button, code, dd, details, div, dl, dt,
+	fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6,
+	header, hgroup, hr, input, legend, li, menu, nav, ol, p, pre, section,
+	td, textarea, th, ul {
 	margin: 0;
 	padding: 0;
 	border: 0
 }
 
-address,caption,cite,code,dfn,em,i,th,var {
+address, caption, cite, code, dfn, em, i, th, var {
 	font-style: normal;
 	font-weight: 500
 }
 
-article,aside,details,figcaption,figure,footer,header,hgroup,iframe,menu,nav,section {
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	iframe, menu, nav, section {
 	display: block
 }
 
-audio,canvas,video {
+audio, canvas, video {
 	display: inline-block
 }
 
-body,button,input,select,textarea {
-	font: 12px/150% "microsoft yahei",arial,\5FAE\8F6F\96C5\9ED1,\5b8b\4f53;
+body, button, input, select, textarea {
+	font: 12px/150% "microsoft yahei", arial, \5FAE\8F6F\96C5\9ED1,
+		\5b8b\4f53;
 	outline: 0
 }
 
-input,select,textarea {
+input, select, textarea {
 	font-size: 100%;
 	background: #fff;
 	color: #333;
@@ -74,7 +79,7 @@ textarea {
 	resize: none
 }
 
-a,a:link,a:visited,ins {
+a, a:link, a:visited, ins {
 	outline: 0;
 	text-decoration: none;
 	color: inherit
@@ -86,15 +91,15 @@ table {
 	empty-cells: show
 }
 
-caption,th {
+caption, th {
 	text-align: left
 }
 
-.pagination,.pagination-cont,.text-center {
+.pagination, .pagination-cont, .text-center {
 	text-align: center
 }
 
-fieldset,img {
+fieldset, img {
 	border: 0
 }
 
@@ -103,15 +108,15 @@ img {
 	vertical-align: middle
 }
 
-li,ol,ul {
+li, ol, ul {
 	list-style: none
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
 	font-size: 100%
 }
 
-q:after,q:before {
+q:after, q:before {
 	content: ''
 }
 
@@ -123,15 +128,15 @@ q:after,q:before {
 	color: #c9c9c9
 }
 
-input:-ms-input-placeholder,textarea:-ms-input-placeholder {
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	color: #c9c9c9
 }
 
-input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 	color: #c9c9c9
 }
 
-abbr,acronym {
+abbr, acronym {
 	border: 0;
 	font-variant: normal
 }
@@ -140,7 +145,7 @@ del {
 	text-decoration: line-through
 }
 
-sub,sup {
+sub, sup {
 	font-size: 75%;
 	line-height: 0;
 	position: relative;
@@ -155,11 +160,11 @@ sub {
 	bottom: -.25em
 }
 
-.fnLeft,.fnRight {
+.fnLeft, .fnRight {
 	display: inline
 }
 
-.clearfix:after,.fnClear:after {
+.clearfix:after, .fnClear:after {
 	visibility: hidden;
 	display: block;
 	font-size: 0;
@@ -187,7 +192,8 @@ sub {
 	clear: both
 }
 
-.container:after,.feature-items:after,.navbar-items::after,.result-nav-tabs::after {
+.container:after, .feature-items:after, .navbar-items::after,
+	.result-nav-tabs::after {
 	content: '';
 	clear: both
 }
@@ -197,8 +203,8 @@ sub {
 	clear: both
 }
 
-.mmm-cloak,body .fnHide {
-	display: none!important
+.mmm-cloak, body .fnHide {
+	display: none !important
 }
 
 .ellipsis {
@@ -213,7 +219,7 @@ sub {
 	transform: translateZ(0)
 }
 
-body,html {
+body, html {
 	height: 100%
 }
 
@@ -222,7 +228,7 @@ body {
 	min-width: 1230px
 }
 
-.color-bg-white,.header {
+.color-bg-white, .header {
 	background-color: #fff
 }
 
@@ -300,7 +306,8 @@ body {
 }
 
 .header-feature i {
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png);
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png);
 	width: 30px;
 	height: 30px;
 	display: block;
@@ -348,7 +355,9 @@ body {
 	width: 90px;
 	height: 32px;
 	line-height: 32px;
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/3d/52/3d52fc736b9fdddb3230333e36d1eb4b.png) center no-repeat #ff4958;
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/3d/52/3d52fc736b9fdddb3230333e36d1eb4b.png)
+		center no-repeat #ff4958;
 	color: #fff;
 	cursor: pointer
 }
@@ -363,11 +372,11 @@ body {
 	overflow: hidden
 }
 
-.main,.pagination,.pagination li,.pagination-cont {
+.main, .pagination, .pagination li, .pagination-cont {
 	position: relative
 }
 
-.header-search-keywords-item,.header-search-keywords-title {
+.header-search-keywords-item, .header-search-keywords-title {
 	margin-right: 8px
 }
 
@@ -399,7 +408,7 @@ body {
 	font-size: 16px;
 	padding: 11px 24px;
 	cursor: pointer;
-	color: #fff!important
+	color: #fff !important
 }
 
 .navbar-item.active {
@@ -408,7 +417,7 @@ body {
 	font-weight: 700
 }
 
-.navbar-items::after,.result-nav-tabs::after {
+.navbar-items::after, .result-nav-tabs::after {
 	display: block
 }
 
@@ -421,10 +430,10 @@ body {
 }
 
 .font-weight-normal {
-	font-weight: 400!important
+	font-weight: 400 !important
 }
 
-.font-title-16,.font-weight,.price,.section-title {
+.font-title-16, .font-weight, .price, .section-title {
 	font-weight: 700
 }
 
@@ -489,7 +498,7 @@ body {
 	margin-bottom: 20px
 }
 
-.ml-10,.mr-10 {
+.ml-10, .mr-10 {
 	margin-right: 10px
 }
 
@@ -497,7 +506,7 @@ body {
 	margin-top: 10px
 }
 
-.mg-20,.size-160 {
+.mg-20, .size-160 {
 	margin: 20px
 }
 
@@ -513,13 +522,13 @@ body {
 
 .section-more {
 	line-height: 50px;
-	color: #666!important;
+	color: #666 !important;
 	font-size: 14px
 }
 
 .section-more:hover {
 	text-decoration: underline;
-	color: #333!important
+	color: #333 !important
 }
 
 .border-bottom-e5 {
@@ -527,11 +536,11 @@ body {
 }
 
 .border-left-none {
-	border-left: none!important
+	border-left: none !important
 }
 
 .border-right-none {
-	border-right: none!important
+	border-right: none !important
 }
 
 .size-200 {
@@ -592,7 +601,7 @@ body {
 	right: 50%
 }
 
-.pagination li a,.pagination li span {
+.pagination li a, .pagination li span {
 	position: relative;
 	display: block;
 	line-height: 1.428571429;
@@ -603,7 +612,7 @@ body {
 	border: 1px solid #d1d2d0
 }
 
-.pagination li:first-child a,.pagination li:first-child span {
+.pagination li:first-child a, .pagination li:first-child span {
 	margin-left: 0
 }
 
@@ -627,15 +636,18 @@ body {
 	padding: 8px 13px
 }
 
-.pagination .page a,.pagination .page span {
+.pagination .page a, .pagination .page span {
 	margin: 0 4px
 }
 
-.pagination li a:focus,.pagination li a:hover,.pagination li span:focus,.pagination li span:hover {
+.pagination li a:focus, .pagination li a:hover, .pagination li span:focus,
+	.pagination li span:hover {
 	background-color: #eee
 }
 
-.pagination .active a,.pagination .active a:focus,.pagination .active a:hover,.pagination .active span,.pagination .active span:focus,.pagination .active span:hover {
+.pagination .active a, .pagination .active a:focus, .pagination .active a:hover,
+	.pagination .active span, .pagination .active span:focus, .pagination .active span:hover
+	{
 	z-index: 2;
 	color: #fff;
 	cursor: default;
@@ -643,7 +655,9 @@ body {
 	border: 1px solid transparent
 }
 
-.pagination .disabled a,.pagination .disabled a:focus,.pagination .disabled a:hover,.pagination .disabled span,.pagination .disabled span:focus,.pagination .disabled span:hover {
+.pagination .disabled a, .pagination .disabled a:focus, .pagination .disabled a:hover,
+	.pagination .disabled span, .pagination .disabled span:focus,
+	.pagination .disabled span:hover {
 	color: #999;
 	cursor: not-allowed;
 	background-color: #fff;
@@ -669,12 +683,14 @@ body {
 	display: inline-block;
 	width: 50px;
 	height: 50px;
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/cb/2c/cb2c55f84a156367627edf9c0b77c3ef.png) -293px -352px no-repeat;
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/cb/2c/cb2c55f84a156367627edf9c0b77c3ef.png)
+		-293px -352px no-repeat;
 	cursor: pointer;
 	position: relative
 }
 
-.sidebar .fav a span,.sidebar .qq a span {
+.sidebar .fav a span, .sidebar .qq a span {
 	width: 90px;
 	height: 50px;
 	line-height: 50px;
@@ -718,15 +734,15 @@ body {
 	background-position: -56px -56px
 }
 
-.sidebar .fav .active,.sidebar .fav a:active {
-	background-position: -168px -56px!important
+.sidebar .fav .active, .sidebar .fav a:active {
+	background-position: -168px -56px !important
 }
 
 .sidebar .fav a span {
 	display: none
 }
 
-.sidebar .fav a.active span,.sidebar .fav a:hover span {
+.sidebar .fav a.active span, .sidebar .fav a:hover span {
 	display: inline-block
 }
 
@@ -738,7 +754,7 @@ body {
 	background-position: -56px 0
 }
 
-.sidebar .gotop .active,.sidebar .gotop a:active {
+.sidebar .gotop .active, .sidebar .gotop a:active {
 	background-position: -112px 0
 }
 
@@ -748,12 +764,12 @@ body {
 	bottom: 0
 }
 
-.w1650 .sidebar .fav a:hover span,.w1650 .sidebar .qq a:hover span {
+.w1650 .sidebar .fav a:hover span, .w1650 .sidebar .qq a:hover span {
 	display: none
 }
 
-.w1650 .sidebar .fav a.active span,.w1650 .sidebar .fav a:active span {
-	display: none!important;
+.w1650 .sidebar .fav a.active span, .w1650 .sidebar .fav a:active span {
+	display: none !important;
 	display: none
 }
 
@@ -770,7 +786,7 @@ body {
 	color: #e1e1e1
 }
 
-.footer a,.footer span {
+.footer a, .footer span {
 	text-decoration: none;
 	padding: 0 10px;
 	color: #747675
@@ -817,7 +833,7 @@ a.update-inner:hover {
 	cursor: pointer
 }
 
-a.update-inner:hover span,a.update-inner:hover span b {
+a.update-inner:hover span, a.update-inner:hover span b {
 	text-decoration: underline;
 	color: #38b;
 	cursor: pointer
@@ -828,7 +844,7 @@ a.update-inner:hover span,a.update-inner:hover span b {
 	margin-right: 30px
 }
 
-.update-inner span a,.update-inner span b {
+.update-inner span a, .update-inner span b {
 	color: #B10000
 }
 
@@ -838,7 +854,7 @@ span.update-close {
 	float: right
 }
 
-.share-section,.share-section-bg {
+.share-section, .share-section-bg {
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -851,7 +867,7 @@ span.update-close {
 }
 
 .share-section-bg {
-	background-color: rgba(0,0,0,.53)
+	background-color: rgba(0, 0, 0, .53)
 }
 
 .share-dialog {
@@ -874,7 +890,9 @@ span.update-close {
 }
 
 .share-channel-item {
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/e0/b3/e0b3a03b07f6e9e38898cf4ef2d7dc19.png) no-repeat;
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/e0/b3/e0b3a03b07f6e9e38898cf4ef2d7dc19.png)
+		no-repeat;
 	width: 50px;
 	height: 49px;
 	display: block;
@@ -1015,7 +1033,7 @@ span.update-close {
 
 .recommend-item-discount {
 	background-color: #ff4958;
-	color: #fff!important;
+	color: #fff !important;
 	display: block;
 	width: 90px;
 	height: 32px;
@@ -1035,7 +1053,7 @@ span.update-close {
 	width: 670px
 }
 
-.item-price-trend-area,.item-price-trend-canvas {
+.item-price-trend-area, .item-price-trend-canvas {
 	width: 426px;
 	height: 226px
 }
@@ -1052,7 +1070,7 @@ span.update-close {
 	margin-right: 4px
 }
 
-.item-title,.num {
+.item-title, .num {
 	font-size: 16px;
 	font-weight: 700
 }
@@ -1097,15 +1115,16 @@ span.update-close {
 	color: #ff4958
 }
 
-#M-addFavorite:hover,#M-share:hover,.item-from-source:hover,.item-price-trend:hover {
-	color: #0096ff!important
+#M-addFavorite:hover, #M-share:hover, .item-from-source:hover,
+	.item-price-trend:hover {
+	color: #0096ff !important
 }
 
 .item-redirect-link:hover {
 	background-color: #F31A48
 }
 
-.feature-type a:hover,.feature-type li.active a {
+.feature-type a:hover, .feature-type li.active a {
 	background-color: #ff4958;
 	color: #f5f5f5
 }
@@ -1173,7 +1192,9 @@ span.update-close {
 	position: absolute;
 	left: -10px;
 	top: -10px;
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png) no-repeat
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png)
+		no-repeat
 }
 
 .item-hot-mark.rank-1 {
@@ -1234,8 +1255,9 @@ span.update-close {
 	font-size: 14px
 }
 
-.feature-item.item-disabled .item-desc,.feature-item.item-disabled .item-promotion,.feature-item.item-disabled .item-title {
-	filter: alpha(opacity=70);
+.feature-item.item-disabled .item-desc, .feature-item.item-disabled .item-promotion,
+	.feature-item.item-disabled .item-title {
+	filter: alpha(opacity = 70);
 	-moz-opacity: .7;
 	-khtml-opacity: .7;
 	opacity: .7
@@ -1278,7 +1300,7 @@ span.update-close {
 }
 
 .item-from-source {
-	color: #666!important
+	color: #666 !important
 }
 
 .item-redirect-link {
@@ -1287,7 +1309,7 @@ span.update-close {
 	height: 35px;
 	line-height: 35px;
 	background-color: #ff4958;
-	color: #fff!important;
+	color: #fff !important;
 	cursor: pointer;
 	text-align: center;
 	font-size: 18px
@@ -1322,7 +1344,7 @@ span.update-close {
 	vertical-align: middle
 }
 
-.item-promotion-discount,.item-promotion-postfree {
+.item-promotion-discount, .item-promotion-postfree {
 	background-color: #d32147;
 	color: #fff;
 	padding: 2px 3px;
@@ -1353,7 +1375,7 @@ span.update-close {
 }
 
 .item-desc-more-text {
-	text-decoration: underline!important
+	text-decoration: underline !important
 }
 
 .item-desc-more-text:hover {
@@ -1374,7 +1396,8 @@ span.update-close {
 	height: 60px;
 	border-left: 1px solid #e0e0df;
 	border-top: 1px solid #e0e0df;
-	background-image: url(https://s.pc.qq.com/guanjia/gjalpha/file/5e/73/5e73b8b61add249468a555c64a93b712.png)
+	background-image:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/5e/73/5e73b8b61add249468a555c64a93b712.png)
 }
 
 .feature-friend-link a[index="1"] {
@@ -1494,7 +1517,7 @@ span.update-close {
 	font-weight: 700
 }
 
-.d-goods-support-item,.feedback-p2 {
+.d-goods-support-item, .feedback-p2 {
 	text-align: center;
 	border: 1px solid #e5e5e5
 }
@@ -1518,7 +1541,9 @@ span.update-close {
 	display: block;
 	width: 320px;
 	height: 120px;
-	background: url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png) -227px 0 no-repeat #fff
+	background:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/e2/d9/e2d9b25d4a5bdeb45c54b29969c638b5.png)
+		-227px 0 no-repeat #fff
 }
 
 .feedback-p1 {
@@ -1527,7 +1552,7 @@ span.update-close {
 }
 
 .feedback-p2 {
-	color: #999!important;
+	color: #999 !important;
 	width: 86px;
 	height: 30px;
 	background-color: #f5f5f5;
@@ -1552,10 +1577,12 @@ span.update-close {
 	height: 22px
 }
 
-.d-goods-support-no .support-title-icon,.d-goods-support-yes .support-title-icon {
+.d-goods-support-no .support-title-icon, .d-goods-support-yes .support-title-icon
+	{
 	height: 12px;
 	width: 12px;
-	background-image: url(https://s.pc.qq.com/guanjia/gjalpha/file/c6/b9/c6b9405e19edc25300a72042d120078a.png);
+	background-image:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/c6/b9/c6b9405e19edc25300a72042d120078a.png);
 	vertical-align: middle
 }
 
@@ -1620,7 +1647,8 @@ span.update-close {
 	width: 173px;
 	height: 205px;
 	text-align: left;
-	background-image: url(https://s.pc.qq.com/guanjia/gjalpha/file/fb/b9/fbb919ceae692e15eedee1bcf19c217d.png)
+	background-image:
+		url(https://s.pc.qq.com/guanjia/gjalpha/file/fb/b9/fbb919ceae692e15eedee1bcf19c217d.png)
 }
 
 .d-goods-support-options .d-goods-support-option-item {
@@ -1642,14 +1670,15 @@ span.update-close {
 	padding-left: 16px
 }
 
-.d-goods-support-option-item.active,.d-goods-support-option-item:hover {
+.d-goods-support-option-item.active, .d-goods-support-option-item:hover
+	{
 	color: #333;
 	background-color: #f7f7f7;
 	margin: 0 9px
 }
 
 .crumbs-items {
-	color: #999!important
+	color: #999 !important
 }
 
 .crumbs-item-title:hover {
