@@ -30,6 +30,7 @@ class Index extends BaseController
         $pageSize = isset($_REQUEST['pageSize']) && ! empty($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : "100";
         $keywords = new KeyWords($keyWord, 1, 1000);
         $keywords->getData();
+        
         $this->assign('name', 123);
         return $this->fetch('q');
     }
