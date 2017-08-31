@@ -32,7 +32,11 @@ class Index extends BaseController
         $keywords->getData();
         
         $this->assign('name', 123);
-        return $this->fetch('q');
+        return $this->fetch('index');
+    }
+    
+    public function list(){
+        return $this->fetch('list');
     }
 }
 
