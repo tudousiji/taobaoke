@@ -26,9 +26,20 @@ class Index extends BaseController
         if (! isset($keyWord) || empty($keyWord)) {
             return;
         }
+        $keyConfig=require ('apps/config/keyConfig.php');
         $page = isset($_REQUEST['page']) && ! empty($_REQUEST['page']) ? $_REQUEST['page'] : "1";
-        $pageSize = isset($_REQUEST['pageSize']) && ! empty($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : "100";
-        $keywords = new KeyWords($keyWord, 1, 1000);
+        $pageSize = isset($_REQUEST['pageSize']) && ! empty($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : $keyConfig['keyWordPageSize'];
+        
+        $time=isset($_REQUEST['time']) && ! empty($_REQUEST['time']) ? $_REQUEST['time'] : "";
+        $sign=isset($_REQUEST['sign']) && ! empty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
+        
+        $isCollection=false;
+        if(!empty($time) && !empty($sign) && md5($time)==$sign){
+            $pageSize=1000;
+            $isCollection=true;
+        }
+        
+        $keywords = new KeyWords($keyWord, $page, $pageSize,$isCollection);
         $keywords->getData();
         
         $this->assign('name', 123);

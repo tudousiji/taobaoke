@@ -19,15 +19,18 @@ class KeyWords extends BaseModel
     private $pageSize = 100;
 
     private $url = "";
+    
+    private $isCollection=false;
 
     // private $_m_h5_tk="0d108efaf4053934489d0a0c8744a58e_1503981225329";
     // private $_m_h5_tk_enc="aba7060bd7c5c889d0a906e647fd4ab1";
-    function __construct($keyWord, $page = 1, $pageSize = 100)
+    function __construct($keyWord, $page = 1, $pageSize = 100,$isCollection=false)
     {
         parent::__construct();
         $this->keyWords = $keyWord;
         $this->page = $page;
         $this->pageSize = $pageSize;
+        $this->isCollection=$isCollection;
     }
 
     public function getData()
@@ -74,15 +77,33 @@ class KeyWords extends BaseModel
             $json = $this->netData();
             $jsonObj = json_decode($json, true);
             if ($jsonObj) {
-                $data = [
-                    TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
-                    TableUtils::getTableDetails('keywords_details', 'json') => $json,
-                    TableUtils::getTableDetails('keywords_details', 'page') => $this->page,
-                    TableUtils::getTableDetails('keywords_details', 'page_size') => $this->pageSize,
-                    TableUtils::getTableDetails('keywords_details', 'update_time') => time()
-                ];
+                if($this->isCollection){
+                    $num=$this->keyConfig['keyWordCollectionPageSize']%$this->keyConfig['keyWordPageSize']>0?($this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize'])+1:$this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize'];
+                    for($j=0;$j<$num;$j++){
+                        $arr=[];
+                        $m=0;
+                        for($i = 0; $i <$this->keyConfig['keyWordCollectionPageSize'] ; $i ++){
+                            $arr[$i]=$jsonObj['data']['data']['auctionList']['auctions'][$m];
+                            
+                        }
+                        
+                        
+                    }
+                    
+                }else{
+                    $data = [
+                        TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
+                        TableUtils::getTableDetails('keywords_details', 'json') => $json,
+                        TableUtils::getTableDetails('keywords_details', 'page') => $this->page,
+                        TableUtils::getTableDetails('keywords_details', 'page_size') => $this->pageSize,
+                        TableUtils::getTableDetails('keywords_details', 'update_time') => time()
+                    ];
+                    
+                    Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
+                }
                 
-                Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
+                
+                
                 $this->addItemDb(true, $keyword_id, $jsonObj);
             }
         }
@@ -94,6 +115,9 @@ class KeyWords extends BaseModel
         $taobaoke_keyword = $key['taobaoke_keyword'];
         $taobaoke_keyword_data = $key['taobaoke_keyword_data'];
         // var_dump(sprintf($taobaoke_keyword_data,"哈哈","哈哈"));
+        $handlePageSize=($this->isCollection)?$this->keyConfig['keyWordCollectionPageSize']:$this->pageSize;
+       
+        
         $parameter = [
             // 'is_proxy'=>true,
             'header_type' => 1,
@@ -101,7 +125,7 @@ class KeyWords extends BaseModel
             'isTbk' => true,
             'is_proxy' => true,
             'taobaoke_keyword' => $taobaoke_keyword,
-            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, $this->page * $this->pageSize, $this->pageSize, $key['pid'], $key['pid'])
+            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, $this->page * $handlePageSize, $handlePageSize, $key['pid'], $key['pid'])
         ];
         
         $aa = \app\utils\NetUtils::curlData('GET', '', $parameter);
