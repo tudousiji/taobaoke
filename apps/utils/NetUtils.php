@@ -4,12 +4,11 @@ namespace app\utils;
 use think\Db;
 require_once 'apps/utils/function.php';
 
+
 class NetUtils
 {
 
-    private static $FAIL = 'Fail';
-
-    private static $SUCCESS = 'Success';
+    
 
     // 网络请求
     public static function curlData($RequestType = 'GET', $url, $parameter/* ,$post_data =array(),$is_proxy,$header="0",$cookie="",$isHttps=false */)
@@ -113,6 +112,7 @@ class NetUtils
         
         $body = "";
         $header = "";
+        $jsonKeyValConfig=require_once 'apps/utils/jsonKeyValConfig.php';
         
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
@@ -137,13 +137,13 @@ class NetUtils
                 
                 $ref = [
                     'msg' => curl_error($ch),
-                    'status' => self::$FAIL
+                    'status' => $jsonKeyValConfig['Fail'],
                 ];
                 $content['ref'] = $ref;
             } else {
                 $ref = [
                     'msg' => '',
-                    'status' => self::$SUCCESS
+                    'status' => $jsonKeyValConfig['Success'],
                 ];
                 $content['ref'] = $ref;
             }
@@ -168,14 +168,14 @@ class NetUtils
             
             $ref = [
                 'msg' => curl_error($ch),
-                'status' => self::$FAIL
+                'status' => $jsonKeyValConfig['Fail'],
             ];
             
             $content['ref'] = $ref;
         } else {
             $ref = [
                 'msg' => '',
-                'status' => self::$SUCCESS
+                'status' => $jsonKeyValConfig['Success'],
             ];
             $content['ref'] = $ref;
         }
@@ -186,10 +186,10 @@ class NetUtils
     public static function parseTaobaokeKeyWords($parameter)
     {
         $bodyStr = $parameter['body'];
-        if (isset($bodyStr) && ! empty($bodyStr) && $parameter['ref']['status'] == self::$SUCCESS) {
+        if (isset($bodyStr) && ! empty($bodyStr) && $parameter['ref']['status'] == $jsonKeyValConfig['Success']) {
             $bodyObj = json_decode($bodyStr, true);
             
-            if (isset($bodyObj) && is_array($bodyObj) && count($bodyObj) > 0 && isset($bodyObj['ret']) && is_array($bodyObj['ret']) && count($bodyObj['ret']) > 0 && ! empty($bodyObj['ret'][0]) && substr($bodyObj['ret'][0], 0, 7) != 'SUCCESS') {
+            if (isset($bodyObj) && is_array($bodyObj) && count($bodyObj) > 0 && isset($bodyObj['ret']) && is_array($bodyObj['ret']) && count($bodyObj['ret']) > 0 && ! empty($bodyObj['ret'][0]) && substr($bodyObj['ret'][0], 0, 7) != $jsonKeyValConfig['Success']) {
                 
                 preg_match_all("/set\-cookie:([^\r\n]*)/i", $parameter['response_header'], $matches);
                 if (isset($matches) && is_array($matches) && count($matches) > 1) {
@@ -218,7 +218,7 @@ class NetUtils
                     return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
                 }
             }
-        } else if (isset($parameter['ref']) && isset($parameter['ref']['status']) && $parameter['ref']['status'] == self::$FAIL) {
+        } else if (isset($parameter['ref']) && isset($parameter['ref']['status']) && $parameter['ref']['status'] == $jsonKeyValConfig['Fail']) {
             
             if (isset($parameter['ref']['msg']) && strpos(trim($parameter['ref']['msg']), 'Could not resolve proxy:') != - 1 && isset($parameter['proxy_ip']['id']) && ! empty($parameter['proxy_ip']['id'])) {
                 $dataUpdate = [
