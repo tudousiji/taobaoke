@@ -5,8 +5,15 @@ use app\base\BaseController;
 use app\keyWords\model\KeyWords;
 
 // require_once 'apps/utils/function.php';
-class Index extends BaseController
+class Keywords extends BaseController
 {
+    public function lists(){
+        $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
+        $KeyWords=new KeyWords();
+        $list=$KeyWords->getList($id);
+        $this->assign('list',$list);
+        return $this->fetch('list');
+    }
 
     public function goodsItem()
     {
@@ -45,20 +52,20 @@ class Index extends BaseController
             if(isset($return) && !empty($return)){
                 if($return){
                     $data=[
-                        'msg'=>$jsonKeyValConfig['Success'],
+                        $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
                         'code'=>0,//还可以请求下一页
                     ];
                     echo json_encode($data);
                 }else{
                     $data=[
-                        'msg'=>$jsonKeyValConfig['Success'],
+                        $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
                         'code'=>1,//不可以请求下一页
                     ];
                     echo json_encode($data);
                 }
             }else {
                 $data=[
-                    'msg'=>$jsonKeyValConfig['Fail'],
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
                     'code'=>-1,//
                 ];
                 echo json_encode($data);
@@ -71,13 +78,7 @@ class Index extends BaseController
         
     }
     
-    public function lists(){
-        $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
-        $KeyWords=new KeyWords();
-        $list=$KeyWords->getList($id);
-        $this->assign('list',$list);
-        return $this->fetch('list');
-    }
+    
 }
 
 ?>
