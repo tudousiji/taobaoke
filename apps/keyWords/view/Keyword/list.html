@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<script src="/public/static/image/plugin.js" async="" charset="utf-8"
-	mod_name="tkapi-plugin"></script>
-<script src="/public/static/image/hm.js"></script>
-<script src="/public/static/image/click.js" async="" charset="utf-8"
-	mod_name="tkapi-click"></script>
-<script charset="gbk" async="" src="/public/static/image/tkapi.js"></script>
+<script charset="utf-8" async="" src="/public/static/image/tkapi.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="觅鱼">
 <meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
-<title>觅鱼 | 更懂你的实时优惠播报站-让优惠触手可及</title>
+<title>{$keyWord}_{$subtitle}</title>
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base-f3f5423bb4.css">
 <link rel="stylesheet" href="/public/static/image/result-e07e67d7fc.css">
-<script type="text/javascript">!function(win,doc){var s=doc.createElement("script"),h=doc.getElementsByTagName("head")[0];win.alimamatk_show||(s.charset="gbk",s.async=!0,s.src="https://alimama.alicdn.com/tkapi.js",h.insertBefore(s,h.firstChild));var o={pid:"mm_112246918_11840005_41944807",appkey:"",unid:"",type:"click"};win.alimamatk_onload=win.alimamatk_onload||[],win.alimamatk_onload.push(o)}(window,document)</script>
 </head>
 <body>
 	<div class="container">
@@ -25,8 +19,8 @@
     <div id="J_BrowserUpdate" class="browser-update">
     </div>
     <![endif]-->
-		{include file="../../public/header" /} 
-		{include file="../../public/navigation_list_goods" /} 
+		{include file="../../public/header" /} {include
+		file="../../public/navigation_list_goods" /}
 		<div class="result-section">
 			<div class="main mt-15">
 				<div class="result-tab-container" id="R-result-content">
@@ -34,7 +28,16 @@
 						<div class="result-tab-pane">
 							<div class="feature-items">
 
-								
+								<div class="feature-items-header"
+									style="position: relative; top: auto; z-index: 1;">
+									<div class="feature-items-td" index="0">商品</div>
+									<div class="feature-items-td" index="1">&nbsp;</div>
+									<div class="feature-items-td" index="2">券后价</div>
+									<div class="feature-items-td" index="3">优惠券</div>
+									<div class="feature-items-td" index="4">原价</div>
+									<div class="feature-items-td" index="5">优惠券</div>
+								</div>
+								{volist name="list" id="vo"}
 
 								<div class="feature-items-tr">
 									<div class="feature-items-td" index="0">
@@ -42,8 +45,7 @@
 											href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
 											data-hottag="mmm.result.info.723615" isconvert="1"
 											onclick="_hmt.push(['_trackEvent', 'result_item_img', 'shop', 'result']);"><img
-											src="/public/static/image/5933c2aeN803868e3.jpg" class="size-110"
-											style="margin: 11px;"></a>
+											src="{vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
 									<div class="feature-items-td" index="1">
@@ -51,13 +53,10 @@
 											<a class="item_cat"
 												href="https://miyu.qq.com/assets/god.html?cat=3"
 												target="_blank" data-hottag="mmm.discount.info.49520"
-												onclick="_hmt.push(['_trackEvent', 'result_item_cat', 'god', 'result']);">手机数码</a>
-											<a target="_blank"
+												onclick="">{$keyWord}</a> <a target="_blank"
 												href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
 												data-hottag="mmm.result.info.723615" isconvert="1"
-												onclick="_hmt.push(['_trackEvent', 'result_item_title', 'shop', 'result']);"
-												title="华为mate9 pro 手机 玫瑰金 全网通(6GRAM+128GROM)标配 ">华为mate9
-												pro 手机 玫瑰金 全网通(6GRAM+128GROM)标配 </a>
+												onclick="" title="{vo.title}">{vo.title} </a>
 										</div>
 										<div class="item-col2-bottom">
 											<div class="item-time pull-left" style="color: #666;">2017-08-25</div>
@@ -66,7 +65,7 @@
 											<a class="item-from-source pull-left"
 												href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
 												target="_blank" data-hottag="mmm.result.info.723615"
-												onclick="_hmt.push(['_trackEvent', 'result_item_shop', 'shop', 'result']);">京东</a>
+												onclick="">京东</a>
 
 
 										</div>
@@ -96,7 +95,7 @@
 										</div>
 									</div>
 								</div>
-
+								{/volist}
 
 							</div>
 							<div class="pagination-cont">
@@ -131,11 +130,11 @@
 			</div>
 		</div>
 	</div>
-	{include file="../../public/footer" /} 
+	{include file="../../public/footer" /}
 	<ul class="sidebar">
 		<li class="item gotop"><a id="gotop_btn" title="置顶"
 			_hover-ignore="1"></a></li>
 	</ul>
-	
+
 </body>
 </html>

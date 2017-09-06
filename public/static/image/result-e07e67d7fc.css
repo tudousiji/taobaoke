@@ -28,6 +28,20 @@
 	color: #be1515
 }
 
+.feature-items-header {
+	overflow: hidden;
+	background-color: #fff8ef;
+	border-top: 1px solid #ff6000;
+	border-bottom: 1px solid #e9eae8
+}
+
+.feature-items-header .feature-items-td {
+	line-height: 50px!important;
+	font-size: 16px!important;
+	color: #000!important;
+	font-weight: 700
+}
+
 .result-tab-content {
 	width: 100%;
 	float: left;
@@ -141,7 +155,7 @@
 	margin-left: 20px;
 	line-height: normal;
 	position: relative;
-	height: 132px
+	
 }
 
 .feature-items-td[index="2"] {

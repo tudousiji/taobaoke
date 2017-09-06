@@ -26,7 +26,9 @@ class KeyWords extends BaseModel
 
     // private $_m_h5_tk="0d108efaf4053934489d0a0c8744a58e_1503981225329";
     // private $_m_h5_tk_enc="aba7060bd7c5c889d0a906e647fd4ab1";
-   
+    public function __construct(){
+        
+    }
 
     public function getData($keyWord, $page = 1, $pageSize = 100,$isCollection=false)
     {
@@ -193,7 +195,8 @@ class KeyWords extends BaseModel
     }
     
     
-    public function getList($id,$page=1,$pageSize=$this->keyConfig['keyWordPageSize']){
+    public function getList($id,$page=1){
+        
         $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))
         ->where(TableUtils::getTableDetails('keywords_details', 'id'), $id)
         ->where(TableUtils::getTableDetails('keywords_details', 'page'), $this->page)

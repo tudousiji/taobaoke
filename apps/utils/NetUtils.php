@@ -112,7 +112,7 @@ class NetUtils
         
         $body = "";
         $header = "";
-        $jsonKeyValConfig=require_once 'apps/utils/jsonKeyValConfig.php';
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
@@ -185,6 +185,7 @@ class NetUtils
 
     public static function parseTaobaokeKeyWords($parameter)
     {
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         $bodyStr = $parameter['body'];
         if (isset($bodyStr) && ! empty($bodyStr) && $parameter['ref']['status'] == $jsonKeyValConfig['Success']) {
             $bodyObj = json_decode($bodyStr, true);

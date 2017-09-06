@@ -5,7 +5,7 @@ use app\base\BaseController;
 use app\keyWords\model\KeyWords;
 
 // require_once 'apps/utils/function.php';
-class Keywords extends BaseController
+class Keyword extends BaseController
 {
     public function lists(){
         $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
@@ -72,7 +72,8 @@ class Keywords extends BaseController
             }
         }else{
             
-            $this->assign('name', 123);
+            $this->assign('keyWord', $keyWord);
+            $this->assign('list', $return);
             return $this->fetch('list');
         }
         
