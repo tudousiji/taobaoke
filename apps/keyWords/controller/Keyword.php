@@ -46,6 +46,7 @@ class Keyword extends BaseController
         
         $keywords = new KeyWords();
         $return = $keywords->getData($keyWord, $page, $pageSize,$isCollection);
+        
         if($isCollection){
             $jsonKeyValConfig=require_once 'apps/utils/jsonKeyValConfig.php';
             
