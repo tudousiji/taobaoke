@@ -118,7 +118,10 @@ class NetUtils
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $response_header = substr($output, 0, $headerSize);
             $body = substr($output, $headerSize);
-            
+            //TODO 调试信息
+            echo $url;
+            print_r($response_header);
+            print_r($body);
             $content = [
                 "response_header" => $response_header,
                 'post_data' => $post_data,
@@ -193,6 +196,7 @@ class NetUtils
             if (isset($bodyObj) && is_array($bodyObj) && count($bodyObj) > 0 && isset($bodyObj['ret']) && is_array($bodyObj['ret']) && count($bodyObj['ret']) > 0 && ! empty($bodyObj['ret'][0]) && substr($bodyObj['ret'][0], 0, 7) != $jsonKeyValConfig['Success']) {
                 
                 preg_match_all("/set\-cookie:([^\r\n]*)/i", $parameter['response_header'], $matches);
+                
                 if (isset($matches) && is_array($matches) && count($matches) > 1) {
                     preg_match("/_m_h5_tk=([a-zA-Z0-9_]{0,});/i", $matches[1][0], $_m_h5_tk);
                     preg_match("/_m_h5_tk_enc=([a-zA-Z0-9_]{0,})/i", $matches[1][1], $_m_h5_tk_enc);
