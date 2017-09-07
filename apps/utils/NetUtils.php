@@ -107,12 +107,12 @@ class NetUtils
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file); //存储cookies
-        
+        //echo $url;
         $output = curl_exec($ch);
         
         $body = "";
         $header = "";
-        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
         
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
@@ -188,8 +188,9 @@ class NetUtils
 
     public static function parseTaobaokeKeyWords($parameter)
     {
-        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
         $bodyStr = $parameter['body'];
+        //var_dump( $jsonKeyValConfig['Success']) ;
         if (isset($bodyStr) && ! empty($bodyStr) && $parameter['ref']['status'] == $jsonKeyValConfig['Success']) {
             $bodyObj = json_decode($bodyStr, true);
             
@@ -200,6 +201,7 @@ class NetUtils
                 if (isset($matches) && is_array($matches) && count($matches) > 1) {
                     preg_match("/_m_h5_tk=([a-zA-Z0-9_]{0,});/i", $matches[1][0], $_m_h5_tk);
                     preg_match("/_m_h5_tk_enc=([a-zA-Z0-9_]{0,})/i", $matches[1][1], $_m_h5_tk_enc);
+                    //print_r($parameter);return ;
                     $parameter['cookie'] = $_m_h5_tk[0] . $_m_h5_tk_enc[0];
                     // var_dump($parameter['cookie']);
                     if (isset($parameter['tokenObj']) && ! is_null($parameter['tokenObj']) && ! empty($parameter['tokenObj'])) {
