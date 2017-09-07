@@ -37,7 +37,7 @@
 									<div class="feature-items-td" index="4">原价</div>
 									<div class="feature-items-td" index="5">地址</div>
 								</div>
-								{volist name="list" id="vo"}
+								{foreach $list as $vo}
 
 								<div class="feature-items-tr">
 									<div class="feature-items-td" index="0">
@@ -45,7 +45,7 @@
 											href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
 											data-hottag="mmm.result.info.723615" isconvert="1"
 											onclick="_hmt.push(['_trackEvent', 'result_item_img', 'shop', 'result']);"><img
-											src="{vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
+											src="{$vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
 									<div class="feature-items-td" index="1">
@@ -56,7 +56,7 @@
 												onclick="">{$keyWord}</a> <a target="_blank"
 												href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
 												data-hottag="mmm.result.info.723615" isconvert="1"
-												onclick="" title="{vo.title}">{vo.title} </a>
+												onclick="" title="{$vo.title}">{$vo.title} </a>
 										</div>
 										<div class="item-col2-bottom">
 											<div class="item-time pull-left" style="color: #666;">2017-08-25</div>
@@ -95,7 +95,7 @@
 										</div>
 									</div>
 								</div>
-								{/volist}
+								{/foreach}
 
 							</div>
 							<div class="pagination-cont">

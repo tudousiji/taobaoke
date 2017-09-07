@@ -24,14 +24,16 @@ class NetUtils
         $isHttps = isset($parameter['isHttps']) ? $parameter['isHttps'] : false;
         
         $tk = null;
-        
+       
         if (isset($parameter['isTbk']) && $parameter['isTbk']) {
             $url = trim($parameter['taobaoke_keyword'] . urlencode($parameter['taobaoke_keyword_data']));
             $tk = Db::table(TableUtils::getTableDetails('tbk_token'))->where(TableUtils::getTableDetails('tbk_token', 'status'), 0)
                 ->order('rand()')
                 ->limit(1)
                 ->find();
+              
             if (isset($tk)) {
+                
                 $tk_preix = null;
                 if (isset($tk) && isset($tk[TableUtils::getTableDetails('tbk_token', 'tk')]) && ! empty($tk[TableUtils::getTableDetails('tbk_token', 'tk')])) {
                     $cookie = $tk[TableUtils::getTableDetails('tbk_token', 'tk')];
@@ -113,15 +115,12 @@ class NetUtils
         $body = "";
         $header = "";
         $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
-        
+        //var_dump(curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1");
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $response_header = substr($output, 0, $headerSize);
             $body = substr($output, $headerSize);
-            //TODO 调试信息
-            echo $url;
-            print_r($response_header);
-            print_r($body);
+            //var_dump($body);
             $content = [
                 "response_header" => $response_header,
                 'post_data' => $post_data,
@@ -133,9 +132,11 @@ class NetUtils
                 'body' => self::handleBody(trim($body)),
                 'requestType' => $RequestType,
                 'url' => $url,
-                
                 'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
             ];
+            
+            $content=array_merge($parameter,$content);//$content 必须在后面以便覆盖前面同名key
+            
             if (! empty(curl_error($ch))) {
                 
                 $ref = [
@@ -151,6 +152,7 @@ class NetUtils
                 $content['ref'] = $ref;
             }
             curl_close($ch);
+            
             return $content;
         }
         
@@ -166,7 +168,7 @@ class NetUtils
             'url' => $url,
             'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
         ];
-        
+        $content=array_merge( $parameter,$content);
         if (! empty(curl_error($ch))) {
             
             $ref = [
@@ -190,20 +192,29 @@ class NetUtils
     {
         $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
         $bodyStr = $parameter['body'];
-        //var_dump( $jsonKeyValConfig['Success']) ;
+        //print_r($bodyStr);
         if (isset($bodyStr) && ! empty($bodyStr) && $parameter['ref']['status'] == $jsonKeyValConfig['Success']) {
             $bodyObj = json_decode($bodyStr, true);
-            
-            if (isset($bodyObj) && is_array($bodyObj) && count($bodyObj) > 0 && isset($bodyObj['ret']) && is_array($bodyObj['ret']) && count($bodyObj['ret']) > 0 && ! empty($bodyObj['ret'][0]) && substr($bodyObj['ret'][0], 0, 7) != $jsonKeyValConfig['Success']) {
-                
+          
+            if (isset($bodyObj) && is_array($bodyObj) && count($bodyObj) > 0 && isset($bodyObj['ret']) && is_array($bodyObj['ret']) && count($bodyObj['ret']) > 0 && ! empty($bodyObj['ret'][0]) && strtolower(substr($bodyObj['ret'][0], 0, 7)) != strtolower($jsonKeyValConfig['Success'])) {
                 preg_match_all("/set\-cookie:([^\r\n]*)/i", $parameter['response_header'], $matches);
-                
                 if (isset($matches) && is_array($matches) && count($matches) > 1) {
                     preg_match("/_m_h5_tk=([a-zA-Z0-9_]{0,});/i", $matches[1][0], $_m_h5_tk);
                     preg_match("/_m_h5_tk_enc=([a-zA-Z0-9_]{0,})/i", $matches[1][1], $_m_h5_tk_enc);
-                    //print_r($parameter);return ;
-                    $parameter['cookie'] = $_m_h5_tk[0] . $_m_h5_tk_enc[0];
-                    // var_dump($parameter['cookie']);
+                    if(is_array($_m_h5_tk) && count($_m_h5_tk)>0 &&  is_array($_m_h5_tk_enc) && count($_m_h5_tk_enc)>0){
+                        $parameter['cookie'] = $_m_h5_tk[0] . $_m_h5_tk_enc[0];
+                        $data = [
+                            TableUtils::getTableDetails('tbk_token', 'tk') => $parameter['cookie'],
+                            TableUtils::getTableDetails('tbk_token', 'status') => 0,
+                            TableUtils::getTableDetails('tbk_token', 'update_time') => time()
+                        ];
+                        if (isset($bodyObj['proxy_ip']) && is_null($bodyObj['proxy_ip']) && is_array($bodyObj['proxy_ip']) && count($bodyObj['proxy_ip']) > 0) {
+                            $data['proxy_id'] = $bodyObj['proxy_ip'][TableUtils::getTableDetails('proxy_ip', 'id')];
+                        }
+                        Db::table(TableUtils::getTableDetails('tbk_token'))->insert($data);
+                    }
+                   
+                    
                     if (isset($parameter['tokenObj']) && ! is_null($parameter['tokenObj']) && ! empty($parameter['tokenObj'])) {
                         $dataUpdate = [
                             TableUtils::getTableDetails('tbk_token', 'status') => 1,
@@ -212,18 +223,9 @@ class NetUtils
                         // var_dump($parameter['tokenObj']) ;
                         Db::table(TableUtils::getTableDetails('tbk_token'))->where(TableUtils::getTableDetails('tbk_token', 'id'), $parameter['tokenObj'][TableUtils::getTableDetails('tbk_token', 'id')])->update($dataUpdate); // 更新失效的tk
                     }
-                    $data = [
-                        TableUtils::getTableDetails('tbk_token', 'tk') => $parameter['cookie'],
-                        TableUtils::getTableDetails('tbk_token', 'status') => 0,
-                        TableUtils::getTableDetails('tbk_token', 'update_time') => time()
-                    ];
-                    if (isset($bodyObj['proxy_ip']) && is_null($bodyObj['proxy_ip']) && is_array($bodyObj['proxy_ip']) && count($bodyObj['proxy_ip']) > 0) {
-                        $data['proxy_id'] = $bodyObj['proxy_ip'][TableUtils::getTableDetails('proxy_ip', 'id')];
-                    }
-                    Db::table(TableUtils::getTableDetails('tbk_token'))->insert($data);
-                    
-                    return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
                 }
+                var_dump("再次请求");
+                return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
             }
         } else if (isset($parameter['ref']) && isset($parameter['ref']['status']) && $parameter['ref']['status'] == $jsonKeyValConfig['Fail']) {
             

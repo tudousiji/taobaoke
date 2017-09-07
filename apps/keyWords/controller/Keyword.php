@@ -72,7 +72,7 @@ class Keyword extends BaseController
                 echo json_encode($data);
             }
         }else{
-            print_r($return);
+            
             $this->assign('keyWord', $keyWord);
             $this->assign('list', $return);
             return $this->fetch('list');
