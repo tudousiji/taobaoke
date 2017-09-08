@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+<!-- saved from url=(0073)https://miyu.qq.com/assets/result.html?tab=1&ADTAG=&kw=%E9%9B%B6%E9%A3%9F -->
 <html lang="zh-CN">
 <head>
-<script charset="utf-8" async="" src="/public/static/image/tkapi.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="觅鱼">
 <meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
-<title>{$keyWord}_{$subtitle}</title>
+<title>觅鱼 | 更懂你的实时优惠播报站-让优惠触手可及</title>
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
-<link rel="stylesheet" href="/public/static/image/base-f3f5423bb4.css">
-<link rel="stylesheet" href="/public/static/image/result-e07e67d7fc.css">
+<link rel="stylesheet" href="/public/static/image/base.css">
+<link rel="stylesheet"
+	href="/public/static/image/result.css">
 </head>
 <body>
 	<div class="container">
@@ -19,8 +20,26 @@
     <div id="J_BrowserUpdate" class="browser-update">
     </div>
     <![endif]-->
-		{include file="../../public/header" /} {include
-		file="../../public/navigation_list_goods" /}
+		{include file="../../public/header" /} 
+		<div class="row recommend-category-header-row">
+			<div class="main">
+				<div class="recommend-category-header" id="R-result-tabs">
+					<ul class="recommend-category-tabs pull-left">
+						<a class="result-nav-tab" href="javascript:void(0);"
+							link="/assets/couponsearch.html">券后价</a>
+						<a class="result-nav-tab active" tab="1"
+							href="javascript:void(0);" link="/assets/result.html?tab=1">神价直播</a>
+						<a class="result-nav-tab" tab="2" href="javascript:void(0);"
+							link="/assets/result.html?tab=2" _hover-ignore="1">白菜价</a>
+					</ul>
+					<div class="recommend-category-update pull-right">
+						为您找到<span id="R-search-keywords" class="font-weight"></span>的搜索结果，共<span
+							id="R-search-num" class="font-weight">116</span>条
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
 		<div class="result-section">
 			<div class="main mt-15">
 				<div class="result-tab-container" id="R-result-content">
@@ -28,64 +47,60 @@
 						<div class="result-tab-pane">
 							<div class="feature-items">
 
-								<div class="feature-items-header"
-									style="position: relative; top: auto; z-index: 1;">
-									<div class="feature-items-td" index="0">商品</div>
-									<div class="feature-items-td" index="1">&nbsp;</div>
-									<div class="feature-items-td" index="2">券后价</div>
-									<div class="feature-items-td" index="3">优惠券</div>
-									<div class="feature-items-td" index="4">原价</div>
-									<div class="feature-items-td" index="5">地址</div>
-								</div>
+
+
 								{foreach $list as $vo}
 
 								<div class="feature-items-tr">
 									<div class="feature-items-td" index="0">
 										<a target="_blank"
-											href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
-											data-hottag="mmm.result.info.723615" isconvert="1"
-											onclick="_hmt.push(['_trackEvent', 'result_item_img', 'shop', 'result']);"><img
-											src="{$vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
+											href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+											data-hottag="mmm.result.info.740999" isconvert="1"
+											onclick=""><img
+											src="{$vo.pictUrl}"
+											class="size-110" style="margin: 11px;"></a>
 
 									</div>
 									<div class="feature-items-td" index="1">
 										<div class="item_title">
 											<a class="item_cat"
-												href="https://miyu.qq.com/assets/god.html?cat=3"
+												href="https://miyu.qq.com/assets/god.html?cat=9"
 												target="_blank" data-hottag="mmm.discount.info.49520"
-												onclick="">{$keyWord}</a> <a target="_blank"
-												href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
-												data-hottag="mmm.result.info.723615" isconvert="1"
-												onclick="" title="{$vo.title}">{$vo.title} </a>
+												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_cat&#39;, &#39;god&#39;, &#39;result&#39;]);">食品保健</a>
+											<a target="_blank"
+												href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+												data-hottag="mmm.result.info.740999" isconvert="1"
+												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_title&#39;, &#39;shop&#39;, &#39;result&#39;]);"
+												title="{$vo.pictUrl}">{$vo.title}</a>
 										</div>
 										<div class="item-col2-bottom">
-											<div class="item-time pull-left" style="color: #666;">2017-08-25</div>
+											<div class="item-time pull-left" style="color: #666;">优惠券个数{$vo.couponTotalCount}</div>
 											<div class="item-split pull-left"></div>
 
-											<a class="item-from-source pull-left"
-												href="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
-												target="_blank" data-hottag="mmm.result.info.723615"
-												onclick="">京东</a>
 
+											<a class="item-from-source pull-left"
+												href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+												target="_blank" data-hottag="mmm.result.info.740999"
+												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_shop&#39;, &#39;shop&#39;, &#39;result&#39;]);">天猫</a>
 
 										</div>
 									</div>
-									<div class="feature-items-td" index="2">4899元</div>
+									<div class="feature-items-td" index="2">券后价10元</div>
 									<div class="feature-items-td" index="3">
 
-										<span class="td-discount">7折</span>
+										<span class="td-discount">6折</span>
 
 									</div>
-									<div class="feature-items-td" index="4">6999元</div>
+									<div class="feature-items-td" index="4">278元</div>
 									<div class="feature-items-td" index="5">
 										<div class="feature-items-td5-container">
-											<span class="inline-block">4899元</span>
+											<span class="inline-block">116元</span>
 											<div class="trend-icon item-price-trend inline-block"
-												link="https://item.jd.com/11130736810.html?jd_pop=a91433b1-5e43-411d-bb6b-4a92728996c8#crumb-wrap"
+												link="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
 												val="-1">
-												<div class="item-price-trend-area">
+												<div class="item-price-trend-area" style="display: none;">
 													<div class="item-price-trend-canvas"
-														id="M-price-trend-canvas-39"></div>
+														id="M-price-trend-canvas-2"></div>
 													<div class="item-price-history-lowest">
 														历史最低价:<span class="item-price-history-lowest-text"></span><span
 															class="item-price-history-lowest-unit">元</span>
@@ -95,20 +110,29 @@
 										</div>
 									</div>
 								</div>
+
 								{/foreach}
+
 
 							</div>
 							<div class="pagination-cont">
 								<ul class="pagination" id="R-pagination">
-									<li class="prev"><a href="#">&lt;</a></li>
-									<li class="page"><a href="#">1</a></li>
-									<li class="page active"><a href="#">2</a></li>
-									<li class="page"><a href="#">3</a></li>
-									<li class="page"><a href="#">4</a></li>
-									<li class="page"><a href="#">5</a></li>
-									<li class="page"><a href="#">...</a></li>
-									<li class="page"><a href="#">41</a></li>
-									<li class="next"><a href="#">&gt;</a></li>
+									<li class="prev disabled"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&lt;</a></li>
+									<li class="page active"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">1</a></li>
+									<li class="page"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">2</a></li>
+									<li class="page"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">3</a></li>
+									<li class="page"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">4</a></li>
+									<li class="page"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">...</a></li>
+									<li class="page"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">6</a></li>
+									<li class="next"><a
+										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&gt;</a></li>
 								</ul>
 							</div>
 						</div>
@@ -130,11 +154,8 @@
 			</div>
 		</div>
 	</div>
-	{include file="../../public/footer" /}
-	<ul class="sidebar">
-		<li class="item gotop"><a id="gotop_btn" title="置顶"
-			_hover-ignore="1"></a></li>
-	</ul>
-
+	{include file="../../public/footer" /} 
+	
 </body>
+
 </html>
