@@ -2,7 +2,8 @@
 namespace app\api\controller;
 
 use app\base\BaseController;
-use app\index\model\KeyWords;
+
+
 
 // require_once 'apps/utils/function.php';
 class Keywords extends BaseController
@@ -14,7 +15,7 @@ class Keywords extends BaseController
         $time=isset($_REQUEST['time']) && ! empty($_REQUEST['time']) ? $_REQUEST['time'] : "";
         $sign=isset($_REQUEST['sign']) && ! empty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
         
-        $jsonKeyValConfig=require_once 'apps/utils/jsonKeyValConfig.php';
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
         $isCollection=false;
         if(!empty($time) && !empty($sign) && md5($time)==$sign){
@@ -22,12 +23,16 @@ class Keywords extends BaseController
             $isCollection=true;
         }else{
             $data=[
-                $jsonKeyValConfigp['msg']=>$jsonKeyValConfig['sign_error'],
+                $jsonKeyValConfig['msg']=>$jsonKeyValConfig['sign_error'],
                 'code'=>-1,//
             ];
              echo json_encode($data);
              return;
         }
+        
+        $keywords = new app\keyWords\model\KeyWords();
+        $return = $keywords->getData($keyWord, $page, $pageSize,$isCollection);
+        
     }
 
     
