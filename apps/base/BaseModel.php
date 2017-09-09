@@ -17,7 +17,7 @@ class BaseModel
          */
         if ($this->keyConfig == null) {
             $this->keyConfig = require ('apps/config/keyConfig.php');
-            // var_dump($this->table);
+            //var_dump($this->keyConfig['keyWordCollectionPageSize']);
         }
     }
 }

@@ -111,7 +111,7 @@ class NetUtils
         // curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file); //存储cookies
         //echo $url;
         $output = curl_exec($ch);
-        
+        //var_dump(curl_error($ch));
         $body = "";
         $header = "";
         $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
@@ -224,7 +224,7 @@ class NetUtils
                         Db::table(TableUtils::getTableDetails('tbk_token'))->where(TableUtils::getTableDetails('tbk_token', 'id'), $parameter['tokenObj'][TableUtils::getTableDetails('tbk_token', 'id')])->update($dataUpdate); // 更新失效的tk
                     }
                 }
-                var_dump("再次请求");
+                //var_dump("再次请求");
                 return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
             }
         } else if (isset($parameter['ref']) && isset($parameter['ref']['status']) && $parameter['ref']['status'] == $jsonKeyValConfig['Fail']) {

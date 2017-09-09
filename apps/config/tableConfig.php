@@ -5,6 +5,7 @@ return [
     'keywords' => [
         'table_name' => 'keywords',
         'table_field' => [
+            'id' => 'id',
             'keyword' => 'keyword',
             'update_time' => 'update_time'
         ]

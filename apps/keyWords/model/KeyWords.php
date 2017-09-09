@@ -25,7 +25,9 @@ class KeyWords extends BaseModel
     // private $_m_h5_tk="0d108efaf4053934489d0a0c8744a58e_1503981225329";
     // private $_m_h5_tk_enc="aba7060bd7c5c889d0a906e647fd4ab1";
     public function __construct()
-    {}
+    {
+        parent::__construct();
+    }
 
     public function getData($keyWord, $page = 1, $pageSize = 100, $isCollection = false)
     {
@@ -53,7 +55,7 @@ class KeyWords extends BaseModel
         // where($this->table['keywords_details']['keyword_id'],$keyword_id)->
         find();
         
-        if ($keywords_details != null) {
+        if ($keywords_details != null && !$this->isCollection) {
             if ($keywords_details[TableUtils::getTableDetails('keywords_details', 'update_time')] + $this->keyConfig['cache_time'] < time()) {
                 
                 $json = $this->netData();
@@ -71,71 +73,85 @@ class KeyWords extends BaseModel
                     Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'id'), $keywords_details[TableUtils::getTableDetails('keywords_details', 'id')])->update($data);
                     $this->addItemDb(false, $keyword_id, $jsonObj);
                 }
-               
+                
                 return $jsonObj['data']['data']['auctionList']['auctions'];
             }
-           
-            return $keywords_details[ TableUtils::getTableDetails('keywords_details', 'json')];
+            
+            return $keywords_details[TableUtils::getTableDetails('keywords_details', 'json')];
         } else {
             $json = $this->netData();
             $jsonObj = json_decode($json, true);
-            if ($jsonObj && isset($jsonObj['data']) && isset($jsonObj['data']['data']) && isset($jsonObj['data']['data']['auctionList']) && isset($jsonObj['data']['data']['auctionList']['auctions'])
-                &&  is_array($jsonObj['data']) && is_array($jsonObj['data']['data']) && is_array($jsonObj['data']['data']['auctionList']) && is_array($jsonObj['data']['data']['auctionList']['auctions']) &&
-                    count($jsonObj['data'])>0 && count($jsonObj['data']['data'])>0 && count($jsonObj['data']['data']['auctionList'])>0 && count($jsonObj['data']['data']['auctionList']['auctions'])>0
-                ) {
-                 $insertjson = "";
-            if ($this->isCollection) {
-                $num = $this->keyConfig['keyWordCollectionPageSize'] % $this->keyConfig['keyWordPageSize'] > 0 ? ($this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize']) + 1 : $this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize'];
-                $size = $jsonObj['data']['data']['auctionList']['auctions'];
-                for ($j = 0; $j < $num; $j ++) {
-                    $arr = [];
+            
+            if ($jsonObj && isset($jsonObj['data']) && isset($jsonObj['data']['data']) && isset($jsonObj['data']['data']['auctionList']) && isset($jsonObj['data']['data']['auctionList']['auctions']) && is_array($jsonObj['data']) && is_array($jsonObj['data']['data']) && is_array($jsonObj['data']['data']['auctionList']) && is_array($jsonObj['data']['data']['auctionList']['auctions']) && count($jsonObj['data']) > 0 && count($jsonObj['data']['data']) > 0 && count($jsonObj['data']['data']['auctionList']) > 0 && count($jsonObj['data']['data']['auctionList']['auctions']) > 0) {
+                $insertjson = "";
+               
+                if ($this->isCollection) {
+                    
+                    $num = $this->keyConfig['keyWordCollectionPageSize'] % $this->keyConfig['keyWordPageSize'] > 0 ? ($this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize']) + 1 : $this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize'];
+                    $size =count( $jsonObj['data']['data']['auctionList']['auctions']);
+                    
                     $m = 0;
-                    for ($i = 0; $i < $this->keyConfig['keyWordCollectionPageSize']; $i ++) {
-                        $arr[$i] = $jsonObj['data']['data']['auctionList']['auctions'][$m];
-                        
-                        $m ++;
-                        if ($m >= $size) {
-                            break 2;
+                    for ($j = 0; $j < $num; $j ++) {
+                        $arr = [];
+                        for ($i = 0; $i < $this->keyConfig['keyWordPageSize']; $i ++) {
+                            $arr[$i] = $jsonObj['data']['data']['auctionList']['auctions'][$m];
+                            $m ++;
+                            
+                            if ($m >= $size) {
+                                break;
+                            }
                         }
+                       
+                        $data = [
+                            TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
+                            TableUtils::getTableDetails('keywords_details', 'json') => json_encode($arr),
+                            TableUtils::getTableDetails('keywords_details', 'page') => $this->page + $j,
+                            TableUtils::getTableDetails('keywords_details', 'page_size') => count($arr),
+                            TableUtils::getTableDetails('keywords_details', 'update_time') => time()
+                        ];
+                        
+                        $isUpdate = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
+                        ->where(TableUtils::getTableDetails('keywords_details', 'page'), ($this->page + $j))
+                        ->
+                        // where($this->table['keywords_details']['keyword_id'],$keyword_id)->
+                        find();
+                        if ($isUpdate == null) {
+                            Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
+                        } else {
+                            //var_dump($data);
+                            Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'id'), $isUpdate[TableUtils::getTableDetails('keywords_details', 'id')])->update($data);
+                        }
+                        unset($arr);
                     }
+                } else {
+                    
+                    $keywords_details = $jsonObj['data']['data']['auctionList']['auctions'];
+                    $insertjson = json_encode($keywords_details);
                     $data = [
                         TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
-                        TableUtils::getTableDetails('keywords_details', 'json') => json_encode($arr),
-                        TableUtils::getTableDetails('keywords_details', 'page') => $this->page + $j,
-                        TableUtils::getTableDetails('keywords_details', 'page_size') => count($arr),
+                        TableUtils::getTableDetails('keywords_details', 'json') => $insertjson,
+                        TableUtils::getTableDetails('keywords_details', 'page') => $this->page,
+                        TableUtils::getTableDetails('keywords_details', 'page_size') => $this->pageSize,
                         TableUtils::getTableDetails('keywords_details', 'update_time') => time()
                     ];
                     
                     Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
                 }
-            } else {
-                $keywords_details = $jsonObj['data']['data']['auctionList']['auctions'];
-                $insertjson=json_encode($keywords_details);
-                $data = [
-                    TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
-                    TableUtils::getTableDetails('keywords_details', 'json') => $insertjson,
-                    TableUtils::getTableDetails('keywords_details', 'page') => $this->page,
-                    TableUtils::getTableDetails('keywords_details', 'page_size') => $this->pageSize,
-                    TableUtils::getTableDetails('keywords_details', 'update_time') => time()
-                ];
-                
-                Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
-            }
-            $this->addItemDb(true, $keyword_id, $jsonObj);
-            if ($this->isCollection) {
-                if ($this->pageSize == $size) {
-                    return true;
+                $this->addItemDb(true, $keyword_id, $jsonObj);
+                if ($this->isCollection) {
+                    if ($this->pageSize == $size) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
-                    return false;
+                    return $keywords_details;
                 }
             } else {
-                return $keywords_details;
+                return array();
             }
-        }else{
-            return array();
         }
     }
-}
 
     private function netData()
     {
@@ -143,8 +159,7 @@ class KeyWords extends BaseModel
         $taobaoke_keyword = $key['taobaoke_keyword'];
         $taobaoke_keyword_data = $key['taobaoke_keyword_data'];
         // var_dump(sprintf($taobaoke_keyword_data,"哈哈","哈哈"));
-        $handlePageSize=($this->isCollection)?$this->keyConfig['keyWordCollectionPageSize']:$this->pageSize;
-       
+        $handlePageSize = ($this->isCollection) ? $this->keyConfig['keyWordCollectionPageSize'] : $this->pageSize;
         
         $parameter = [
             // 'is_proxy'=>true,
@@ -199,26 +214,20 @@ class KeyWords extends BaseModel
             }
         }
     }
-    
-    
-    public function getList($id,$page=1){
-        
-        $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))
-        ->where(TableUtils::getTableDetails('keywords_details', 'id'), $id)
-        ->where(TableUtils::getTableDetails('keywords_details', 'page'), $this->page)
-        ->select();
+
+    public function getList($id, $page = 1)
+    {
+        $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'id'), $id)
+            ->where(TableUtils::getTableDetails('keywords_details', 'page'), $this->page)
+            ->select();
         return $keywords_details;
     }
-    
-    
-    public function getGoodsItems($id){
-        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))
-        ->where(TableUtils::getTableDetails('goods_list', 'id'), $id)
-        ->select();
+
+    public function getGoodsItems($id)
+    {
+        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'id'), $id)->select();
         return $keywords_details;
     }
-    
-    
 }
 
 ?>

@@ -11,13 +11,14 @@ class Keywords extends BaseController
 
     public function keywordsId()
     {
-        $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
-        $time=isset($_REQUEST['time']) && ! empty($_REQUEST['time']) ? $_REQUEST['time'] : "";
-        $sign=isset($_REQUEST['sign']) && ! empty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
+        $id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
+        $time=isset($_REQUEST['time']) && is_numeric($_REQUEST['time']) ? $_REQUEST['time'] : "";
+        $sign=isset($_REQUEST['sign']) && !isEmpty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : "1";
         
         $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
-        $isCollection=false;
+        $isCollection=true;
         if(!empty($time) && !empty($sign) && md5($time)==$sign){
             $pageSize=1000;
             $isCollection=true;
@@ -26,12 +27,12 @@ class Keywords extends BaseController
                 $jsonKeyValConfig['msg']=>$jsonKeyValConfig['sign_error'],
                 'code'=>-1,//
             ];
-             echo json_encode($data);
-             return;
+             //echo json_encode($data);
+             //return;
         }
         
-        $keywords = new app\keyWords\model\KeyWords();
-        $return = $keywords->getData($keyWord, $page, $pageSize,$isCollection);
+        $keywords = new \app\api\model\KeyWordsModel();
+        $return = $keywords->getData($id,$page,$isCollection);
         
     }
 
