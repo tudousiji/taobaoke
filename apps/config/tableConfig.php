@@ -41,6 +41,10 @@ return [
             'couponAmount' => 'couponAmount',
             'couponSendCount' => 'couponSendCount',
             'couponTotalCount' => 'couponTotalCount',
+            'couponEffectiveStartTime' => 'couponEffectiveStartTime',
+            'couponEffectiveEndTime' => 'couponEffectiveEndTime',
+            'provcity' => 'provcity',
+            'nick' => 'nick',
             'userType' => 'userType',
             'update_time' => 'update_time'
         ]

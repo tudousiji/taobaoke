@@ -17,9 +17,9 @@ class Keyword extends BaseController
 
     public function goodsItem()
     {
-        $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
+        $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) ? $_REQUEST['itemId'] : "1";
         $KeyWords=new KeyWords();
-        $item=$KeyWords->getGoodsItems($id);
+        $item=$KeyWords->getGoodsItems($itemId);
         $this->assign('item',$item);
         return $this->fetch('item');
     }
@@ -75,6 +75,7 @@ class Keyword extends BaseController
             
             $this->assign('keyWord', $keyWord);
             $this->assign('list', $return);
+            //print_r($return);
             return $this->fetch('list');
         }
         

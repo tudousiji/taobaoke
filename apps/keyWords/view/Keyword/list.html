@@ -66,15 +66,15 @@
 											<a class="item_cat"
 												href="https://miyu.qq.com/assets/god.html?cat=9"
 												target="_blank" data-hottag="mmm.discount.info.49520"
-												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_cat&#39;, &#39;god&#39;, &#39;result&#39;]);">食品保健</a>
+												onclick="">食品保健</a>
 											<a target="_blank"
-												href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+												href="/index.php/keyWords/Keyword/goodsItem?id={$vo.nid}"
 												data-hottag="mmm.result.info.740999" isconvert="1"
-												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_title&#39;, &#39;shop&#39;, &#39;result&#39;]);"
+												onclick=""
 												title="{$vo.pictUrl}">{$vo.title}</a>
 										</div>
 										<div class="item-col2-bottom">
-											<div class="item-time pull-left" style="color: #666;">优惠券个数{$vo.couponTotalCount}</div>
+											<div class="item-time pull-left" style="color: #666;">已售{$vo.biz30Day}</div>
 											<div class="item-split pull-left"></div>
 
 
@@ -82,31 +82,24 @@
 												href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
 												target="_blank" data-hottag="mmm.result.info.740999"
 												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_shop&#39;, &#39;shop&#39;, &#39;result&#39;]);">天猫</a>
-
+											<div class="item-split pull-left"></div>
+											<div class="item-time pull-left" style="color: #666;">优惠券总数:{$vo.couponTotalCount}</div>
+											<div class="item-split pull-left"></div>
+											<div class="item-time pull-left" style="color: #666;">已领取总数:{$vo.couponSendCount}</div>
+											<div class="item-split pull-left"></div>
 										</div>
 									</div>
-									<div class="feature-items-td" index="2">券后价10元</div>
+									<div class="feature-items-td" index="2">券后价{$vo.zkFinalPriceWap-$vo.couponAmount/100 }元</div>
 									<div class="feature-items-td" index="3">
 
-										<span class="td-discount">6折</span>
+										<span class="td-discount">券:{$vo.couponAmount/100 }元</span>
 
 									</div>
-									<div class="feature-items-td" index="4">278元</div>
+									<div class="feature-items-td" index="4">现价:{$vo.zkFinalPriceWap}元</div>
 									<div class="feature-items-td" index="5">
 										<div class="feature-items-td5-container">
-											<span class="inline-block">116元</span>
-											<div class="trend-icon item-price-trend inline-block"
-												link="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
-												val="-1">
-												<div class="item-price-trend-area" style="display: none;">
-													<div class="item-price-trend-canvas"
-														id="M-price-trend-canvas-2"></div>
-													<div class="item-price-history-lowest">
-														历史最低价:<span class="item-price-history-lowest-text"></span><span
-															class="item-price-history-lowest-unit">元</span>
-													</div>
-												</div>
-											</div>
+											<span class="inline-block">领取内部优惠券</span>
+											
 										</div>
 									</div>
 								</div>

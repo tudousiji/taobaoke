@@ -77,7 +77,7 @@ class KeyWords extends BaseModel
                 return $jsonObj['data']['data']['auctionList']['auctions'];
             }
             
-            return $keywords_details[TableUtils::getTableDetails('keywords_details', 'json')];
+            return json_decode($keywords_details[TableUtils::getTableDetails('keywords_details', 'json')],true);
         } else {
             $json = $this->netData();
             $jsonObj = json_decode($json, true);
@@ -101,19 +101,22 @@ class KeyWords extends BaseModel
                                 break;
                             }
                         }
+                        
+                        $page=( ($this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize']) * $this->page 
+                            - ($this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize']))  +1+ $j;
+                        
                        
                         $data = [
                             TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
                             TableUtils::getTableDetails('keywords_details', 'json') => json_encode($arr),
-                            TableUtils::getTableDetails('keywords_details', 'page') => $this->page + $j,
+                            TableUtils::getTableDetails('keywords_details', 'page') => $page,
                             TableUtils::getTableDetails('keywords_details', 'page_size') => count($arr),
                             TableUtils::getTableDetails('keywords_details', 'update_time') => time()
                         ];
                         
                         $isUpdate = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
-                        ->where(TableUtils::getTableDetails('keywords_details', 'page'), ($this->page + $j))
-                        ->
-                        // where($this->table['keywords_details']['keyword_id'],$keyword_id)->
+                        ->where(TableUtils::getTableDetails('keywords_details', 'page'), ($page))
+                        ->where(TableUtils::getTableDetails('keywords_details','keyword_id'),$keyword_id)->
                         find();
                         if ($isUpdate == null) {
                             Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
@@ -168,7 +171,7 @@ class KeyWords extends BaseModel
             'isTbk' => true,
             'is_proxy' => true,
             'taobaoke_keyword' => $taobaoke_keyword,
-            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, $this->page * $handlePageSize, $handlePageSize, $key['pid'], $key['pid'])
+            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, ($this->page-1) * $handlePageSize, $handlePageSize, $key['pid'], $key['pid'])
         ];
         
         $aa = \app\utils\NetUtils::curlData('GET', '', $parameter);
@@ -198,6 +201,12 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'couponAmount') => $item['couponAmount'],
                 TableUtils::getTableDetails('goods_list', 'couponSendCount') => $item['couponSendCount'],
                 TableUtils::getTableDetails('goods_list', 'couponTotalCount') => $item['couponTotalCount'],
+                
+                TableUtils::getTableDetails('goods_list', 'couponEffectiveStartTime') => strlen($item['couponEffectiveStartTime'])>11? $item['couponEffectiveStartTime']/1000:$item['couponEffectiveStartTime'],
+                TableUtils::getTableDetails('goods_list', 'couponEffectiveEndTime') => strlen($item['couponEffectiveEndTime'])>11?$item['couponEffectiveEndTime']/1000:$item['c:ouponEffectiveEndTime'],
+                TableUtils::getTableDetails('goods_list', 'provcity') => $item['provcity'],
+                TableUtils::getTableDetails('goods_list', 'nick') => $item['nick'],
+                
                 TableUtils::getTableDetails('goods_list', 'userType') => $item['userType'],
                 TableUtils::getTableDetails('goods_list', 'update_time') => time()
             ];
@@ -223,9 +232,9 @@ class KeyWords extends BaseModel
         return $keywords_details;
     }
 
-    public function getGoodsItems($id)
+    public function getGoodsItems($itemId)
     {
-        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'id'), $id)->select();
+        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->select();
         return $keywords_details;
     }
 }

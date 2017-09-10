@@ -42,7 +42,7 @@ class NetUtils
                 $time = getMillisecond();
                 $md5s = $tk_preix . "&" . $time . "&12574478&" . $parameter['taobaoke_keyword_data'];
                 $url = trim(sprintf($parameter['taobaoke_keyword'], $time, md5($md5s)) . urlencode($parameter['taobaoke_keyword_data']));
-                // echo $url;
+                //echo urldecode($url) ;
             }
         }
         
@@ -120,6 +120,7 @@ class NetUtils
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $response_header = substr($output, 0, $headerSize);
             $body = substr($output, $headerSize);
+            
             //var_dump($body);
             $content = [
                 "response_header" => $response_header,
