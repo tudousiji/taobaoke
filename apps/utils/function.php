@@ -73,4 +73,38 @@ function randIP()
     return $headerArr;
 }
 
+function page($nowPage=1,$pageSize=20){
+    $startPage=0;
+    if($nowPage>5){
+        $startPage=$nowPage-5;
+    }else{
+        $startPage=1;
+    }
+    
+    
+    $endPage=$pageSize;
+    if($nowPage<=$pageSize-5){
+        $endPage=$nowPage+5;
+    }
+    var_dump($startPage);
+    var_dump($endPage);
+    
+    $arr=[];
+    $index=0;
+    for($i=$startPage;$i<=$endPage;$i++){
+        $arr[]=$startPage+$index;
+        $index++;
+    }
+    
+    $page=[
+        'page'=>$arr,
+        'pageCount'=>$pageSize,
+        'nowPage'=>$nowPage,
+        'startPage'=>$startPage,
+        'endPage'=>$endPage,
+    ];
+    
+    return $page;
+}
+
 ?>

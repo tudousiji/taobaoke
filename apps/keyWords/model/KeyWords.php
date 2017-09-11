@@ -237,6 +237,12 @@ class KeyWords extends BaseModel
         $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->select();
         return $keywords_details;
     }
+    
+    public function getCount(){
+       $count = Db::table(TableUtils::getTableDetails('keywords_details'))->count();
+       return $count;
+    }
+    
 }
 
 ?>

@@ -8,11 +8,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="觅鱼">
 <meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
-<title>觅鱼 | 更懂你的实时优惠播报站-让优惠触手可及</title>
+<title>{$keyWord}_{$subtitle}</title>
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base.css">
-<link rel="stylesheet"
-	href="/public/static/image/result.css">
+<link rel="stylesheet" href="/public/static/image/result.css">
 </head>
 <body>
 	<div class="container">
@@ -20,7 +19,7 @@
     <div id="J_BrowserUpdate" class="browser-update">
     </div>
     <![endif]-->
-		{include file="../../public/header" /} 
+		{include file="../../public/header" /}
 		<div class="row recommend-category-header-row">
 			<div class="main">
 				<div class="recommend-category-header" id="R-result-tabs">
@@ -55,100 +54,103 @@
 									<div class="feature-items-td" index="0">
 										<a target="_blank"
 											href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
-											data-hottag="mmm.result.info.740999" isconvert="1"
-											onclick=""><img
-											src="{$vo.pictUrl}"
-											class="size-110" style="margin: 11px;"></a>
+											data-hottag="mmm.result.info.740999" isconvert="1" onclick=""><img
+											src="{$vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
-									<div class="feature-items-td" index="1">
-										<div class="item_title">
-											<a class="item_cat"
-												href="https://miyu.qq.com/assets/god.html?cat=9"
-												target="_blank" data-hottag="mmm.discount.info.49520"
-												onclick="">食品保健</a>
-											<a target="_blank"
-												href="/index.php/keyWords/Keyword/goodsItem?id={$vo.nid}"
-												data-hottag="mmm.result.info.740999" isconvert="1"
-												onclick=""
-												title="{$vo.pictUrl}">{$vo.title}</a>
+									<div class="feature-items-td-right">
+										<div
+											class="feature-items-td-right-top">
+											<div class="
+											feature-items-td" index="1">
+											<div class="item_title">
+												<a class="item_cat"
+													href="https://miyu.qq.com/assets/god.html?cat=9"
+													target="_blank" data-hottag="mmm.discount.info.49520"
+													onclick="">食品保健</a> <a target="_blank"
+													href="/index.php/keyWords/Keyword/goodsItem?id={$vo.nid}"
+													data-hottag="mmm.result.info.740999" isconvert="1"
+													onclick="" title="{$vo.pictUrl}">{$vo.title}</a>
+											</div>
+
 										</div>
-										<div class="item-col2-bottom">
-											<div class="item-time pull-left" style="color: #666;">已售{$vo.biz30Day}</div>
-											<div class="item-split pull-left"></div>
+										<div class="feature-items-td" index="2">券后价{$vo.zkFinalPriceWap-$vo.couponAmount/100
+											}元</div>
+										<div class="feature-items-td" index="3">
 
+											<span class="td-discount">券:{$vo.couponAmount/100 }元</span>
 
-											<a class="item-from-source pull-left"
-												href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
-												target="_blank" data-hottag="mmm.result.info.740999"
-												onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_shop&#39;, &#39;shop&#39;, &#39;result&#39;]);">天猫</a>
-											<div class="item-split pull-left"></div>
-											<div class="item-time pull-left" style="color: #666;">优惠券总数:{$vo.couponTotalCount}</div>
-											<div class="item-split pull-left"></div>
-											<div class="item-time pull-left" style="color: #666;">已领取总数:{$vo.couponSendCount}</div>
-											<div class="item-split pull-left"></div>
 										</div>
-									</div>
-									<div class="feature-items-td" index="2">券后价{$vo.zkFinalPriceWap-$vo.couponAmount/100 }元</div>
-									<div class="feature-items-td" index="3">
+										<div class="feature-items-td" index="4">现价:{$vo.zkFinalPriceWap}元</div>
+										<div class="feature-items-td" index="5">
+											<div class="feature-items-td5-container">
+												<span class="inline-block">领取内部优惠券</span>
 
-										<span class="td-discount">券:{$vo.couponAmount/100 }元</span>
-
-									</div>
-									<div class="feature-items-td" index="4">现价:{$vo.zkFinalPriceWap}元</div>
-									<div class="feature-items-td" index="5">
-										<div class="feature-items-td5-container">
-											<span class="inline-block">领取内部优惠券</span>
-											
+											</div>
 										</div>
 									</div>
+
+
+									<div class="item-col2-bottom">
+										<div class="item-time pull-left" style="color: #666;">已售{$vo.biz30Day}</div>
+										<div class="item-split pull-left"></div>
+										<a class="item-from-source pull-left"
+											href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+											target="_blank" data-hottag="mmm.result.info.740999"
+											onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;result_item_shop&#39;, &#39;shop&#39;, &#39;result&#39;]);">天猫</a>
+										<div class="item-split pull-left"></div>
+										<div class="item-time pull-left" style="color: #666;">优惠券总数:{$vo.couponTotalCount}</div>
+										<div class="item-split pull-left"></div>
+										<div class="item-time pull-left" style="color: #666;">已领取总数:{$vo.couponSendCount}</div>
+										<div class="item-split pull-left"></div>
+									</div> 
 								</div>
 
+
+
+							</div>
+
+							{/foreach}
+
+
+						</div>
+						<div class="pagination-cont">
+							<ul class="pagination" id="R-pagination">
+								{if $page.startPage!=$page.nowPage}
+								<li class="prev disabled"><a
+									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&lt;</a></li>
+								{/if}
+								{foreach name="page.page" item="vo" }
+								<li class="page {if $vo==$page.nowPage} active {/if}"><a
+									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">{$vo}</a></li>
 								{/foreach}
-
-
-							</div>
-							<div class="pagination-cont">
-								<ul class="pagination" id="R-pagination">
-									<li class="prev disabled"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&lt;</a></li>
-									<li class="page active"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">1</a></li>
-									<li class="page"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">2</a></li>
-									<li class="page"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">3</a></li>
-									<li class="page"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">4</a></li>
-									<li class="page"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">...</a></li>
-									<li class="page"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">6</a></li>
-									<li class="next"><a
-										href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&gt;</a></li>
-								</ul>
-							</div>
+								{if $page.endPage!=$page.pageCount}
+								<li class="next"><a
+									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&gt;</a></li>
+								{/if}
+							</ul>
 						</div>
-						<div class="feature-sidebar">
-							<div class="feature-hot temai-section-top-color mb-20">
-								<div class="feature-hot-title font-title-16 pl-10">热门推荐</div>
-								<ul class="feature-hot-items" id="M-temai"></ul>
-							</div>
-						</div>
-						<div class="fnClear"></div>
 					</div>
-					<div class="result-tab-content" tab="2" id="R-cbg">
-						<div class="result-tab-pane">
-							<div class="feature-items"></div>
+					<div class="feature-sidebar">
+						<div class="feature-hot temai-section-top-color mb-20">
+							<div class="feature-hot-title font-title-16 pl-10">热门推荐</div>
+							<ul class="feature-hot-items" id="M-temai"></ul>
 						</div>
 					</div>
 					<div class="fnClear"></div>
 				</div>
+				<div class="result-tab-content" tab="2" id="R-cbg">
+					<div class="result-tab-pane">
+						<div class="feature-items"></div>
+					</div>
+				</div>
+				<div class="fnClear"></div>
 			</div>
 		</div>
 	</div>
-	{include file="../../public/footer" /} 
-	
+	</div>
+	{include file="../../public/footer" /}
+
 </body>
 
 </html>

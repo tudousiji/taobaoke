@@ -75,7 +75,10 @@ class Keyword extends BaseController
             
             $this->assign('keyWord', $keyWord);
             $this->assign('list', $return);
-            //print_r($return);
+            $count = $keywords->getCount();
+            $this->assign('page', page($page,$count));
+            
+            
             return $this->fetch('list');
         }
         
