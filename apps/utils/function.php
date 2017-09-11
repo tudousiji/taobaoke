@@ -1,5 +1,5 @@
 <?php
-require_once 'apps/config/keyConfig.php';
+
 
 // 关键词查询优惠券
 function getKeyWord($keyWord, $page = 1, $pageSize = 100)
@@ -86,8 +86,8 @@ function page($nowPage=1,$pageSize=20){
     if($nowPage<=$pageSize-5){
         $endPage=$nowPage+5;
     }
-    var_dump($startPage);
-    var_dump($endPage);
+    /* var_dump($startPage);
+    var_dump($endPage); */
     
     $arr=[];
     $index=0;
@@ -105,6 +105,27 @@ function page($nowPage=1,$pageSize=20){
     ];
     
     return $page;
+}
+
+
+function urlIdEncode($id,$isEncode=true){
+    $n = "$n";
+    $keyConfig=require 'apps/config/keyConfig.php';
+    $urlEncodeKey= $keyConfig['urlEncodeKey'];
+    $key = "$urlEncodeKey";
+    $r = '';
+    if($isEncode){//加密
+        for($i=0; $i<strlen($n); $i++) {
+            $k = $key{$i%strlen($key)};
+            $r .= ($n{$i} + $k) % 10;
+        }
+    }else{
+        for($i=0; $i<strlen($n); $i++) {
+            $k = $key{$i%strlen($key)};
+            $r .= ($n{$i} < $k ? $n{$i} + 10: $n{$i}) - $k;
+        }
+    }
+    return $r;
 }
 
 ?>
