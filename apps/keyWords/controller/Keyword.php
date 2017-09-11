@@ -9,9 +9,16 @@ class Keyword extends BaseController
 {
     public function lists(){
         $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
+        $page = isset($_REQUEST['page']) && ! empty($_REQUEST['page']) ? $_REQUEST['page'] : "1";
+        
+        
         $KeyWords=new KeyWords();
         $list=$KeyWords->getList($id);
         $this->assign('list',$list);
+        
+        $count = $KeyWords->getCount();
+        $this->assign('page', page($page,$count));
+        $this->assign('keyWord', $KeyWords->getIdForKeywords($list['keyword']));
         return $this->fetch('list');
     }
 
@@ -78,6 +85,7 @@ class Keyword extends BaseController
             $count = $keywords->getCount();
             $this->assign('page', page($page,$count));
             
+            $this->assign('myTime','1499097600');
             
             return $this->fetch('list');
         }

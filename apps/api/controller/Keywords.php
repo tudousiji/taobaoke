@@ -34,10 +34,36 @@ class Keywords extends BaseController
         $keywords = new \app\api\model\KeyWordsModel();
         $return = $keywords->getData($id,$page,$isCollection);
         
+        if($keywords!=null){
+            $nextData = $keywords->getData($keywords);
+            if(!empty($nextData) && is_array($nextData)){
+                $data=[
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+                    $jsonKeyValConfig['Code']=>0,//
+                    'data'=>$nextData,
+                ];
+                echo json_encode($data);
+            } else{
+                $data=[
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                    $jsonKeyValConfig['Code']=>-1,//
+                    
+                ];
+                echo json_encode($data);
+            }
+        }else{
+            $data=[
+                $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                $jsonKeyValConfig['Code']=>-1,//
+                
+            ];
+            echo json_encode($data);
+        }
+        
     }
 
     
-
+    
     
 }
 

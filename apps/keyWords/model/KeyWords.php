@@ -243,6 +243,14 @@ class KeyWords extends BaseModel
        return $count;
     }
     
+    
+    public function getIdForKeywords($keyword_id){
+        $data = Db::table(TableUtils::getTableDetails('keywords'))->
+        where(TableUtils::getTableDetails('keywords','id'),$keyword_id)
+        ->find();
+        return $data;
+    }
+    
 }
 
 ?>
