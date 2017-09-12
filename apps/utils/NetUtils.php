@@ -251,6 +251,61 @@ class NetUtils
         }
         return $body;
     }
+    
+    
+    //获取百度关键词
+    public static function BaiDuKeyWords($keyWords){
+        if(empty($keyWords) || strlen($keyWords)<=0){
+            echo "关键词不能为空";
+            return ;
+        }
+        $keyConfig=require ('apps/config/keyConfig.php');
+        $url=sprintf($keyConfig['baiDuWordPos'],$keyWords);
+        $parameter = [
+            'is_proxy' => true,
+        ];
+        $keyArrayJsonObj = curlData('GET',$url,$parameter);
+        $keyArrayJson=$keyArrayJsonObj['body'];
+        if(!empty($keyArrayJson)){
+            $keyArray=json_decode($keyArrayJson);
+            if(is_array($keyArray) && isset($keyArray['result']) && isset($keyArray['result']['_ret'])==0){
+                return $keyArray['result']['res']['keyword_list'];
+            }else{
+                return array();
+            }
+        }else{
+            return array();
+        }
+    }
+    
+    
+    
+    
+    //从淘宝获取 生成相关的关键词
+    public static function taobaoKeyWords($keyWords){
+        if(empty($keyWords) || strlen($keyWords)<=0){
+            echo "关键词不能为空";
+            return ;
+        }
+        $keyConfig=require ('apps/config/keyConfig.php');
+        $url=sprintf($keyConfig['taoBaoKeyWords'],$keyWords);
+        $parameter = [
+            'is_proxy' => true,
+            'isHttps'=>true,
+        ];
+        $keyArrayJsonObj = curlData('GET',$url,$parameter);
+        $keyArrayJson=$keyArrayJsonObj['body'];
+        if(!empty($keyArrayJson)){
+            $keyArray=json_decode($keyArrayJson);
+            if(is_array($keyArray) && isset($keyArray['result'])){
+                return $keyArray['result'];
+            }else{
+                return array();
+            }
+        }else{
+            return array();
+        }
+    }
 }
 
 ?>
