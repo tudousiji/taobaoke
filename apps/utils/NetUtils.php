@@ -306,6 +306,66 @@ class NetUtils
             return array();
         }
     }
+    
+    //淘宝评论
+    public function TaobaoCommentList($itemId,$sellerId,$page=1){
+        if(!is_numeric($itemId) || !is_numeric($sellerId)){
+            echo "不是数字";
+            return ;
+        }
+        $keyConfig=require ('apps/config/keyConfig.php');
+        $url=sprintf($keyConfig['comment_list'],$itemId,$sellerId,$page);
+        $parameter = [
+            'is_proxy' => true,
+            'isHttps'=>true,
+        ];
+        $commentListArrayJsonObj = curlData('GET',$url,$parameter);
+        $commentListArrayJson=$commentListArrayJsonObj['body'];
+        if(stripos($commentListArrayJson, "jsonp1966(")){
+            $commentListArrayJson=substr($commentListArrayJson, strlen("jsonp1966("),strlen($commentListArrayJson)-1);
+        };
+        if(!empty($commentListArrayJson)){
+            $commentListArray=json_decode($commentListArrayJson);
+            if(is_array($commentListArray) && isset($commentListArray['rateDetail']) ){
+                return $commentListArray['rateDetail'];
+            }else{
+                return array();
+            }
+        }else{
+            return array();
+        }
+    }
+    
+    
+    //问大家
+    public function AskEverybodyList($itemId,$sellerId){
+        if(!is_numeric($itemId) || !is_numeric($sellerId)){
+            echo "不是数字";
+            return ;
+        }
+        $keyConfig=require ('apps/config/keyConfig.php');
+        $url=sprintf($keyConfig['askEverybody_list'],$itemId,$sellerId);
+        $parameter = [
+            'is_proxy' => true,
+            'isHttps'=>true,
+        ];
+        $AskEverybodyListArrayJsonObj = curlData('GET',$url,$parameter);
+        $AskEverybodyListArrayJson=$AskEverybodyListArrayJsonObj['body'];
+        if(stripos($AskEverybodyListArrayJson, "json_tbc_rate_summary(")){
+            $AskEverybodyListArrayJson=substr($AskEverybodyListArrayJson, strlen("json_tbc_rate_summary("),strlen($AskEverybodyListArrayJson)-1);
+        };
+        if(!empty($AskEverybodyListArrayJson)){
+            $AskEverybodyListArray=json_decode($AskEverybodyListArrayJson);
+            if(!empty($AskEverybodyListArray)  && isset($AskEverybodyListArray['data']) ){
+                return $AskEverybodyListArray['data'];
+            }else{
+                return array();
+            }
+        }else{
+            return array();
+        }
+    }
+    
 }
 
 ?>

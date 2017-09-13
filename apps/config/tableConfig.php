@@ -46,6 +46,9 @@ return [
             'provcity' => 'provcity',
             'nick' => 'nick',
             'userType' => 'userType',
+            'reason' => 'reason',
+            'commentList' => 'commentList',
+            'askeverybodyList' => 'askeverybodyList',
             'update_time' => 'update_time'
         ]
     ],

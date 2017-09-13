@@ -14,9 +14,9 @@ return [
     // 'is_open_page'=>false,
     //  新加字段 couponEffectiveStartTime provcity nick couponEffectiveEndTime 
     'baiDuWordPos'=>"http://www.xiaoqiwen.cn/api/baidukw.php?kw=%s",//百度分词获取地址
-    'taoBaoKeyWords'=>"https://suggest.taobao.com/sug?code=utf-8&q=%s"//淘宝关键词生成
-    // 天猫  https://rate.tmall.com/list_detail_rate.htm?itemId=554662908267&sellerId=1637289231&order=3&currentPage=2&append=0&content=1&tagId=&posi=&picture=0&itemPropertyId=&itemPropertyIndex=&userPropertyId=&userPropertyIndex=&rateQuery=&location=&needFold=0&callback=jsonp1966
-        // 问大家 https://rate.taobao.com/detailCommon.htm?auctionNumId=536650105506&userNumId=1914800532&callback=json_tbc_rate_summary
+    'taoBaoKeyWords'=>"https://suggest.taobao.com/sug?code=utf-8&q=%s",//淘宝关键词生成
+    'comment_list' =>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=%s&order=3&currentPage=%s&append=0&content=1&tagId=&posi=&picture=0&itemPropertyId=&itemPropertyIndex=&userPropertyId=&userPropertyIndex=&rateQuery=&location=&needFold=0&callback=jsonp1966',//评论
+    'askEverybody_list' =>'https://rate.taobao.com/detailCommon.htm?auctionNumId=%s&userNumId=%s&callback=json_tbc_rate_summary'  ,//问大家
 ];
 
 ?>
