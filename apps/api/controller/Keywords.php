@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use app\base\BaseController;
+use think\Request;
 
 
 
@@ -15,6 +16,7 @@ class Keywords extends BaseController
         $time=isset($_REQUEST['time']) && is_numeric($_REQUEST['time']) ? $_REQUEST['time'] : "";
         $sign=isset($_REQUEST['sign']) && !isEmpty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
         $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : "1";
+       // var_dump(input('id'));
         
         $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
@@ -35,7 +37,7 @@ class Keywords extends BaseController
         $return = $keywords->getData($id,$page,$isCollection);
         
         if($keywords!=null){
-            $nextData = $keywords->getData($keywords);
+            $nextData = $keywords->getNextData($return);
             if(!empty($nextData) && is_array($nextData)){
                 $data=[
                     $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],

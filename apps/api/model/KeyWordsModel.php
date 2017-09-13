@@ -18,10 +18,13 @@ class KeyWordsModel extends BaseModel{
          $keywordsModel = new \app\keyWords\model\KeyWords();
          //var_dump($page);
          $return = $keywordsModel->getData($keyWord[TableUtils::getTableDetails('keywords', 'keyword')], $page, $keyConfig['keyWordCollectionPageSize'],$isCollection);
+         //var_dump($keyWord);
+         
          return $keyWord;
     }
     
     public function getNextData($keyWord){
+        //print_r($keyWord);
         $keyWord=Db::table(TableUtils::getTableDetails('keywords'))->
         where(TableUtils::getTableDetails('keywords', 'id'),'>', $keyWord[TableUtils::getTableDetails('keywords', 'id')])->order(TableUtils::getTableDetails('keywords', 'id'),"asc")
         ->find();

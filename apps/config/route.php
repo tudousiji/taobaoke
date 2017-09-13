@@ -9,6 +9,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 return [
-    ''=>'',
+    'keywordsId/:id'=>'api/Keywords/keywordsId',
 
 ];
