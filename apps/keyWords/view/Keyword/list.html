@@ -47,15 +47,15 @@
 							<div class="feature-items">
 
 
-
+							{if is_array($list)}
 								{foreach $list as $vo}
 
 								<div class="feature-items-tr">
 									<div class="feature-items-td" index="0">
 										<a target="_blank"
-											href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14847653622.73.46f16db0jf2499&amp;id=37454658224&amp;rn=b0e66fec4c91d2c4822e8af258363613&amp;abbucket=5&amp;skuId=3106208488611"
+											href="/goods/{$vo.nid|urlIdcode=###,true}.html"
 											data-hottag="mmm.result.info.740999" isconvert="1" onclick=""><img
-											src="{$vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
+											src="{$vo.title}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
 									<div class="feature-items-td-right">
@@ -65,9 +65,9 @@
 											feature-items-td" index="1">
 											<div class="item_title">
 												 <a target="_blank"
-													href="/index.php/keyWords/Keyword/goodsItem?id={$vo.nid}"
+													href="/goods/{$vo.nid|urlIdcode=###,true}.html"
 													data-hottag="mmm.result.info.740999" isconvert="1"
-													onclick="" title="{$vo.pictUrl}">{$vo.title}</a>
+													onclick="" title="{$vo.title}">{$vo.title}</a>
 											</div>
 
 										</div>
@@ -108,7 +108,7 @@
 							</div>
 
 							{/foreach}
-
+						{/if}
 
 						</div>
 						<div class="pagination-cont">

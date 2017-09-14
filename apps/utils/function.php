@@ -108,8 +108,8 @@ function page($nowPage=1,$pageSize=20){
 }
 
 
-function urlIdEncode($id,$isEncode=true){
-    $n = "$n";
+function urlIdcode($id,$isEncode=true){
+    $n = "$id";
     $keyConfig=require 'apps/config/keyConfig.php';
     $urlEncodeKey= $keyConfig['urlEncodeKey'];
     $key = "$urlEncodeKey";

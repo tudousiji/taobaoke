@@ -224,17 +224,17 @@ class KeyWords extends BaseModel
         }
     }
 
-    public function getList($id, $page = 1)
+    public function getList($keyword_id, $page = 1)
     {
-        $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'id'), $id)
-            ->where(TableUtils::getTableDetails('keywords_details', 'page'), $this->page)
-            ->select();
+        $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
+        ->where(TableUtils::getTableDetails('keywords_details', 'page'), $page)
+            ->find();
         return $keywords_details;
     }
 
     public function getGoodsItems($itemId)
     {
-        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->select();
+        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->find();
         return $keywords_details;
     }
     

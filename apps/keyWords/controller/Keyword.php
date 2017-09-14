@@ -3,28 +3,40 @@ namespace app\keyWords\controller;
 
 use app\base\BaseController;
 use app\keyWords\model\KeyWords;
-
+use think\Request;
+require_once 'apps/utils/function.php';
 // require_once 'apps/utils/function.php';
 class Keyword extends BaseController
 {
     public function lists(){
-        $id = isset($_REQUEST['id']) && ! empty($_REQUEST['id']) ? $_REQUEST['id'] : "1";
+        $keyword_id = isset($_REQUEST['keyword_id']) && ! empty($_REQUEST['keyword_id']) ? $_REQUEST['keyword_id'] : "1";
         $page = isset($_REQUEST['page']) && ! empty($_REQUEST['page']) ? $_REQUEST['page'] : "1";
         
         
+        //var_dump($id."--->".$page);
         $KeyWords=new KeyWords();
-        $list=$KeyWords->getList($id);
-        $this->assign('list',$list);
+        $list=$KeyWords->getList($keyword_id,$page);
+        $keyWord = $KeyWords->getIdForKeywords($keyword_id);
+        if(empty($list) ){
+            
+            $list = $KeyWords->getData($keyWord['keyword'], $page, $this->keyConfig['keyWordPageSize'],false);
+            $this->assign('list',$list );
+            
+        }else{
+            $this->assign('list',is_array($list)?json_decode($list['json'],true):array() );
+            
+        }
         
         $count = $KeyWords->getCount();
         $this->assign('page', page($page,$count));
-        $this->assign('keyWord', $KeyWords->getIdForKeywords($list['keyword']));
+        $this->assign('keyWord', $keyWord['keyword'] ) ;
         return $this->fetch('list');
     }
 
     public function goodsItem()
     {
-        $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) ? $_REQUEST['itemId'] : "1";
+        $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) 
+        && is_numeric($_REQUEST['itemId']) ? urlIdcode( $_REQUEST['itemId'],false) : "1";
         $KeyWords=new KeyWords();
         $item=$KeyWords->getGoodsItems($itemId);
         $this->assign('item',$item);
