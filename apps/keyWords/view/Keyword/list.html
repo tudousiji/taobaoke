@@ -89,7 +89,7 @@
 
 
 									<div class="item-col2-bottom">
-										<div class="item-time pull-left" style="color: #666;">已售:{$vo.biz30Day}</div>
+										<div class="item-time pull-left" style="color: #666;">已售:{if $vo.biz30Day>9999}{$vo.biz30Day/10000|round=###,2}万{else}{$vo.biz30Day}{/if}件</div>
 										<div class="item-split pull-left"></div>
 										<div class="item-time pull-left" style="color: #666;">来源:{if $vo.userType==0}淘宝{else}天猫{/if}</div>
 										<div class="item-split pull-left"></div>
@@ -97,7 +97,7 @@
 										<div class="item-split pull-left"></div>
 										<div class="item-time pull-left" style="color: #666;">已领取:{$vo.couponSendCount}</div>
 										<div class="item-split pull-left"></div>
-										<div class="item-time pull-left" style="color: #666;">优惠券使用时间:{$vo.couponEffectiveStartTime/1000|date="Y-m-d",###}--{$vo.couponEffectiveEndTime/1000|date="Y-m-d",###} </div>
+										<div class="item-time pull-left" style="color: #666;">优惠券使用时间:{$vo.couponEffectiveStartTime/1000|date="Y-m-d",###}~{$vo.couponEffectiveEndTime/1000|date="Y-m-d",###} </div>
 										
 										
 									</div> 

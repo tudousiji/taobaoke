@@ -39,6 +39,7 @@ class Keyword extends BaseController
         && is_numeric($_REQUEST['itemId']) ? urlIdcode( $_REQUEST['itemId'],false) : "1";
         $KeyWords=new KeyWords();
         $item=$KeyWords->getGoodsItems($itemId);
+    
         $this->assign('item',$item);
         return $this->fetch('item');
     }

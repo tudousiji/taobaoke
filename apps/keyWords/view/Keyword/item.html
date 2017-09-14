@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="觅鱼">
 <meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
-<title>觅鱼 | 更懂你的实时优惠播报站-让优惠触手可及</title>
+<title>{$item.title|strip_tags=###}_{$subtitle}</title>
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base.css">
 <link rel="stylesheet" href="/public/static/image/item.css">
@@ -42,24 +42,23 @@
 								class="crumbs-item-title">保护壳/套</span></a>
 						</div>
 						<div class="d-top-layer-property pull-right">
-							<span class="mr-20">来源：京东</span> <span class="mr-20">4小时前</span>
+							<span class="mr-20">来源:{if $item.userType==0}淘宝{else}天猫{/if}</span> <span class="mr-20">更新时间:{$item.update_time|date="Y-m-d",###}</span>
 							<span>浏览1次</span>
 						</div>
 					</div>
 					<div class="d-top-content">
 						<div class="d-top-content-left">
 							<div class="d-large-thumbnail">
-								<img src="/public/static/image/58b44c14N1eecae25.jpg">
+								<img src="{$item.pictUrl}">
 							</div>
 
 						</div>
 						<div class="d-top-content-right">
-							<div class="d-goods-title" _hover-ignore="1">锐舞
-								iPhone7手机壳苹果7Plus保护套磨砂男女薄防摔全包硬壳 透澈明-全包/轻薄-苹果7专用</div>
+							<div class="d-goods-title" _hover-ignore="1">{$item.title|strip_tags=###}</div>
 							<div class="d-goods-price">
 								<span
-									class="item-promotion-orgprice d-goods-price-origin mr-10 nowprice">现价:29.9元</span>
-								<span class=" d-goods-price-now mr-10 sold">已售:1999件</span>
+									class="item-promotion-orgprice d-goods-price-origin mr-10 nowprice">现价:{$item.zkFinalPriceWap}元</span>
+								<span class=" d-goods-price-now mr-10 sold">已售:{if $item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件</span>
 								<!-- <span
 									class="item-promotion-discount d-goods-price-discount mr-10"
 									style="margin-right: 0px;">3.5折</span> <span
@@ -68,20 +67,21 @@
 
 
 							<div class="d-goods-price">
-								<span class=" d-goods-price-now mr-10 sold">已售:1999件</span>
+								<span class=" d-goods-price-now mr-10 sold">优惠券总数:{$item.couponTotalCount}</span>
+								<span class=" d-goods-price-now mr-10 sold">已领取:{$item.couponSendCount}</span>
 							</div>
 							<div class="d-goods-price">
-								<span class=" d-goods-price-now mr-10 sold">共:1999优惠券</span> <span
-									class=" d-goods-price-now mr-10 sold">已领取 400</span>
+								 <span
+									class=" d-goods-price-now mr-10 sold">卖家:{$item.nick}</span>
 							</div>
 							<div class="d-goods-price">
-								<span class="d-goods-price-now mr-10 sold">来源:淘宝</span>
+								<span class="d-goods-price-now mr-10 sold">优惠券使用时间:{$item.couponEffectiveStartTime|date="Y-m-d",###}~{$item.couponEffectiveEndTime|date="Y-m-d",###}</span>
 							</div>
 							<div class="d-goods-price">
-								<span class="item-promotion-thisprice d-goods-price-now mr-10">券后价:65元</span>
+								<span class="item-promotion-thisprice d-goods-price-now mr-10">券后价:{$item.zkFinalPriceWap-$item.couponAmount/100}元</span>
 								<div class="coupon-amount-icon p-top">
 									<div class="icon-left">券</div>
-									<span>5元</span>
+									<span>{$item.couponAmount/100 }元</span>
 								</div>
 
 							</div>
@@ -89,11 +89,11 @@
 							<a class="d-goods-redirect-link"
 								href="https://item.jd.com/10659967038.html#crumb-wrap"
 								target="_blank" isconvert="1"
-								onclick="_hmt.push(['_trackEvent', 'item_item_direct', 'shop', 'item']);">领取内部优惠券</a>
+								onclick="">领取内部优惠券</a>
 							<a class="d-goods-redirect-link-2"
 								href="https://item.jd.com/10659967038.html#crumb-wrap"
 								target="_blank" isconvert="1"
-								onclick="_hmt.push(['_trackEvent', 'item_item_direct', 'shop', 'item']);">直达商品链接</a>
+								onclick="">直达商品链接</a>
 
 							<div class="statement">
 								<p style="color: #999;">声明：商品的价格与折扣仅供参考，信息可能根据时间变化，商家调整而过期。敬请理解</p>
@@ -158,6 +158,42 @@
 							</div>
 						</div>
 					</div>
+					
+					
+					
+					<div class="d-comment color-bg-white mt-15 featurenums-section-top-color">
+						<div class="d-comment-title border-bottom-e5">
+							<div class="section-title pull-left">大家说</div>
+							<a class="section-more pull-right" href="https://item.jd.com/10659967038.html#crumb-wrap#comment" target="_blank" isconvert="1">更多评价&gt;</a>
+							<div class="clearfix"></div>
+						</div>
+						<div class="d-comment-items">
+							<div class="d-comment-item">
+								<div class="d-comment-item-top">
+									<div class="d-comment-nickname pull-left">jd_卜经意间</div>
+									<div class="d-comment-time pull-left">2017-08-29 17:37:57</div>
+								</div>
+								<div class="d-comment-content">上午下的单下午就送到了，物流超快，安装上去，手感不错，下次接着光顾</div>
+								<div class="d-comment-pictures">
+									<ul class="d-comment-pictures-items">
+										<li class="active"><img src="/public/static/image/59a535f5N71fa4d8c_002.jpg" large-src="//img30.360buyimg.com/n1/s760x500_jfs/t8131/14/293637043/271876/b31063ca/59a535f5N71fa4d8c.jpg">
+											<div class="d-comment-pictures-items-arrow-down"></div></li>
+										<div class="fnClear"></div>
+									</ul>
+									<div class="d-comment-picture-large">
+										<div class="d-comment-picture-large-container1">
+											<div class="d-comment-picture-large-container2">
+												<img src="/public/static/image/59a535f5N71fa4d8c.jpg">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
 				</div>
 				<div class="d-bottom-right">
 					<div class="feature-sidebar">
