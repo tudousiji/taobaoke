@@ -251,6 +251,113 @@ class KeyWords extends BaseModel
         return $data;
     }
     
+    public function getSubKeyWords($keyWords,$id){
+        if(empty($keyWords) || empty($id) || !is_numeric($id)){
+            return ;
+        }
+        
+        $url=sprintf($this->keyConfig['taoBaoKeyWords'],$keyWords) ;
+        $parameter = [
+            'isHttps' => true,
+            'is_proxy' => true,
+        ];
+        
+        $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
+        
+        if(!empty($json['body'])){
+            $jsonObj=json_decode($json['body'],true);
+            
+            if(!empty($jsonObj) &&!empty($jsonObj['result']) && is_array($jsonObj['result']) && count($jsonObj['result'])>0 ){
+                $data=[
+                    'subKeyWords'=>json_encode($jsonObj['result'])
+                ];
+                $tableUtils =new \app\tableUtils\keywordsUtils();
+                $status = $tableUtils->updateKeyword($data, $id);
+                //var_dump("请求网络");
+                return $jsonObj['result'];
+            }else{
+                return array();
+            }
+        } else{
+            return array();
+        };
+    }
+    
+    public function getAskeverybodyList($itemId,$id){
+        $url=sprintf($this->keyConfig['askEverybody_list'],$itemId) ;
+        $parameter = [
+            'isHttps' => true,
+            'is_proxy' => true,
+        ];
+        
+        $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
+        if(!empty($json['body'])){
+            $AskeverybodyListArrayJson= trim(mb_convert_encoding($json['body'], "UTF-8","GBK" ));
+            if(stripos($AskeverybodyListArrayJson, "json_tbc_rate_summary(")>=0){
+                $$AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("json_tbc_rate_summary("),strripos($AskeverybodyListArrayJson,")")-strlen("json_tbc_rate_summary("));
+                
+            };
+            $jsonObj=json_decode($AskeverybodyListArrayJson,true);
+            //print_r($jsonObj);
+            //print_r($jsonObj);
+            if(!empty($jsonObj) &&!empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data'])>0 
+                &&!empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress'])>0 ){
+                $data=[
+                    'askeverybodyList'=>json_encode($jsonObj['data']['impress'])
+                ];
+                $tableUtils =new \app\tableUtils\goodslistUtils();
+                $status = $tableUtils->updateAskeverybodyList($data, $id);
+                var_dump($status);
+                //var_dump("请求网络");
+                return $jsonObj['data']['impress'];
+            }else{
+                return array();
+            }
+        } else{
+            return array();
+        };
+    }
+    
+    public function getCommentList($itemId,$id,$page=1){
+        //$url=sprintf($this->keyConfig['comment_list'],$itemId,$page) ;
+        //$url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&currentPage=1";
+        $url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&Page=1";
+        $parameter = [
+            'isHttps' => true,
+            'is_proxy' => false,
+            'header_type' => 1,
+        ];
+        
+        $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
+        print_r($json);
+        if(!empty($json['body'])){
+            
+            $AskeverybodyListArrayJson= trim(mb_convert_encoding($json['body'], "UTF-8","GBK" ));
+            if(stripos($AskeverybodyListArrayJson, "json_tbc_rate_summary(")>=0){
+                $$AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("json_tbc_rate_summary("),strripos($AskeverybodyListArrayJson,")")-strlen("json_tbc_rate_summary("));
+                
+            };
+            $jsonObj=json_decode($AskeverybodyListArrayJson,true);
+            //print_r($jsonObj);
+            //print_r($jsonObj);
+            if(!empty($jsonObj) &&!empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data'])>0
+                &&!empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress'])>0 ){
+                    $data=[
+                        'askeverybodyList'=>json_encode($jsonObj['data']['impress'])
+                    ];
+                    $tableUtils =new \app\tableUtils\goodslistUtils();
+                    $status = $tableUtils->updateAskeverybodyList($data, $id);
+                    var_dump($status);
+                    //var_dump("请求网络");
+                    return $jsonObj['data']['impress'];
+            }else{
+                return array();
+            }
+        } else{
+            return array();
+        };
+    }
+    
 }
 
 ?>

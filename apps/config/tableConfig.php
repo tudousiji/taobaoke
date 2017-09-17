@@ -7,6 +7,7 @@ return [
         'table_field' => [
             'id' => 'id',
             'keyword' => 'keyword',
+            'subKeyWords'=>'subKeyWords',
             'update_time' => 'update_time'
         ]
     ],

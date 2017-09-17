@@ -18,7 +18,6 @@ class Keyword extends BaseController
         $list=$KeyWords->getList($keyword_id,$page);
         $keyWord = $KeyWords->getIdForKeywords($keyword_id);
         if(empty($list) ){
-            
             $list = $KeyWords->getData($keyWord['keyword'], $page, $this->keyConfig['keyWordPageSize'],false);
             $this->assign('list',$list );
             
@@ -27,6 +26,24 @@ class Keyword extends BaseController
             
         }
         
+        
+        $subKeyWordsArr=$keyWord['subKeyWords'];
+        $subKeyWords=$keyWord['keyword'];
+        if(empty($subKeyWordsArr)){
+            $subKeyWordsArr = $KeyWords->getSubKeyWords($keyWord['keyword'],$keyWord['id']);
+        }else{
+             $subKeyWordsArr=json_decode($subKeyWordsArr,true);
+        }
+        
+        if( is_array($subKeyWordsArr) && count($subKeyWordsArr)>0){
+            for($i=0;$i<count($subKeyWordsArr);$i++){
+                $subKeyWords.=(",".$subKeyWordsArr[$i][0]);
+            }
+        }else{
+            $subKeyWords=$keyWord['keyword'];
+        }
+        
+        $this->assign('subKeyWords', $subKeyWords);
         $count = $KeyWords->getCount();
         $this->assign('page', page($page,$count));
         $this->assign('keyWord', $keyWord['keyword'] ) ;
@@ -39,7 +56,22 @@ class Keyword extends BaseController
         && is_numeric($_REQUEST['itemId']) ? urlIdcode( $_REQUEST['itemId'],false) : "1";
         $KeyWords=new KeyWords();
         $item=$KeyWords->getGoodsItems($itemId);
-    
+        
+        
+        $askeverybodyList =$item['askeverybodyList'];
+        if(empty($item['askeverybodyList']) ){
+            //$askeverybodyList=$KeyWords->getAskeverybodyList ($itemId,$item['id']);
+        }
+         
+        
+        $commentList=$item['commentList'];
+        if(empty($item['commentList']) ){
+            $commentList=$KeyWords->getCommentList($itemId,$item['id'],1);
+            //var_dump($commentList);
+        }
+        
+        
+        $this->assign('askeverybodyList',$askeverybodyList);
         $this->assign('item',$item);
         return $this->fetch('item');
     }
@@ -98,7 +130,7 @@ class Keyword extends BaseController
             $count = $keywords->getCount();
             $this->assign('page', page($page,$count));
             
-            $this->assign('myTime','1499097600');
+            //$this->assign('myTime','1499097600');
             
             return $this->fetch('list');
         }
