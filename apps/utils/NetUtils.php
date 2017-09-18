@@ -120,7 +120,7 @@ class NetUtils
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $response_header = substr($output, 0, $headerSize);
             $body = substr($output, $headerSize);
-            print_r($body);return ;
+            //print_r($body);//return ;
             //var_dump($body);
             $content = [
                 "response_header" => $response_header,
