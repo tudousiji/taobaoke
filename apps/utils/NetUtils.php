@@ -63,7 +63,8 @@ class NetUtils
             
             curl_setopt($ch, CURLOPT_COOKIE, $cookie); // 使用上面获取的cookies
         }
-        
+        //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        //curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727;http://www.baidu.com)'); 
         // $headers= array_merge($headers,randIP());
         curl_setopt($ch, CURLOPT_HEADER, $header_type);
         if (strtoupper($RequestType) != 'GET') {
@@ -111,10 +112,12 @@ class NetUtils
         // curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file); //存储cookies
         //echo $url;
         $output = curl_exec($ch);
+       
         //var_dump(curl_error($ch));
         $body = "";
         $header = "";
         $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
+        //print_r($output);return ;
         //var_dump(curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1");
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
             $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
@@ -169,6 +172,7 @@ class NetUtils
             'url' => $url,
             'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
         ];
+        
         $content=array_merge( $parameter,$content);
         if (! empty(curl_error($ch))) {
             
@@ -186,6 +190,7 @@ class NetUtils
             $content['ref'] = $ref;
         }
         curl_close($ch);
+        
         return $content;
     }
 
@@ -246,8 +251,10 @@ class NetUtils
     public static function handleBody($body)
     {
         $str = 'mtopjsonp1(';
+   
+        $body=trim($body);
         if (stripos($body, $str) === 0) {
-            $body = substr($body, strlen($str), strlen($body) - 1 - strlen($str));
+            $body = substr($body, strlen($str), strripos($body,")")-strlen($str));
         }
         return $body;
     }
@@ -308,21 +315,21 @@ class NetUtils
     }
     
     //淘宝评论
-    public function TaobaoCommentList($itemId,$sellerId,$page=1){
+    public function TaobaoCommentList($itemId,$page=1){
         if(!is_numeric($itemId) || !is_numeric($sellerId)){
             echo "不是数字";
             return ;
         }
         $keyConfig=require ('apps/config/keyConfig.php');
-        $url=sprintf($keyConfig['comment_list'],$itemId,$sellerId,$page);
+        $url=sprintf($keyConfig['comment_list'],$itemId,$page);
         $parameter = [
             'is_proxy' => true,
             'isHttps'=>true,
         ];
         $commentListArrayJsonObj = curlData('GET',$url,$parameter);
-        $commentListArrayJson=$commentListArrayJsonObj['body'];
-        if(stripos($commentListArrayJson, "jsonp1966(")){
-            $commentListArrayJson=substr($commentListArrayJson, strlen("jsonp1966("),strlen($commentListArrayJson)-1);
+        $commentListArrayJson=trim($commentListArrayJsonObj['body']);
+        if(stripos($commentListArrayJson, "jsonp1966(")>=0){
+            $commentListArrayJson=substr($commentListArrayJson, strlen("jsonp1966("),strripos($reasonListArrayJson,")")-strlen("jsonp1966("));
         };
         if(!empty($commentListArrayJson)){
             $commentListArray=json_decode($commentListArrayJson);
@@ -350,9 +357,9 @@ class NetUtils
             'isHttps'=>true,
         ];
         $AskEverybodyListArrayJsonObj = curlData('GET',$url,$parameter);
-        $AskEverybodyListArrayJson=$AskEverybodyListArrayJsonObj['body'];
-        if(stripos($AskEverybodyListArrayJson, "json_tbc_rate_summary(")){
-            $AskEverybodyListArrayJson=substr($AskEverybodyListArrayJson, strlen("json_tbc_rate_summary("),strlen($AskEverybodyListArrayJson)-1);
+        $AskEverybodyListArrayJson=trim($AskEverybodyListArrayJsonObj['body']);
+        if(stripos($AskEverybodyListArrayJson, "json_tbc_rate_summary(")>=0){
+            $AskEverybodyListArrayJson=substr($AskEverybodyListArrayJson, strlen("json_tbc_rate_summary("),strripos($reasonListArrayJson,")")-strlen("json_tbc_rate_summary("));
         };
         if(!empty($AskEverybodyListArrayJson)){
             $AskEverybodyListArray=json_decode($AskEverybodyListArrayJson);
