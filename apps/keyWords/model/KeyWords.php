@@ -329,7 +329,9 @@ class KeyWords extends BaseModel
         ];
         
         $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
-        print_r($json);
+        //$json = \app\utils\NetUtils::curlDataTest($url);
+        
+        //print_r($json);
         if(!empty($json['body'])){
             
             $AskeverybodyListArrayJson= trim(mb_convert_encoding($json['body'], "UTF-8","GBK" ));
