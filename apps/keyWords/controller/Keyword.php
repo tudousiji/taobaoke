@@ -58,20 +58,32 @@ class Keyword extends BaseController
         $item=$KeyWords->getGoodsItems($itemId);
         
         
-        $askeverybodyList =$item['askeverybodyList'];
-        if(empty($item['askeverybodyList']) ){
-            //$askeverybodyList=$KeyWords->getAskeverybodyList ($itemId,$item['id']);
-        }
-         
+        $reasonList =$item['reason'];
+        if(empty($item['reason'])  || ($this->keyConfig['reason_list_cache_time']!=-1
+            && !empty($item['reason'])  )){
+                $array=json_decode($item['reason']);
+                if($array && $array['time']<=(time()-$this->keyConfig['reason_list_cache_time'])){
+                    $reasonList=$KeyWords->getReasonList ($itemId,$item['id']);
+                }
+            }
+                
+           
+       
+        
         
         $commentList=$item['commentList'];
-        if(empty($item['commentList']) ){
-            $commentList=$KeyWords->getCommentList($itemId,$item['id'],1);
+        if(empty($item['commentList']) || ($this->keyConfig['reason_list_cache_time']!=-1
+            && !empty($item['commentList']))  ){
+                $array=json_decode($item['commentList']);
+               
+                if($array['time']<=(time()-$this->keyConfig['reason_list_cache_time']) ){
+                    $commentList=$KeyWords->getCommentList($itemId,$item['id'],1);
+                }
             //var_dump($commentList);
         }
         
         
-        $this->assign('askeverybodyList',$askeverybodyList);
+        //$this->assign('askeverybodyList',$askeverybodyList);
         $this->assign('item',$item);
         return $this->fetch('item');
     }

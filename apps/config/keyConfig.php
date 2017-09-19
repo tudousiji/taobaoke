@@ -16,8 +16,14 @@ return [
     'baiDuWordPos'=>"http://www.xiaoqiwen.cn/api/baidukw.php?kw=%s",//百度分词获取地址
     'taoBaoKeyWords'=>"https://suggest.taobao.com/sug?code=utf-8&q=%s",//淘宝关键词生成
     //'comment_list' =>'https://rate.taobao.com/feedRateList.htm?auctionNumId=%s&userNumId=3089150000&currentPageNum=%s&pageSize=%s&rateType=&orderType=sort_weight&attribute=&sku=&hasSku=true&folded=0&callback=jsonp_tbcrate_reviews_list',//评论
-    'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s',
-    'askEverybody_list' =>'https://rate.taobao.com/detailCommon.htm?auctionNumId=%s&userNumId=123&callback=json_tbc_rate_summary'  ,//问大家
+   // 'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s',
+    'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s&callback=jsonp_tbcrate_reviews_list',
+    'comment_list_cache_time'=>-1,
+    'askEverybody_list' =>''  ,//问大家
+    'reason_list'=>'https://rate.taobao.com/detailCommon.htm?auctionNumId=%s&userNumId=123&callback=json_tbc_rate_summary',
+    'reason_list_cache_time'=>-1,//-1是永久不更新
+    //https://rate.taobao.com/detailCommon.htm?auctionNumId=13654813327&userNumId=721822968&ua=090%23qCQXoXXqXqwX2Ti0XXXXXQkOIHplk0GhflnoIeGXAGBpfHQbcYRtGw13OHRYHaLiXXB%2B0ydC24QX%2FXXxhejwBHdvXOjvwSB9I1VX43oJ3vQXiPR22a4tXvXQ0ZsNLKQiXi8mLdxXNb2FZeUd2%2FlYOIlrZ1RLytEh9CUxH4QXa%2FY9%2BWO3id1UPvQXiJ%2BvQBiCxkLiXaHPsiLNwqi5vLjlQSuvwud6m6vBDKavKLNPsi%2FBwqi82LjlQDuvwuDskvQXisty2Jq95T%3D%3D&callback=json_tbc_rate_summary 好评中评差评的个数等
+    //https://api.m.taobao.com/h5/mtop.taobao.ocean.quest.detail.pc/1.0/?appKey=12574478&t=1505815380288&sign=3ec6baef3c8889c74380d3422fdeb657&api=mtop.taobao.ocean.quest.detail.pc&v=1.0&type=jsonp&dataType=jsonp&callback=mtopjsonp3&data=%7B%22topicId%22%3A%2290207620086%22%7D 问大家
 ];
 
 ?>

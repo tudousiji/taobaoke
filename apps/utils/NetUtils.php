@@ -10,10 +10,27 @@ class NetUtils
 
     public static function curlDataTest($url){
         $ch = curl_init();
+        
+        
+        
+        
+        $headers = array();
+        $headers[] = 'Host:' . parse_url($url)['host'];
+        $headers[] = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0';
+        $headers[] = 'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
+        $headers[] = 'Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3';
+        $headers[] = 'Accept-Encoding:gzip, deflate, br';
+        $headers[] = 'Connection:keep-alive';
+        $headers[] = 'Upgrade-Insecure-Requests:1';
+        $headers[] = 'Cache-Control:max-age=0';
+       
+        
+        
         //设置选项，包括URL
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER  , $headers);  
         //执行并获取HTML文档内容
         $output = curl_exec($ch);
         //释放curl句柄
@@ -22,6 +39,10 @@ class NetUtils
         var_dump($output);
         
     } 
+    
+    public static function getData($url){
+        return file_get_contents($url);
+    }
 
     // 网络请求
     public static function curlData($RequestType = 'GET', $url, $parameter/* ,$post_data =array(),$is_proxy,$header="0",$cookie="",$isHttps=false */)

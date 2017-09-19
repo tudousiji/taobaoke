@@ -11,6 +11,11 @@ class goodslistUtils{
             ->setField($data);
     }
     
+    public static function updateReasonList($data,$id){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
+            TableUtils::getTableDetails('reason', 'id'), $id)
+            ->setField($data);
+    }
 }
 
 ?>
