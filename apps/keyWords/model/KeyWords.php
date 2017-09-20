@@ -315,7 +315,8 @@ class KeyWords extends BaseModel
                 $AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("json_tbc_rate_summary("),strripos($AskeverybodyListArrayJson,")")-strlen("json_tbc_rate_summary("));
             };
             $jsonObj=json_decode($AskeverybodyListArrayJson,true);
-            print_r($json['body']);
+            //print_r($json['body']);
+           
             if(!empty($jsonObj) &&!empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data'])>0
                 &&!empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress'])>0 ){
                     $array=[
@@ -323,12 +324,12 @@ class KeyWords extends BaseModel
                         'data'=>json_encode($jsonObj['data']['impress']),
                     ];
                     $data=[
-                        'askeverybodyList'=>json_encode($array)
+                        'reason'=>json_encode($array)
                     ];
                     
                     $tableUtils =new \app\tableUtils\goodslistUtils();
                     $status = $tableUtils->updateReasonList($data, $id);
-                    return $jsonObj['data']['impress'];
+                    return $array;
             }else{
                 return array();
             }
@@ -356,8 +357,7 @@ class KeyWords extends BaseModel
             
             $AskeverybodyListArrayJson= trim(mb_convert_encoding($json, "UTF-8","GBK" ));
             if(stripos($AskeverybodyListArrayJson, "jsonp_tbcrate_reviews_list(")>=0){
-                $$AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("jsonp_tbcrate_reviews_list("),strripos($AskeverybodyListArrayJson,")")-strlen("jsonp_tbcrate_reviews_list("));
-                
+                $AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("jsonp_tbcrate_reviews_list("),strripos($AskeverybodyListArrayJson,")")-strlen("jsonp_tbcrate_reviews_list("));
             };
             $jsonObj=json_decode($AskeverybodyListArrayJson,true);
             
@@ -371,10 +371,10 @@ class KeyWords extends BaseModel
                         'commentList'=>json_encode($array),
                     ];
                     $tableUtils =new \app\tableUtils\goodslistUtils();
-                    $status = $tableUtils->updateAskeverybodyList($data, $id);
-                    
+                    $status = $tableUtils->updateCommentList($data, $id);
+                    //var_dump($status);
                     //var_dump("请求网络");
-                    return $jsonObj['rateDetail']['rateList'];
+                    return $array;
             }else{
                 return array();
             }

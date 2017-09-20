@@ -223,8 +223,19 @@ class NetUtils
             ];
             $content['ref'] = $ref;
         }
-        curl_close($ch);
         
+        //var_dump(curl_error($ch));
+        if ( strpos(curl_error($ch), 'Could not resolve proxy:') != - 1 && isset($parameter['proxy_ip']['id']) && ! empty($parameter['proxy_ip']['id'])) {
+            $dataUpdate = [
+                TableUtils::getTableDetails('proxy_ip', 'status') => 2,
+                TableUtils::getTableDetails('proxy_ip', 'update_time') => time(),
+                TableUtils::getTableDetails('proxy_ip', 'log') => trim($parameter['ref']['msg'])
+            ];
+            
+            Db::table(TableUtils::getTableDetails('proxy_ip'))->where(TableUtils::getTableDetails('proxy_ip', 'id'), $parameter['proxy_ip'][TableUtils::getTableDetails('proxy_ip', 'id')])->update($dataUpdate); // 更新失效的tk
+        }
+        
+        curl_close($ch);
         return $content;
     }
 

@@ -13,7 +13,13 @@ class goodslistUtils{
     
     public static function updateReasonList($data,$id){
         return Db::table(TableUtils::getTableDetails('goods_list'))->where(
-            TableUtils::getTableDetails('reason', 'id'), $id)
+            TableUtils::getTableDetails('goods_list', 'id'), $id)
+            ->setField($data);
+    }
+    
+    public static function updateCommentList($data,$id){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
+            TableUtils::getTableDetails('goods_list', 'id'), $id)
             ->setField($data);
     }
 }
