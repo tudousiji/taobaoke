@@ -27,6 +27,18 @@ class goodslistUtils{
         return Db::table(TableUtils::getTableDetails('goods_list'))->where(
             TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->find();
     }
+    
+    //获取大于传入id的最近的一条数据
+    public function getItemForGtId($id){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
+            TableUtils::getTableDetails('id','>', 'id'), $id)->limit(1)->order("id asc")->find();
+    }
+    
+    public  function updateItem($id,$data){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
+            TableUtils::getTableDetails('goods_list', 'id'), $id)
+            ->setField($data);
+    }
 }
 
 ?>

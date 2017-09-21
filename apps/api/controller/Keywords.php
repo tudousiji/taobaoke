@@ -65,7 +65,72 @@ class Keywords extends BaseController
     }
 
     
+    //查询大于传入id的数据，用于采集 问大家，评论，和评论数，和 推荐理由
+    public function getItem($id=0){
+        //$id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
+        $tableUtils=new \app\tableUtils\goodslistUtils();
+        $item = $tableUtils->getItemForGtId($id);
+        if($item!=null){
+            $array=[
+                'Code'=>0,
+                'data'=>$item,
+            ];
+            return json_encode($array);
+        }else{
+            $array=[
+                'Code'=>-1,
+                'msg'=>"数据为空",
+            ];
+            return json_encode($array);
+        }
+    }
     
+    
+    //id 要更新的id 并返回下一个商品信息
+    public function upDateGoodsItem(){
+        $id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
+        if($id==0){
+            getItem($id);
+            return; 
+        }
+        $json = isset($_REQUEST['data']) && is_numeric($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        if(empty($json)){
+            $array=[
+                'Code'=>-1,
+                'msg'=>"data数据为空",
+            ];
+            return json_encode($array);
+        }
+        
+        $data=json_decode($json,true);
+        if(!$data || empty($data) || !is_array($data) || count($data)<=0){
+            $array=[
+                'Code'=>-1,
+                'msg'=>"data数据为空",
+            ];
+            return json_encode($array);
+        }
+        /* $array=[
+            'field'=>'reason',//reason  commentList  askeverybodyList
+            'id'=>'id',
+            'json'=>"",
+        ]; */
+        $array=['reason','commentList','askeverybodyList'];
+        if(!in_array($array, $data['field'])){
+            $array=[
+                'Code'=>-1,
+                'msg'=>"数据错误",
+            ];
+            return json_encode($array);
+        }
+        
+        $data=[
+            $data['field']=>$data['json'],
+        ];
+        $tableUtils=new \app\tableUtils\goodslistUtils();
+        $tableUtils->updateItem($id,  $data);
+        getItem($id);
+    }
     
 }
 

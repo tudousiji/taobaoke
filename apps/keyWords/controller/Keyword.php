@@ -46,6 +46,7 @@ class Keyword extends BaseController
         $this->assign('subKeyWords', $subKeyWords);
         $count = $KeyWords->getCount();
         $this->assign('page', page($page, $count));
+        $this->assign('count', $count*$this->keyConfig['keyWordPageSize']);
         $this->assign('keyWord', $keyWord['keyword']);
         return $this->fetch('list');
     }
