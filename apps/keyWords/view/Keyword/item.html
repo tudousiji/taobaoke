@@ -12,44 +12,42 @@
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base.css">
 <link rel="stylesheet" href="/public/static/image/item.css">
+<script src="/public/static/js/jquery-3.2.1.min.js"></script>
+<script src="/public/static/js/item.js"></script>
 </head>
+<script>
+var item={$item.itemId|urlIdcode=###,true};
+</script>
 <body>
 	<div class="container">
 		<!--[if lte IE 7 ]>
     <div id="J_BrowserUpdate" class="browser-update">
     </div>
     <![endif]-->
-		{include file="../../public/header" /} 
+		{include file="../../public/header" /}
 		<div class="main" id="D-main">
 			<div class="d-top">
 				<div class="d-top-container">
 					<div class="d-top-layer">
 						<div class="crumbs-items pull-left" id="M-crumbs">
 							<a class="crumbs-item crumbs-item-0"
-								href="https://miyu.qq.com/?ADTAG="><span>当前位置：</span><span
+								href="/"><span>当前位置：</span><span
 								class="crumbs-item-title">全部推荐</span></a> <a
 								class="crumbs-item crumbs-item-1"
-								href="https://miyu.qq.com/assets/god.html?cat=3&amp;ADTAG="
+								href="/goods/{$cate['id']}_1.html"
 								target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
-								class="crumbs-item-title">手机数码</span></a> <a
-								class="crumbs-item crumbs-item-2"
-								href="https://miyu.qq.com/assets/god.html?cat=3,3004&amp;ADTAG="
-								target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
-								class="crumbs-item-title">数码配件</span></a> <a
-								class="crumbs-item crumbs-item-3"
-								href="https://miyu.qq.com/assets/god.html?cat=3,3004,3004007&amp;ADTAG="
-								target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
-								class="crumbs-item-title">保护壳/套</span></a>
+								class="crumbs-item-title">{$cate['keyword']}</span></a>
 						</div>
 						<div class="d-top-layer-property pull-right">
-							<span class="mr-20">来源:{if $item.userType==0}淘宝{else}天猫{/if}</span> <span class="mr-20">更新时间:{$item.update_time|date="Y-m-d",###}</span>
+							<span class="mr-20">来源:{if
+								$item.userType==0}淘宝{else}天猫{/if}</span> <span class="mr-20">更新时间:{$item.update_time|date="Y-m-d",###}</span>
 							<span>浏览1次</span>
 						</div>
 					</div>
 					<div class="d-top-content">
-						<div class="d-top-content-left">
+						<div class="d-top-content-left item">
 							<div class="d-large-thumbnail">
-								<img src="{$item.pictUrl}">
+								<img src="{$taobao_img_url}{$item.pictUrl}">
 							</div>
 
 						</div>
@@ -58,7 +56,8 @@
 							<div class="d-goods-price">
 								<span
 									class="item-promotion-orgprice d-goods-price-origin mr-10 nowprice">现价:{$item.zkFinalPriceWap}元</span>
-								<span class=" d-goods-price-now mr-10 sold">已售:{if $item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件</span>
+								<span class=" d-goods-price-now mr-10 sold">已售:{if
+									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件</span>
 								<!-- <span
 									class="item-promotion-discount d-goods-price-discount mr-10"
 									style="margin-right: 0px;">3.5折</span> <span
@@ -71,8 +70,7 @@
 								<span class=" d-goods-price-now mr-10 sold">已领取:{$item.couponSendCount}</span>
 							</div>
 							<div class="d-goods-price">
-								 <span
-									class=" d-goods-price-now mr-10 sold">卖家:{$item.nick}</span>
+								<span class=" d-goods-price-now mr-10 sold">卖家:{$item.nick}</span>
 							</div>
 							<div class="d-goods-price">
 								<span class="d-goods-price-now mr-10 sold">优惠券使用时间:{$item.couponEffectiveStartTime|date="Y-m-d",###}~{$item.couponEffectiveEndTime|date="Y-m-d",###}</span>
@@ -86,14 +84,12 @@
 
 							</div>
 
-							<a class="d-goods-redirect-link"
-								href="https://item.jd.com/10659967038.html#crumb-wrap"
-								target="_blank" isconvert="1"
-								onclick="">领取内部优惠券</a>
-							<a class="d-goods-redirect-link-2"
-								href="https://item.jd.com/10659967038.html#crumb-wrap"
-								target="_blank" isconvert="1"
-								onclick="">直达商品链接</a>
+							<a class="d-goods-redirect-link item"
+								
+								target="_blank" isconvert="1">领取内部优惠券</a> <a
+								class="d-goods-redirect-link-2 item"
+								
+								target="_blank" isconvert="1">直达商品链接</a>
 
 							<div class="statement">
 								<p style="color: #999;">声明：商品的价格与折扣仅供参考，信息可能根据时间变化，商家调整而过期。敬请理解</p>
@@ -127,6 +123,50 @@
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
 							<div class="section-title pull-left">图文评价</div>
+							<a class="section-more pull-right item"
+								target="_blank" isconvert="1">更多评价&gt;</a>
+							<div class="clearfix"></div>
+						</div>
+
+
+						{if condition="isset($commentData) && is_array($commentData) &&
+						count($commentData)>0"} {foreach $commentData.data as $vo}
+
+						<div class="d-comment-items">
+							<div class="d-comment-item">
+								<div class="d-comment-item-top">
+									<div class="d-comment-nickname pull-left">{$vo.displayUserNick}</div>
+									<div class="d-comment-time pull-left">{$vo.rateDate}</div>
+									<div class="d-comment-time pull-left">{$vo.auctionSku}</div>
+								</div>
+								<div class="d-comment-content">{$vo.rateContent}</div>
+								{if isset($vo.pics) && is_array($vo.pics) &&
+										count($vo.pics)>0} 
+								<div class="d-comment-pictures">
+									<ul class="d-comment-pictures-items">
+										{foreach $vo.pics as $pic}
+										<li><img src="{$taobao_img_url}{$pic}_50x50"
+											large-src="{$taobao_img_url}{$pic}_50x50"> 
+											<div class="d-comment-pictures-items-arrow-down"></div></li>
+										{/foreach}
+										<div class="fnClear"></div>
+									</ul>
+						
+								</div>
+								
+							{/if}
+							</div>
+						</div>
+						{/foreach} 
+						{/if}
+					</div>
+
+
+
+					<div
+						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
+						<div class="d-comment-title border-bottom-e5">
+							<div class="section-title pull-left">大家说</div>
 							<a class="section-more pull-right"
 								href="https://item.jd.com/10659967038.html#crumb-wrap#comment"
 								target="_blank" isconvert="1">更多评价&gt;</a>
@@ -158,42 +198,9 @@
 							</div>
 						</div>
 					</div>
-					
-					
-					
-					<div class="d-comment color-bg-white mt-15 featurenums-section-top-color">
-						<div class="d-comment-title border-bottom-e5">
-							<div class="section-title pull-left">大家说</div>
-							<a class="section-more pull-right" href="https://item.jd.com/10659967038.html#crumb-wrap#comment" target="_blank" isconvert="1">更多评价&gt;</a>
-							<div class="clearfix"></div>
-						</div>
-						<div class="d-comment-items">
-							<div class="d-comment-item">
-								<div class="d-comment-item-top">
-									<div class="d-comment-nickname pull-left">jd_卜经意间</div>
-									<div class="d-comment-time pull-left">2017-08-29 17:37:57</div>
-								</div>
-								<div class="d-comment-content">上午下的单下午就送到了，物流超快，安装上去，手感不错，下次接着光顾</div>
-								<div class="d-comment-pictures">
-									<ul class="d-comment-pictures-items">
-										<li class="active"><img src="/public/static/image/59a535f5N71fa4d8c_002.jpg" large-src="//img30.360buyimg.com/n1/s760x500_jfs/t8131/14/293637043/271876/b31063ca/59a535f5N71fa4d8c.jpg">
-											<div class="d-comment-pictures-items-arrow-down"></div></li>
-										<div class="fnClear"></div>
-									</ul>
-									<div class="d-comment-picture-large">
-										<div class="d-comment-picture-large-container1">
-											<div class="d-comment-picture-large-container2">
-												<img src="/public/static/image/59a535f5N71fa4d8c.jpg">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					
-					
+
+
+
 				</div>
 				<div class="d-bottom-right">
 					<div class="feature-sidebar">
@@ -215,7 +222,7 @@
 			</div>
 		</div>
 	</div>
-	{include file="../../public/footer" /} 
+	{include file="../../public/footer" /}
 
 
 </body>

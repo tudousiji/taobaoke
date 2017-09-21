@@ -12,6 +12,8 @@
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base.css">
 <link rel="stylesheet" href="/public/static/image/result.css">
+<script src="/public/static/js/jquery-3.2.1.min.js"></script>
+<script src="/public/static/js/goods_list.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -50,11 +52,11 @@
 							{if is_array($list)}
 								{foreach $list as $vo}
 
-								<div class="feature-items-tr">
+								<div class="feature-items-tr item" itemId="{$vo.nid|urlIdcode=###,true}">
 									<div class="feature-items-td" index="0">
 										<a target="_blank"
-											href="/goods/{$vo.nid|urlIdcode=###,true}.html"
-											data-hottag="mmm.result.info.740999" isconvert="1" onclick=""><img
+											href="/goods/{$vo.nid|urlIdcode=###,true}.html"  itemId="{$vo.nid|urlIdcode=###,true}"
+											><img
 											src="{$vo.title}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
@@ -64,10 +66,9 @@
 											<div class="
 											feature-items-td" index="1">
 											<div class="item_title">
-												 <a target="_blank"
+												 <a target="_blank"  itemId="{$vo.nid|urlIdcode=###,true}"
 													href="/goods/{$vo.nid|urlIdcode=###,true}.html"
-													data-hottag="mmm.result.info.740999" isconvert="1"
-													onclick="" title="{$vo.title}">{$vo.title}</a>
+													 title="{$vo.title}">{$vo.title}</a>
 											</div>
 
 										</div>
@@ -81,7 +82,7 @@
 										<div class="feature-items-td" index="4">现价:{$vo.zkFinalPriceWap}元</div>
 										<div class="feature-items-td" index="5">
 											<div class="feature-items-td5-container">
-												<span class="inline-block">领取内部优惠券</span>
+												<span class="inline-block item"  itemId="{$vo.nid|urlIdcode=###,true}">领取内部优惠券</span>
 
 											</div>
 										</div>
@@ -115,15 +116,15 @@
 							<ul class="pagination" id="R-pagination">
 								{if $page.startPage!=$page.nowPage}
 								<li class="prev disabled"><a
-									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&lt;</a></li>
+									href="/goods/{$keyword_id}_{$page.startPage}.html">&lt;</a></li>
 								{/if}
 								{foreach name="page.page" item="vo" }
 								<li class="page {if $vo==$page.nowPage} active {/if}"><a
-									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">{$vo}</a></li>
+									href="/goods/{$keyword_id}_{$vo}.html">{$vo}</a></li>
 								{/foreach}
 								{if $page.endPage!=$page.pageCount}
 								<li class="next"><a
-									href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F#">&gt;</a></li>
+									href="/goods/{$keyword_id}_{$page.pageCount}.html">&gt;</a></li>
 								{/if}
 							</ul>
 						</div>

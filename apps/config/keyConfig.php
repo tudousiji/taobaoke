@@ -11,6 +11,7 @@ return [
     'keyWordCollectionPageSize'=>500,//默认
     'taobaoke_keyword' => 'http://api.m.taobao.com/h5/mtop.alimama.ertao.graphql.query/1.0/?appKey=12574478&t=%s&sign=%s&api=mtop.alimama.ertao.graphql.query&v=1.0&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data=',
     'taobaoke_keyword_data' => '{"query":"query auctionQuery($condition: LunaCondition) {auctionList(condition: $condition) {pageInfo {totalCount}auctions {nid title zkFinalPriceWap biz30Day couponEffectiveStartTime provcity nick couponEffectiveEndTime couponStartFee clickUrl shareUrl pictUrl couponKey couponAmount couponSendCount couponTotalCount userType}}}","variables":"{\"condition\":{\"q\":\"%s\",\"offset\":%s,\"count\":%s,\"complement\":false,\"pid\":\"%s\",\"searchMap\":{\"price\":\"0~\",\"summaryfields\":\"npx_score,coupon,tk_mkt_activity_id,tk_mkt_rates,MAX_tk_event_eids,MAX_tk_event_creator_ids\",\"src_scene\":\"\",\"querytype\":\"couponlist\",\"distfield\":\"\"},\"serviceList\":[\"dpyhq\"]},\"bizEnvVars\":{\"pid\":\"%s\",\"st\":\"\"}}"}',
+    'taobao_img_url'=>'https://img.alicdn.com/',
     // 'is_open_page'=>false,
     //  新加字段 couponEffectiveStartTime provcity nick couponEffectiveEndTime 
     'baiDuWordPos'=>"http://www.xiaoqiwen.cn/api/baidukw.php?kw=%s",//百度分词获取地址
@@ -18,10 +19,10 @@ return [
     //'comment_list' =>'https://rate.taobao.com/feedRateList.htm?auctionNumId=%s&userNumId=3089150000&currentPageNum=%s&pageSize=%s&rateType=&orderType=sort_weight&attribute=&sku=&hasSku=true&folded=0&callback=jsonp_tbcrate_reviews_list',//评论
    // 'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s',
     'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s&callback=jsonp_tbcrate_reviews_list',
-    'comment_list_cache_time'=>0,//-1是永久不更新
+    'comment_list_cache_time'=>-1,//-1是永久不更新
     'askEverybody_list' =>''  ,//问大家
     'reason_list'=>'https://rate.taobao.com/detailCommon.htm?auctionNumId=%s&userNumId=123&callback=json_tbc_rate_summary',
-    'reason_list_cache_time'=>0,//-1是永久不更新
+    'reason_list_cache_time'=>-1,//-1是永久不更新
     //https://rate.taobao.com/detailCommon.htm?auctionNumId=13654813327&userNumId=721822968&ua=090%23qCQXoXXqXqwX2Ti0XXXXXQkOIHplk0GhflnoIeGXAGBpfHQbcYRtGw13OHRYHaLiXXB%2B0ydC24QX%2FXXxhejwBHdvXOjvwSB9I1VX43oJ3vQXiPR22a4tXvXQ0ZsNLKQiXi8mLdxXNb2FZeUd2%2FlYOIlrZ1RLytEh9CUxH4QXa%2FY9%2BWO3id1UPvQXiJ%2BvQBiCxkLiXaHPsiLNwqi5vLjlQSuvwud6m6vBDKavKLNPsi%2FBwqi82LjlQDuvwuDskvQXisty2Jq95T%3D%3D&callback=json_tbc_rate_summary 好评中评差评的个数等
     //https://api.m.taobao.com/h5/mtop.taobao.ocean.quest.detail.pc/1.0/?appKey=12574478&t=1505815380288&sign=3ec6baef3c8889c74380d3422fdeb657&api=mtop.taobao.ocean.quest.detail.pc&v=1.0&type=jsonp&dataType=jsonp&callback=mtopjsonp3&data=%7B%22topicId%22%3A%2290207620086%22%7D 问大家
 ];

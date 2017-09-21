@@ -86,9 +86,7 @@ function page($nowPage=1,$pageSize=20){
     if($nowPage<=$pageSize-5){
         $endPage=$nowPage+5;
     }
-    /* var_dump($startPage);
-    var_dump($endPage); */
-    
+   
     $arr=[];
     $index=0;
     for($i=$startPage;$i<=$endPage;$i++){

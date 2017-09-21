@@ -15,8 +15,12 @@ class keywordsUtils{
          return Db::table(TableUtils::getTableDetails('keywords'))->where(
             TableUtils::getTableDetails('keywords', 'id'), $id)
             ->setField($data);
-            
-        
+    }
+    
+    public static function getidForKeyword($id){
+        return Db::table(TableUtils::getTableDetails('keywords'))->where(
+            TableUtils::getTableDetails('keywords', 'id'), $id)
+            ->find();
     }
 }
 ?>

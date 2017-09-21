@@ -42,6 +42,7 @@ class Keyword extends BaseController
             $subKeyWords = $keyWord['keyword'];
         }
         
+        $this->assign('keyword_id', $keyword_id);
         $this->assign('subKeyWords', $subKeyWords);
         $count = $KeyWords->getCount();
         $this->assign('page', page($page, $count));
@@ -55,14 +56,22 @@ class Keyword extends BaseController
         $KeyWords = new KeyWords();
         $item = $KeyWords->getGoodsItems($itemId);
         
+        
+        $cate = $KeyWords->getIdForKeywords($item['keyword_id']);
+        $this->assign('cate', $cate);
+        
+        
         $reasonData=null;
         if ( ($this->keyConfig['reason_list_cache_time'] != - 1)) {
             if(empty($item['reason'])){
+                //var_dump("stmp 1");
                 $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
             }else{
+                //var_dump("stmp 2");
                 $array = json_decode($item['reason'],true);
-                var_dump(( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) );
+                //var_dump(( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) );
                 if (!$array || !isset($array['time']) ||  ( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) ) {
+                    //var_dump("stmp 3");
                     $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
                 }
             }
@@ -86,14 +95,14 @@ class Keyword extends BaseController
         }else{
             $commentData =json_decode( $item['commentList'],true);
         }
-       
-       
-        $this->assign('commentList', $commentData);
+        //var_dump($commentData);
+        //var_dump(isset($commentData) && is_array($commentData) && count($commentData)>0);
+        $this->assign('commentData', $commentData);
         
-        
+        //var_dump($reasonData);
         if(!empty($reasonData) && is_array($reasonData) && count($reasonData)>0){
-            $reasonList=json_decode( $reasonData['data'],true);
-            
+            $reasonList= $reasonData['data'];
+            //var_dump($reasonList);
             if(!empty($reasonList) && is_array($reasonList) && count($reasonList)>0){
                 $reason="只要".($item['zkFinalPriceWap']-$item['couponAmount']/100)."元超划算,大家觉得";
                 for($i=0;$i<count($reasonList);$i++){
@@ -106,7 +115,7 @@ class Keyword extends BaseController
                     
                 };
                 if(!empty($commentData) && is_array($commentData) && count($commentData)>0){
-                    $commentList=json_decode($commentData['data'],true);
+                    $commentList=$commentData['data'];
                     
                     if(!empty($commentList) && is_array($commentList) && count($commentList)>0){
                         $reason.="最近大家发表的评论觉得此宝贝:".$commentList[0]['rateContent'];
@@ -179,6 +188,38 @@ class Keyword extends BaseController
             // $this->assign('myTime','1499097600');
             
             return $this->fetch('list');
+        }
+        
+    }
+    
+    
+    //js获取url并跳转
+    public function getItemUrl(){
+        $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) && is_numeric($_REQUEST['itemId']) ? urlIdcode($_REQUEST['itemId'], false) : "";
+        if(empty($itemId)){
+            $array=[
+                'code'=>-1,
+                'msg'=>"itemId错误",
+            ];
+            echo json_encode($array);
+            return ;
+        }
+        
+        $keywords = new KeyWords();
+        $item = $keywords->getItemUrl($itemId);
+        if($item!=null){
+            $array=[
+                'code'=>0,
+                'msg'=>"成功",
+                'url'=>!empty($item['shareUrl'])?$item['shareUrl']:$item['clickUrl'],
+            ];
+            echo json_encode($array);
+        }else{
+            $array=[
+                'code'=>-1,
+                'msg'=>"没有查到此id数据",
+            ];
+            echo json_encode($array);
         }
         
     }

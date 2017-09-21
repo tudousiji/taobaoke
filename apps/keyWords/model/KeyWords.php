@@ -304,7 +304,7 @@ class KeyWords extends BaseModel
         $url=sprintf($this->keyConfig['reason_list'],$itemId) ;
         $parameter = [
             'isHttps' => true,
-            'is_proxy' => true,
+            //'is_proxy' => true,
         ];
         
         $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
@@ -321,12 +321,13 @@ class KeyWords extends BaseModel
                 &&!empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress'])>0 ){
                     $array=[
                         'time'=>time(),
-                        'data'=>json_encode($jsonObj['data']['impress']),
+                        'data'=>$jsonObj['data']['impress'],
                     ];
+                    $arrayjson=json_encode($array);
                     $data=[
-                        'reason'=>json_encode($array)
+                        'reason'=>$arrayjson,
                     ];
-                    
+                    //var_dump($arrayjson);
                     $tableUtils =new \app\tableUtils\goodslistUtils();
                     $status = $tableUtils->updateReasonList($data, $id);
                     return $array;
@@ -365,10 +366,11 @@ class KeyWords extends BaseModel
                ){
                     $array=[
                         'time'=>time(),
-                        'data'=>json_encode($jsonObj['rateDetail']['rateList'])
+                        'data'=>$jsonObj['rateDetail']['rateList']
                     ];
+                    $arrayjson=json_encode($array);
                     $data=[
-                        'commentList'=>json_encode($array),
+                        'commentList'=>$arrayjson,
                     ];
                     $tableUtils =new \app\tableUtils\goodslistUtils();
                     $status = $tableUtils->updateCommentList($data, $id);
@@ -381,6 +383,12 @@ class KeyWords extends BaseModel
         } else{
             return array();
         };
+    }
+    
+    
+    public function getItemUrl($itemId){
+        $tableUtils =new \app\tableUtils\goodslistUtils();
+        return $tableUtils->getItem($itemId);
     }
     
 }
