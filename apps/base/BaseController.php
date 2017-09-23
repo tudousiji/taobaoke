@@ -18,6 +18,14 @@ class BaseController extends \think\Controller
         $this->assign("description",$this->keyConfig['description']);
         $this->assign("keyWords",$this->keyConfig['keyWords']); 
         $this->assign("taobao_img_url",$this->keyConfig['taobao_img_url']);
+        
+        $this->indexCate();
+    }
+    
+    private function indexCate(){
+        $tableUtils = new \app\tableUtils\indexcateUtils();
+        $list = $tableUtils->getAll();
+        $this->assign("indexCate",$list);
     }
 }
 

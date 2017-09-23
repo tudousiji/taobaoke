@@ -25,12 +25,25 @@ return [
         ]
     ],
     
+    //
+    'index_cate'=>[
+        'table_name'=>'index_cate',
+        'table_field'=>[
+            'id'=>'id',
+            'cate_name'=>'cate_name',
+            'url'=>'url',
+            'status'=>'status',
+            'type'=>'type',
+        ]
+    ],
+    
     'goods_list' => [
         'table_name' => 'goods_list',
         'table_field' => [
             'id' => 'id',
             'keyword_id' => 'keyword_id',
             'title' => 'title',
+            'keyWords'=>'keyWords',
             'itemId' => 'itemId',
             'zkFinalPriceWap' => 'zkFinalPriceWap',
             'biz30Day' => 'biz30Day',

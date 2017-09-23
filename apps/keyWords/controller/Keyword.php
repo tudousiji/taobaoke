@@ -127,6 +127,25 @@ class Keyword extends BaseController
             }
             
         }
+        /*
+        $titleKeyWords=array();
+        if(empty($item['keyWords'])){
+            $titleKeyWords = $KeyWords->getBaiDuPos($item['title']);
+        }else{
+            $titleKeyWords =json_decode( $item['keyWords'],true);
+        }
+        $keyWordsCount=count($titleKeyWords);
+        if($keyWordsCount>0){
+            $itemKeyWords="";
+            for($i=0;$i<$keyWordsCount;$i++){
+                $itemKeyWords.=$keyWordsCount[$i];
+                if($i<($keyWordsCount-1)){
+                    $itemKeyWords.=",";
+                }
+            }
+            $this->assign('itemKeyWords', $itemKeyWords);
+        }
+        */
         
         // $this->assign('askeverybodyList',$askeverybodyList);
         $this->assign('item', $item);

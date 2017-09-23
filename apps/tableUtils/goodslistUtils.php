@@ -39,6 +39,13 @@ class goodslistUtils{
             TableUtils::getTableDetails('goods_list', 'id'), $id)
             ->setField($data);
     }
+    
+    //更新商品页面关键词
+    public function updateKeyword($id,$data){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
+            TableUtils::getTableDetails('goods_list', 'id'), $id)
+            ->setField($data);
+    }
 }
 
 ?>

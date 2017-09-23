@@ -55,7 +55,7 @@ class KeyWords extends BaseModel
         // where($this->table['keywords_details']['keyword_id'],$keyword_id)->
         find();
         
-        if ($keywords_details != null && !$this->isCollection) {
+        if ($keywords_details != null && ! $this->isCollection) {
             if ($keywords_details[TableUtils::getTableDetails('keywords_details', 'update_time')] + $this->keyConfig['cache_time'] < time()) {
                 
                 $json = $this->netData();
@@ -77,18 +77,18 @@ class KeyWords extends BaseModel
                 return $jsonObj['data']['data']['auctionList']['auctions'];
             }
             
-            return json_decode($keywords_details[TableUtils::getTableDetails('keywords_details', 'json')],true);
+            return json_decode($keywords_details[TableUtils::getTableDetails('keywords_details', 'json')], true);
         } else {
             $json = $this->netData();
             $jsonObj = json_decode($json, true);
             
             if ($jsonObj && isset($jsonObj['data']) && isset($jsonObj['data']['data']) && isset($jsonObj['data']['data']['auctionList']) && isset($jsonObj['data']['data']['auctionList']['auctions']) && is_array($jsonObj['data']) && is_array($jsonObj['data']['data']) && is_array($jsonObj['data']['data']['auctionList']) && is_array($jsonObj['data']['data']['auctionList']['auctions']) && count($jsonObj['data']) > 0 && count($jsonObj['data']['data']) > 0 && count($jsonObj['data']['data']['auctionList']) > 0 && count($jsonObj['data']['data']['auctionList']['auctions']) > 0) {
                 $insertjson = "";
-               
+                
                 if ($this->isCollection) {
                     
                     $num = $this->keyConfig['keyWordCollectionPageSize'] % $this->keyConfig['keyWordPageSize'] > 0 ? ($this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize']) + 1 : $this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize'];
-                    $size =count( $jsonObj['data']['data']['auctionList']['auctions']);
+                    $size = count($jsonObj['data']['data']['auctionList']['auctions']);
                     
                     $m = 0;
                     for ($j = 0; $j < $num; $j ++) {
@@ -102,10 +102,8 @@ class KeyWords extends BaseModel
                             }
                         }
                         
-                        $page=( ($this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize']) * $this->page 
-                            - ($this->keyConfig['keyWordCollectionPageSize']/$this->keyConfig['keyWordPageSize']))  +1+ $j;
+                        $page = (($this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize']) * $this->page - ($this->keyConfig['keyWordCollectionPageSize'] / $this->keyConfig['keyWordPageSize'])) + 1 + $j;
                         
-                       
                         $data = [
                             TableUtils::getTableDetails('keywords_details', 'keyword_id') => $keyword_id,
                             TableUtils::getTableDetails('keywords_details', 'json') => json_encode($arr),
@@ -115,13 +113,13 @@ class KeyWords extends BaseModel
                         ];
                         
                         $isUpdate = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
-                        ->where(TableUtils::getTableDetails('keywords_details', 'page'), ($page))
-                        ->where(TableUtils::getTableDetails('keywords_details','keyword_id'),$keyword_id)->
-                        find();
+                            ->where(TableUtils::getTableDetails('keywords_details', 'page'), ($page))
+                            ->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
+                            ->find();
                         if ($isUpdate == null) {
                             Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
                         } else {
-                            //var_dump($data);
+                            // var_dump($data);
                             Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'id'), $isUpdate[TableUtils::getTableDetails('keywords_details', 'id')])->update($data);
                         }
                         unset($arr);
@@ -171,7 +169,7 @@ class KeyWords extends BaseModel
             'isTbk' => true,
             'is_proxy' => true,
             'taobaoke_keyword' => $taobaoke_keyword,
-            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, ($this->page-1) * $handlePageSize, $handlePageSize, $key['pid'], $key['pid'])
+            'taobaoke_keyword_data' => sprintf($taobaoke_keyword_data, $this->keyWords, ($this->page - 1) * $handlePageSize, $handlePageSize, $key['pid'], $key['pid'])
         ];
         
         $aa = \app\utils\NetUtils::curlData('GET', '', $parameter);
@@ -202,8 +200,8 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'couponSendCount') => $item['couponSendCount'],
                 TableUtils::getTableDetails('goods_list', 'couponTotalCount') => $item['couponTotalCount'],
                 
-                TableUtils::getTableDetails('goods_list', 'couponEffectiveStartTime') => strlen($item['couponEffectiveStartTime'])>11? $item['couponEffectiveStartTime']/1000:$item['couponEffectiveStartTime'],
-                TableUtils::getTableDetails('goods_list', 'couponEffectiveEndTime') => strlen($item['couponEffectiveEndTime'])>11?$item['couponEffectiveEndTime']/1000:$item['c:ouponEffectiveEndTime'],
+                TableUtils::getTableDetails('goods_list', 'couponEffectiveStartTime') => strlen($item['couponEffectiveStartTime']) > 11 ? $item['couponEffectiveStartTime'] / 1000 : $item['couponEffectiveStartTime'],
+                TableUtils::getTableDetails('goods_list', 'couponEffectiveEndTime') => strlen($item['couponEffectiveEndTime']) > 11 ? $item['couponEffectiveEndTime'] / 1000 : $item['c:ouponEffectiveEndTime'],
                 TableUtils::getTableDetails('goods_list', 'provcity') => $item['provcity'],
                 TableUtils::getTableDetails('goods_list', 'nick') => $item['nick'],
                 
@@ -227,7 +225,7 @@ class KeyWords extends BaseModel
     public function getList($keyword_id, $page = 1)
     {
         $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details'))->where(TableUtils::getTableDetails('keywords_details', 'keyword_id'), $keyword_id)
-        ->where(TableUtils::getTableDetails('keywords_details', 'page'), $page)
+            ->where(TableUtils::getTableDetails('keywords_details', 'page'), $page)
             ->find();
         return $keywords_details;
     }
@@ -237,160 +235,251 @@ class KeyWords extends BaseModel
         $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->find();
         return $keywords_details;
     }
-    
-    public function getCount(){
-       $count = Db::table(TableUtils::getTableDetails('keywords_details'))->count();
-       return $count;
+
+    public function getCount()
+    {
+        $count = Db::table(TableUtils::getTableDetails('keywords_details'))->count();
+        return $count;
     }
-    
-    
-    public function getIdForKeywords($keyword_id){
-        $data = Db::table(TableUtils::getTableDetails('keywords'))->
-        where(TableUtils::getTableDetails('keywords','id'),$keyword_id)
-        ->find();
+
+    public function getIdForKeywords($keyword_id)
+    {
+        $data = Db::table(TableUtils::getTableDetails('keywords'))->where(TableUtils::getTableDetails('keywords', 'id'), $keyword_id)->find();
         return $data;
     }
-    
-    
-    //根据关键词获取更多关键词
-    public function getSubKeyWords($keyWords,$id){
-        if(empty($keyWords) || empty($id) || !is_numeric($id)){
-            return ;
+
+    // 百度分词
+    public function getBaiDuPos($title, $id)
+    {
+        if (empty($title)) {
+            return;
         }
         
-        $url=sprintf($this->keyConfig['taoBaoKeyWords'],$keyWords) ;
+        $url = sprintf($this->keyConfig['baiDuWordPos'], $title);
+        // echo $url;
+        $parameter = [
+            'isHttps' => false,
+            // 'is_proxy' => true,
+            'header_type' => 1
+        ];
+        
+        $json = \app\utils\NetUtils::curlDataTest($url);
+        if (! empty($json)) {
+            $jsonOb = json_decode($json, true);
+            if ($jsonOb && $jsonOb != null && isset($jsonOb['keyword_list']) && ! empty($jsonOb['keyword_list']) && is_array($jsonOb['keyword_list']) && count($jsonOb['keyword_list']) > 0) {
+                $array = $jsonOb['keyword_list'];
+                if (isset($jsonOb['wordrank']) && ! empty($jsonOb['wordrank']) && is_array($jsonOb['wordrank']) && count($jsonOb['wordrank']) > 0) {
+                    $wordrank = [[]];
+                    $count = count($wordrank);
+                    for ($i = 0; $i < count; $i ++) {
+                        $key = str_split($jsonOb['wordrank'], ":");
+                        if (isChinese($key[0]) || strlen($key[0]) > 4) { // 包含汉子或者数字加上字符大于4
+                            $wordrank[$i][0] = $key[0];
+                            $wordrank[$i][1] = $key[1];
+                        }
+                    }
+                    $countnew = count($wordrank);
+                    if ($countnew > 0) {
+                        $wordranknew = array_sort($wordrank, $wordrank[1], "desc");
+                        
+                        if ($wordranknew <= 3) {
+                            array_push($array, $wordranknew);
+                        } else {
+                            $randCount = rand(2, 4);
+                            for ($i = 0; $i < $randCount; $i ++) {
+                                $randKey = rand(0, count($wordranknew));
+                                array_push($array, $wordranknew[$randKey][0]);
+                                unset($wordranknew[$randKey]);
+                            }
+                        }
+                    }
+                }
+                if (count($array) > 0) {
+                    $data = [
+                        'keyWords' => json_encode($array)
+                    ];
+                    $tableUtils = new \app\tableUtils\goodslistUtils();
+                    $status = $tableUtils->updateKeyword($id, $data);
+                }
+                
+                return $array;
+            } else {
+                return array();
+            }
+        } else {
+            return array();
+        }
+    }
+
+    public function isChinese($str)
+    {
+        if (preg_match("/[\x7f-\xff]/", $str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // $array 要排序的数组
+    // $row 排序依据列
+    // $type 排序类型[asc or desc]
+    // return 排好序的数组
+    function array_sort($array, $row, $type)
+    {
+        $array_temp = array();
+        foreach ($array as $v) {
+            $array_temp[$v[$row]] = $v;
+        }
+        if ($type == 'asc') {
+            ksort($array_temp);
+        } elseif ($type == 'desc') {
+            krsort($array_temp);
+        } else {}
+        return $array_temp;
+    }
+
+    // 根据关键词获取更多关键词
+    public function getSubKeyWords($keyWords, $id)
+    {
+        if (empty($keyWords) || empty($id) || ! is_numeric($id)) {
+            return;
+        }
+        
+        $url = sprintf($this->keyConfig['taoBaoKeyWords'], $keyWords);
         $parameter = [
             'isHttps' => true,
-            'is_proxy' => true,
+            'is_proxy' => true
         ];
         
         $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
         
-        if(!empty($json['body'])){
-            $jsonObj=json_decode($json['body'],true);
+        if (! empty($json['body'])) {
+            $jsonObj = json_decode($json['body'], true);
             
-            if(!empty($jsonObj) &&!empty($jsonObj['result']) && is_array($jsonObj['result']) && count($jsonObj['result'])>0 ){
-                $data=[
-                    'subKeyWords'=>json_encode($jsonObj['result'])
+            if (! empty($jsonObj) && ! empty($jsonObj['result']) && is_array($jsonObj['result']) && count($jsonObj['result']) > 0) {
+                $data = [
+                    'subKeyWords' => json_encode($jsonObj['result'])
                 ];
-                $tableUtils =new \app\tableUtils\keywordsUtils();
+                $tableUtils = new \app\tableUtils\keywordsUtils();
                 $status = $tableUtils->updateKeyword($data, $id);
-                //var_dump("请求网络");
+                // var_dump("请求网络");
                 return $jsonObj['result'];
-            }else{
+            } else {
                 return array();
             }
-        } else{
+        } else {
             return array();
-        };
+        }
+        ;
     }
-    
-    //问大家
-    public function getAskeverybodyList($itemId,$id){
-        $url=sprintf($this->keyConfig['askEverybody_list'],$itemId) ;
+
+    // 问大家
+    public function getAskeverybodyList($itemId, $id)
+    {
+        $url = sprintf($this->keyConfig['askEverybody_list'], $itemId);
         $parameter = [
             'isHttps' => true,
-            'is_proxy' => true,
+            'is_proxy' => true
+        ];
+        
+        $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
+    }
+
+    // 推荐理由
+    public function getReasonList($itemId, $id)
+    {
+        $url = sprintf($this->keyConfig['reason_list'], $itemId);
+        $parameter = [
+            'isHttps' => true
+            // 'is_proxy' => true,
         ];
         
         $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
         
-        
-    }
-    
-    
-    //推荐理由
-    public function getReasonList($itemId,$id){
-        $url=sprintf($this->keyConfig['reason_list'],$itemId) ;
-        $parameter = [
-            'isHttps' => true,
-            //'is_proxy' => true,
-        ];
-        
-        $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
-        
-        if(!empty($json['body'])){
-            $AskeverybodyListArrayJson= trim(mb_convert_encoding($json['body'], "UTF-8","GBK" ));
-            if(stripos($AskeverybodyListArrayJson, "json_tbc_rate_summary(")>=0){
-                $AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("json_tbc_rate_summary("),strripos($AskeverybodyListArrayJson,")")-strlen("json_tbc_rate_summary("));
-            };
-            $jsonObj=json_decode($AskeverybodyListArrayJson,true);
-            //print_r($json['body']);
-           
-            if(!empty($jsonObj) &&!empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data'])>0
-                &&!empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress'])>0 ){
-                    $array=[
-                        'time'=>time(),
-                        'data'=>$jsonObj['data']['impress'],
-                    ];
-                    $arrayjson=json_encode($array);
-                    $data=[
-                        'reason'=>$arrayjson,
-                    ];
-                    //var_dump($arrayjson);
-                    $tableUtils =new \app\tableUtils\goodslistUtils();
-                    $status = $tableUtils->updateReasonList($data, $id);
-                    return $array;
-            }else{
+        if (! empty($json['body'])) {
+            $AskeverybodyListArrayJson = trim(mb_convert_encoding($json['body'], "UTF-8", "GBK"));
+            if (stripos($AskeverybodyListArrayJson, "json_tbc_rate_summary(") >= 0) {
+                $AskeverybodyListArrayJson = substr($AskeverybodyListArrayJson, strlen("json_tbc_rate_summary("), strripos($AskeverybodyListArrayJson, ")") - strlen("json_tbc_rate_summary("));
+            }
+            ;
+            $jsonObj = json_decode($AskeverybodyListArrayJson, true);
+            // print_r($json['body']);
+            
+            if (! empty($jsonObj) && ! empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data']) > 0 && ! empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress']) > 0) {
+                $array = [
+                    'time' => time(),
+                    'data' => $jsonObj['data']['impress']
+                ];
+                $arrayjson = json_encode($array);
+                $data = [
+                    'reason' => $arrayjson
+                ];
+                // var_dump($arrayjson);
+                $tableUtils = new \app\tableUtils\goodslistUtils();
+                $status = $tableUtils->updateReasonList($data, $id);
+                return $array;
+            } else {
                 return array();
             }
-        } else{
+        } else {
             return array();
-        };
+        }
+        ;
     }
-    
-    //评论
-    public function getCommentList($itemId,$id,$page=1){
-        //$url=sprintf($this->keyConfig['comment_list'],$itemId,$page) ;
-        //$url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&currentPage=1";
-        //$url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&Page=1";
-        $url=sprintf($this->keyConfig['comment_list'],$itemId,$page) ;
+
+    // 评论
+    public function getCommentList($itemId, $id, $page = 1)
+    {
+        // $url=sprintf($this->keyConfig['comment_list'],$itemId,$page) ;
+        // $url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&currentPage=1";
+        // $url="https://rate.tmall.com/list_detail_rate.htm?itemId=41464129793&sellerId=123&Page=1";
+        $url = sprintf($this->keyConfig['comment_list'], $itemId, $page);
         $parameter = [
             'isHttps' => true,
             'is_proxy' => false,
-            'header_type' => 1,
+            'header_type' => 1
         ];
         
-        //$json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
-        $json =  \app\utils\NetUtils::getData($url);
+        // $json = \app\utils\NetUtils::curlData('GET', $url, $parameter);
+        $json = \app\utils\NetUtils::getData($url);
         
-        if(!empty($json)){
+        if (! empty($json)) {
             
-            $AskeverybodyListArrayJson= trim(mb_convert_encoding($json, "UTF-8","GBK" ));
-            if(stripos($AskeverybodyListArrayJson, "jsonp_tbcrate_reviews_list(")>=0){
-                $AskeverybodyListArrayJson=substr($AskeverybodyListArrayJson, strlen("jsonp_tbcrate_reviews_list("),strripos($AskeverybodyListArrayJson,")")-strlen("jsonp_tbcrate_reviews_list("));
-            };
-            $jsonObj=json_decode($AskeverybodyListArrayJson,true);
+            $AskeverybodyListArrayJson = trim(mb_convert_encoding($json, "UTF-8", "GBK"));
+            if (stripos($AskeverybodyListArrayJson, "jsonp_tbcrate_reviews_list(") >= 0) {
+                $AskeverybodyListArrayJson = substr($AskeverybodyListArrayJson, strlen("jsonp_tbcrate_reviews_list("), strripos($AskeverybodyListArrayJson, ")") - strlen("jsonp_tbcrate_reviews_list("));
+            }
+            ;
+            $jsonObj = json_decode($AskeverybodyListArrayJson, true);
             
-            if(!empty($jsonObj) &&!empty($jsonObj['rateDetail']) && is_array($jsonObj['rateDetail']['rateList']) && count($jsonObj['rateDetail']['rateList'])>0
-               ){
-                    $array=[
-                        'time'=>time(),
-                        'data'=>$jsonObj['rateDetail']['rateList']
-                    ];
-                    $arrayjson=json_encode($array);
-                    $data=[
-                        'commentList'=>$arrayjson,
-                    ];
-                    $tableUtils =new \app\tableUtils\goodslistUtils();
-                    $status = $tableUtils->updateCommentList($data, $id);
-                    //var_dump($status);
-                    //var_dump("请求网络");
-                    return $array;
-            }else{
+            if (! empty($jsonObj) && ! empty($jsonObj['rateDetail']) && is_array($jsonObj['rateDetail']['rateList']) && count($jsonObj['rateDetail']['rateList']) > 0) {
+                $array = [
+                    'time' => time(),
+                    'data' => $jsonObj['rateDetail']['rateList']
+                ];
+                $arrayjson = json_encode($array);
+                $data = [
+                    'commentList' => $arrayjson
+                ];
+                $tableUtils = new \app\tableUtils\goodslistUtils();
+                $status = $tableUtils->updateCommentList($data, $id);
+                // var_dump($status);
+                // var_dump("请求网络");
+                return $array;
+            } else {
                 return array();
             }
-        } else{
+        } else {
             return array();
-        };
+        }
+        ;
     }
-    
-    
-    public function getItemUrl($itemId){
-        $tableUtils =new \app\tableUtils\goodslistUtils();
+
+    public function getItemUrl($itemId)
+    {
+        $tableUtils = new \app\tableUtils\goodslistUtils();
         return $tableUtils->getItem($itemId);
     }
-    
 }
 
 ?>

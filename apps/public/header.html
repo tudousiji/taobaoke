@@ -60,15 +60,15 @@
 			<div class="navbar-section" id="header-navbar">
 				<div class="main">
 					<div class="navbar-items">
-						<a class="navbar-item" href="https://miyu.qq.com/?ADTAG=">下载觅鱼优惠券</a>
-						<a class="navbar-item active"
-							href="https://miyu.qq.com/assets/god.html?ADTAG=">神价直播</a> <a
-							class="navbar-item"
-							href="https://miyu.qq.com/assets/coupon.html?ADTAG=">券后价</a> <a
-							class="navbar-item"
-							href="https://miyu.qq.com/assets/cbg.html?ADTAG=">白菜价</a> <a
-							class="navbar-item"
-							href="https://miyu.qq.com/assets/wggj/feedback.html?ADTAG=">意见反馈</a>
+						<a class="navbar-item" href="/">首页</a>
+						
+						{if isset($indexCate) && is_array($indexCate) && count($indexCate)>0}
+						{foreach $indexCate as $vo}
+						<a class="navbar-item {if isset($indexCateId) && !empty($indexCateId) && is_numeric($indexCateId) && $indexCateId==$vo.id}active{/if}"
+							href="/indexcate/{$vo.id}.html">{$vo.cate_name}</a> 
+							{/foreach}
+						{/if}
+							
 					</div>
 				</div>
 			</div>

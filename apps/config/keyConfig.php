@@ -14,7 +14,7 @@ return [
     'taobao_img_url'=>'https://img.alicdn.com/',
     // 'is_open_page'=>false,
     //  新加字段 couponEffectiveStartTime provcity nick couponEffectiveEndTime 
-    'baiDuWordPos'=>"http://www.xiaoqiwen.cn/api/baidukw.php?kw=%s",//百度分词获取地址
+    'baiDuWordPos'=>"http://zhannei.baidu.com/api/customsearch/keywords?title=%s",//百度分词获取地址
     'taoBaoKeyWords'=>"https://suggest.taobao.com/sug?code=utf-8&q=%s",//淘宝关键词生成
     //'comment_list' =>'https://rate.taobao.com/feedRateList.htm?auctionNumId=%s&userNumId=3089150000&currentPageNum=%s&pageSize=%s&rateType=&orderType=sort_weight&attribute=&sku=&hasSku=true&folded=0&callback=jsonp_tbcrate_reviews_list',//评论
    // 'comment_list'=>'https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=123&Page=%s',

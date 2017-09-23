@@ -16,13 +16,12 @@ class NetUtils
         
         $headers = array();
         $headers[] = 'Host:' . parse_url($url)['host'];
-        $headers[] = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0';
+        $headers[] = 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
         $headers[] = 'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
         $headers[] = 'Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3';
-        $headers[] = 'Accept-Encoding:gzip, deflate, br';
+        $headers[] = 'Accept-Encoding:gzip,deflate';
         $headers[] = 'Connection:keep-alive';
         $headers[] = 'Upgrade-Insecure-Requests:1';
-        $headers[] = 'Cache-Control:max-age=0';
        
         
         
@@ -34,13 +33,15 @@ class NetUtils
         //执行并获取HTML文档内容
         $output = curl_exec($ch);
         //释放curl句柄
-        curl_close($ch);
-        //打印获得的数据
-        var_dump($output);
         
+        //打印获得的数据
+        var_dump(curl_error($ch));
+        var_dump($output);
+        curl_close($ch);
     } 
     
     public static function getData($url){
+        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)');
         return file_get_contents($url);
     }
 
@@ -84,15 +85,15 @@ class NetUtils
         
         $headers = array();
         $headers[] = 'Host:' . parse_url($url)['host'];
-        $headers[] = 'User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0';
+        $headers[] = 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
         $headers[] = 'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
         $headers[] = 'Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3';
         $headers[] = 'Accept-Encoding:gzip,deflate';
         $headers[] = 'Connection:keep-alive';
         $headers[] = 'Upgrade-Insecure-Requests:1';
-        $headers[] = 'Cache-Control:max-age=0';
-        $headers[] = 'HTTP/1.1';
-        
+        //$headers[] = 'Cache-Control:max-age=0';
+        //$headers[] = 'HTTP/1.1';
+        curl_setopt($ch, CURLOPT_HTTPHEADER  , $headers); 
         if (isset($cookie) && ! empty($cookie)) {
             
             curl_setopt($ch, CURLOPT_COOKIE, $cookie); // 使用上面获取的cookies
@@ -151,6 +152,8 @@ class NetUtils
         $body = "";
         $header = "";
         $jsonKeyValConfig=require 'apps/config/jsonKeyValConfig.php';
+       // var_dump(curl_error($ch));
+       // var_dump(curl_getinfo($ch, CURLINFO_HTTP_CODE));
         //print_r($output);return ;
         //var_dump(curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1");
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' && $header_type == "1") {
@@ -193,19 +196,42 @@ class NetUtils
             
             return $content;
         }
+        $content =[];
+        if($header_type == "1"){
+            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $response_header = substr($output, 0, $headerSize);
+            $body = substr($output, $headerSize);
+            
+            $content = [
+                "response_header" => $response_header,
+                'post_data' => $post_data,
+                'is_proxy' => $is_proxy,
+                'proxy_ip' => $proxy_ip,
+                'request_header_type' => $header_type,
+                'cookie' => $cookie,
+                'isHttps' => $isHttps,
+                'body' => self::handleBody(trim($body)),
+                'requestType' => $RequestType,
+                'url' => $url,
+                'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
+            ];
+            
+        }else{
+            $content = [
+                'post_data' => $post_data,
+                'is_proxy' => $is_proxy,
+                'proxy_ip' => $proxy_ip,
+                'request_header_type' => $header_type,
+                'cookie' => $cookie,
+                'isHttps' => $isHttps,
+                'body' => self::handleBody(trim($output)),
+                'requestType' => $RequestType,
+                'url' => $url,
+                'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
+            ];
+        }
         
-        $content = [
-            'post_data' => $post_data,
-            'is_proxy' => $is_proxy,
-            'proxy_ip' => $proxy_ip,
-            'request_header_type' => $header_type,
-            'cookie' => $cookie,
-            'isHttps' => $isHttps,
-            'body' => self::handleBody(trim($output)),
-            'requestType' => $RequestType,
-            'url' => $url,
-            'tokenObj' => isset($tk) && ! is_null($tk) && ! empty($tk) ? $tk : ""
-        ];
+        
         
         $content=array_merge( $parameter,$content);
         if (! empty(curl_error($ch))) {
