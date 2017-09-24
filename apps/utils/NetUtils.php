@@ -15,7 +15,6 @@ class NetUtils
         $headers[] = 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
         $headers[] = 'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
         $headers[] = 'Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3';
-        $headers[] = 'Accept-Encoding:gzip,deflate';
         $headers[] = 'Connection:keep-alive';
         $headers[] = 'Upgrade-Insecure-Requests:1';
         //设置选项，包括URL
@@ -26,7 +25,6 @@ class NetUtils
         //执行并获取HTML文档内容
         $output = curl_exec($ch);
         //释放curl句柄
-        
         //打印获得的数据
         var_dump(curl_error($ch));
         var_dump($output);
