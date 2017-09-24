@@ -28,10 +28,10 @@ class Index extends BaseController
         }
         $indexModel= new \app\index\model\indexModel();
         $cate = $indexModel->getDataForId($id);
-        if($cate['type']==1){
-            echo "<script>var isOpen = window.open(".$cate['url'].");if(isOpen == null){window.location.href = ".$cate['url']."}</script>";
-            return ;
-        }
+        //if($cate['type']==1){
+        //    echo "<script>alert('11');window.location.href = '".$cate['url']."'</script>";
+        //    return ;
+        //}
         
         $this->assign("cate_name",$cate['cate_name']);
         $this->assign("indexCateId",$cate['id']);
@@ -53,6 +53,7 @@ class Index extends BaseController
         if($cate && is_array($cate) && count($cate)>0){
             $array=['Code'=>0,
                 'url'=>$cate['url'],
+                'type'=>$cate['type'],
             ];
             echo json_encode($array);
         }else{
