@@ -7,7 +7,8 @@
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="keywords" content="{if isset($itemKeyWords) && !empty($itemKeyWords)}{$itemKeyWords}{/if}">
-<meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
+<meta name="description" content="欢迎来到好券vip领取{$item.title|strip_tags=###}的优惠券,此宝贝原价{$item.zkFinalPriceWap}，券后价{$item.zkFinalPriceWap-$item.couponAmount/100}元,最近30天销量{if
+									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件。好券vip,更多淘宝优惠券任你领取。">
 <title>{$item.title|strip_tags=###}_{$subtitle}</title>
 <link rel="dns-prefetch" href="https://guanjia.qq.com/">
 <link rel="stylesheet" href="/public/static/image/base.css">
@@ -58,10 +59,7 @@ var item={$item.itemId|urlIdcode=###,true};
 									class="item-promotion-orgprice d-goods-price-origin mr-10 nowprice">现价:{$item.zkFinalPriceWap}元</span>
 								<span class=" d-goods-price-now mr-10 sold">已售:{if
 									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件</span>
-								<!-- <span
-									class="item-promotion-discount d-goods-price-discount mr-10"
-									style="margin-right: 0px;">3.5折</span> <span
-									style="color: #999; vertical-align: bottom;">(与上次价格相比)</span> -->
+							
 							</div>
 
 
@@ -81,7 +79,10 @@ var item={$item.itemId|urlIdcode=###,true};
 									<div class="icon-left">券</div>
 									<span>{$item.couponAmount/100 }元</span>
 								</div>
-
+								{if $discount<10}
+								<span class="item-promotion-thisprice d-goods-price-now mr-10" style="margin-left:10px">{$discount}折</span>
+								{/if}
+								
 							</div>
 
 							<a class="d-goods-redirect-link item"

@@ -63,7 +63,7 @@ class Keyword extends BaseController
         
         
         $reasonData=null;
-        if ( ($this->keyConfig['reason_list_cache_time'] != - 1)) {
+        if ( ($this->keyConfig['reason_list_cache_time'] != - 1) || empty($item['reason'])) {
             if(empty($item['reason'])){
                 //var_dump("stmp 1");
                 $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
@@ -84,7 +84,7 @@ class Keyword extends BaseController
         
         
         $commentData=null;
-        if ( ($this->keyConfig['comment_list_cache_time'] != - 1)) {
+        if ( ($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) {
             if(empty($item['commentList'])){
                 $commentData = $KeyWords->getCommentList($itemId, $item['id']);
             }else{
@@ -127,10 +127,10 @@ class Keyword extends BaseController
             }
             
         }
-        /*
+       
         $titleKeyWords=array();
         if(empty($item['keyWords'])){
-            $titleKeyWords = $KeyWords->getBaiDuPos($item['title']);
+            $titleKeyWords = $KeyWords->getBaiDuPos($item['title'],$item['id']);
         }else{
             $titleKeyWords =json_decode( $item['keyWords'],true);
         }
@@ -145,9 +145,11 @@ class Keyword extends BaseController
             }
             $this->assign('itemKeyWords', $itemKeyWords);
         }
-        */
+        
         
         // $this->assign('askeverybodyList',$askeverybodyList);
+        $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;
+        $this->assign('discount', $discount);
         $this->assign('item', $item);
         return $this->fetch('item');
     }

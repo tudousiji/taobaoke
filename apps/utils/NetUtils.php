@@ -10,10 +10,6 @@ class NetUtils
 
     public static function curlDataTest($url){
         $ch = curl_init();
-        
-        
-        
-        
         $headers = array();
         $headers[] = 'Host:' . parse_url($url)['host'];
         $headers[] = 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
@@ -22,14 +18,11 @@ class NetUtils
         $headers[] = 'Accept-Encoding:gzip,deflate';
         $headers[] = 'Connection:keep-alive';
         $headers[] = 'Upgrade-Insecure-Requests:1';
-       
-        
-        
         //设置选项，包括URL
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER  , $headers);  
+        curl_setopt($ch, CURLOPT_HTTPHEADER  , $headers);
         //执行并获取HTML文档内容
         $output = curl_exec($ch);
         //释放curl句柄
@@ -88,7 +81,7 @@ class NetUtils
         $headers[] = 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
         $headers[] = 'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
         $headers[] = 'Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3';
-        $headers[] = 'Accept-Encoding:gzip,deflate';
+        //$headers[] = 'Accept-Encoding:gzip,deflate';
         $headers[] = 'Connection:keep-alive';
         $headers[] = 'Upgrade-Insecure-Requests:1';
         //$headers[] = 'Cache-Control:max-age=0';
@@ -302,7 +295,14 @@ class NetUtils
                     }
                 }
                 //var_dump("再次请求");
-                return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
+                
+                $twoGetData = self::curlData($parameter['requestType'], $parameter['url'], $parameter);
+                if($parameter['ref']['status'] == $jsonKeyValConfig['Success']){
+                    return $twoGetData;
+                }else{
+                    $parameter['is_proxy']=false;
+                    return self::curlData($parameter['requestType'], $parameter['url'], $parameter);
+                }
             }
         } else if (isset($parameter['ref']) && isset($parameter['ref']['status']) && $parameter['ref']['status'] == $jsonKeyValConfig['Fail']) {
             

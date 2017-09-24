@@ -8,17 +8,14 @@ use app\index\model\KeyWords;
 class Index extends BaseController
 {
 
-    public function index($name = 'index')
+    public function index()
     {
-        echo test();
+       
         
-        return 'index,' . $name . '！end';
+        return $this->fetch('index');
     }
 
-    public function index2($name = 'index2')
-    {
-        return 'Hello,' . $name . '!';
-    }
+  
     
    
     public function indexcate(){

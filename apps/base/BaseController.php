@@ -18,8 +18,10 @@ class BaseController extends \think\Controller
         $this->assign("description",$this->keyConfig['description']);
         $this->assign("keyWords",$this->keyConfig['keyWords']); 
         $this->assign("taobao_img_url",$this->keyConfig['taobao_img_url']);
+        $this->assign("host",$this->keyConfig['host']);
         
         $this->indexCate();
+        $this->randHeaderHotSearchWord();
     }
     
     private function indexCate(){
@@ -27,6 +29,16 @@ class BaseController extends \think\Controller
         $list = $tableUtils->getAll();
         $this->assign("indexCate",$list);
     }
+    
+    
+    private function randHeaderHotSearchWord(){
+        $tableUtils = new \app\tableUtils\keywordsUtils();
+        $list = $tableUtils->getRandHotSearchWord();
+        $this->assign("randHeaderHotSearchWord",$list);
+    }
+    
+    
+    
 }
 
 ?>

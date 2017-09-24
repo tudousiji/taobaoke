@@ -22,5 +22,10 @@ class keywordsUtils{
             TableUtils::getTableDetails('keywords', 'id'), $id)
             ->find();
     }
+    
+    public static function getRandHotSearchWord(){
+        return Db::table(TableUtils::getTableDetails('keywords'))->order('rand()')
+        ->limit(5)->select();
+    }
 }
 ?>

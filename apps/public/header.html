@@ -1,19 +1,26 @@
+<script src="/public/static/js/header.js"></script>
 <div class="header row" id="header">
 			<div class="header-top" _hover-ignore="1">
 				<div class="main">
-					<div class="pull-left">你好，欢迎来到觅鱼</div>
+					<div class="pull-left">你好，欢迎来到好券vip(专业的淘宝优惠券推荐网站)</div>
 					<div class="pull-right">
-						<a href="javascript:void(0);" id="header-share"
-							data-hottag="mmm.home.sharefriend">分享本站</a> <span
-							class="header-top-right-split">&nbsp;&nbsp;|&nbsp;&nbsp;</span> <a
-							href="javascript:void(0);" id="header-addFavorite"
-							data-hottag="mmm.home.addfavorite">收藏本站</a>
+						
+							<a href="javascript:void(0);" onclick="SetHome(this,'{$host}');">设为首页</a>
+							 <span
+							class="header-top-right-split">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+<a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">收藏本站</a>
+ <span
+							class="header-top-right-split">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+<a href="javascript:void(0);" onclick=" toDesktop(location.href，'我的网站')">保存到桌面</a>
+ 
+							
+							
 					</div>
 				</div>
 			</div>
 			<div class="header-middle" _hover-ignore="1">
 				<div class="main">
-					<a class="header-logo pull-left" href="https://miyu.qq.com/?ADTAG=">
+					<a class="header-logo pull-left" href="/">
 						<img src="/public/static/image/40e0ccf1bbbfe699b2d0b3f768022316.png">
 					</a>
 					<div class="header-features pull-right">
@@ -29,30 +36,24 @@
 					</div>
 					<form enctype="application/x-www-form-urlencoded"
 						class="header-search pull-left" method="GET"
-						action="/assets/result.html" id="header-search">
-						<input name="ADTAG" value="" type="hidden"> <input
-							name="tab" value="1" type="hidden"> <input
-							class="header-search-input" id="header-search-input" name="kw"
+						action="/index.php" id="header-search">
+						  <input
+							class="header-search-input" id="header-search-input" name="q"
 							placeholder="输入关键字搜索全网内部隐藏优惠券" type="text"> <input
 							class="header-search-btn" id="header-search-btn" value=""
 							type="submit">
+							{if isset($randHeaderHotSearchWord) && is_array($randHeaderHotSearchWord) && count($randHeaderHotSearchWord)>0}
 						<div class="header-search-keywords">
-							<span class="header-search-keywords-title">热门搜索：</span><a
+					
+							<span class="header-search-keywords-title">热门搜索：</span>
+							{foreach $randHeaderHotSearchWord as $vo}
+							<a
 								class="header-search-keywords-item active" target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E5%8C%85%E5%8C%85">包包</a><a
-								class="header-search-keywords-item active" target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E9%9B%B6%E9%A3%9F">零食</a><a
-								class="header-search-keywords-item active" target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E7%BE%BD%E7%BB%92%E6%9C%8D">羽绒服</a><a
-								class="header-search-keywords-item " target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E8%BF%90%E5%8A%A8%E9%9E%8B">运动鞋</a><a
-								class="header-search-keywords-item " target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E5%A5%B3%E8%A3%85">女装</a><a
-								class="header-search-keywords-item " target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E6%89%8B%E6%9C%BA">手机</a><a
-								class="header-search-keywords-item " target="_blank"
-								href="https://miyu.qq.com/assets/result.html?tab=1&amp;ADTAG=&amp;kw=%E8%80%B3%E6%9C%BA">耳机</a>
+								href="/goods/{$vo.id}_1.html">{$vo.keyword}</a>
+							{/foreach}
+
 						</div>
+						{/if}
 					</form>
 					<div class="clearfix"></div>
 				</div>
