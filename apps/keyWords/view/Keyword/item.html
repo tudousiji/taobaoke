@@ -10,9 +10,9 @@
 <meta name="description" content="欢迎来到好券vip领取{$item.title|strip_tags=###}的优惠券,此宝贝原价{$item.zkFinalPriceWap}，券后价{$item.zkFinalPriceWap-$item.couponAmount/100}元,最近30天销量{if
 									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件。好券vip,更多淘宝优惠券任你领取。">
 <title>{$item.title|strip_tags=###}_{$subtitle}</title>
-<link rel="dns-prefetch" href="https://guanjia.qq.com/">
-<link rel="stylesheet" href="/public/static/image/base.css">
-<link rel="stylesheet" href="/public/static/image/item.css">
+<link rel="dns-prefetch" href="{$host}">
+<link rel="stylesheet" href="/public/static/css/base.css">
+<link rel="stylesheet" href="/public/static/css/item.css">
 <script src="/public/static/js/jquery-3.2.1.min.js"></script>
 <script src="/public/static/js/item.js"></script>
 </head>
