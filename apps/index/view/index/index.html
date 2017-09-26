@@ -18,9 +18,12 @@
 <body>
 {include file="../../public/header" /}
 	<div id="container">
+	<div style="text-align:center;height:50px; line-height:50px; background-color:#f11a60;font-size:25px;color:#FFFFFF;">
+	复制标题或关键字查优惠券
+	</div>
 	<div class="search d1">
-	  <form class="indexForm">
-	  <input type="text" placeholder="输入关键词查询淘宝优惠券">
+	  <form class="indexForm"  action="/index.php"  method="get">
+	  <input type="text" name="q" placeholder="输入关键词查询淘宝优惠券">
 	  <button type="submit"></button>
 	  </form>
 	</div>
