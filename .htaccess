@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
 
   RewriteEngine On
-  #RewriteRule index.php(.*)$  /index.php/keyWords/Keyword/q$1 [QSA]
+  #RewriteRule index.php(.*)$  /index.php/keyWords/Keyword/q$1 [NC]
   RewriteRule goods/([0-9]*)_([0-9]*).html  /index.php/keyWords/Keyword/lists?keyword_id=$1&page=$2 [NC]
   RewriteRule goods/([0-9]*).html  /index.php/keyWords/Keyword/goodsItem?itemId=$1 [NC]
   RewriteRule goods/getItemUrl/([0-9]*)  /index.php/keyWords/Keyword/getItemUrl?itemId=$1 [NC]
