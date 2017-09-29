@@ -4,7 +4,7 @@ use think\Db;
 use app\utils\TableUtils;
 use app\base\BaseController;
 
-class ProxyIp extends BaseController{
+class Proxyip extends BaseController{
     public function getAllList(){
         $list = Db::table(TableUtils::getTableDetails('proxy_ip'))->where(TableUtils::getTableDetails('proxy_ip','status'),0)->select(); // 
         echo json_encode($list);
@@ -58,20 +58,53 @@ class ProxyIp extends BaseController{
         if(empty($json)){
             $data=[
                 $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
-                $jsonKeyValConfig['msg']=>$jsonKeyValConfig['msg'].":数据为空",
+                $jsonKeyValConfig['msg']=>":数据为空",
                 $jsonKeyValConfig['Code']=>-1,//
             ];
+            //var_dump(isset($_POST['data']));
             echo json_encode($data);
             return ;
         }
         
         $jsonObj = json_decode($json,true);
+        
         if($jsonObj && $jsonObj!=null){
-            echo $json;
+            $successCount=0;
+            for($i=0;$i<count($jsonObj);$i++){
+                $array=[
+                    'ip'=>$jsonObj[$i]['ip'],
+                    'port'=>$jsonObj[$i]['port'],
+                    'http_type'=>$jsonObj[$i]['type'],
+                    'status'=>0,
+                    'log'=>'',
+                    'update_time'=>time(),
+                ];
+                $table =new  \app\tableUtils\proxyipUtils();
+                $status = $table->addProxtIp($array);
+                if($status){
+                    $successCount++;
+                }
+            }
+            
+            if($successCount==count($jsonObj)){
+                $data=[
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+                    $jsonKeyValConfig['msg']=>"成功",
+                    $jsonKeyValConfig['Code']=>0,//
+                ];
+                echo json_encode($data);
+            }else{
+                $data=[
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                    $jsonKeyValConfig['msg']=>"插入失败",
+                    $jsonKeyValConfig['Code']=>-1,//
+                ];
+                echo json_encode($data);
+            }
         }else{
             $data=[
                 $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
-                $jsonKeyValConfig['msg']=>$jsonKeyValConfig['msg'].":数据解析错误",
+                $jsonKeyValConfig['msg']=>"数据解析错误",
                 $jsonKeyValConfig['Code']=>-1,//
             ];
             echo json_encode($data);
