@@ -7,5 +7,11 @@ class proxyipUtils{
         return $keywords_details = Db::table(TableUtils::getTableDetails('proxy_ip'))
         ->insert($data);
     }
+    
+    public static function updateFailProxtIp($data,$id){
+        return $keywords_details = Db::table(TableUtils::getTableDetails('proxy_ip'))
+        ->where(TableUtils::getTableDetails('proxy_ip', 'id'), $id)
+        ->setField($data);
+    }
 }
 ?>
