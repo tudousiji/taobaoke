@@ -91,6 +91,16 @@ return [
             'status' => 'status',
             'update_time' => 'update_time'
         ]
+    ],
+    
+    
+    // 淘宝 达人
+    'daren' => [
+        'table_name' => 'daren',
+        'table_field' => [
+            'id' => 'id',
+            'data' => 'data',
+        ]
     ]
 ];
 
