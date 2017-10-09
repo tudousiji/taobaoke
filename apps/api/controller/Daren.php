@@ -8,6 +8,8 @@ use think\Request;
 class Daren  extends BaseController{
     public function getDaRenUrl(){
         $id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
         $daRen = new \app\api\model\DaRenModel();
         $nextData = $daRen->getDaRen($id);
         if($nextData!=null){
@@ -34,8 +36,10 @@ class Daren  extends BaseController{
     }
     
     public function addDaRenUrlForList(){
-        $jsonObj = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
-        if(empty($jsonObj)){
+        $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        if(empty($json)){
             $data=[
                 $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
                 $jsonKeyValConfig['msg']=>":数据为空",
@@ -45,11 +49,12 @@ class Daren  extends BaseController{
             echo json_encode($data);
             return ;
         }
-        
+        $jsonObj = json_decode($json,true);
         $successCount=0;
         for($i=0;$i<count($jsonObj);$i++){
             $array=[
-                'data'=>$jsonObj[$i],
+                'data'=>json_encode($jsonObj[$i]) ,
+                'userId'=>$jsonObj[$i]['userId'],
             ];
             $table =new  \app\tableUtils\darenUtils();
             $status = $table->addDaRen($array);
