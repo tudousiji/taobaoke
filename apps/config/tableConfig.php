@@ -101,7 +101,19 @@ return [
             'id' => 'id',
             'data' => 'data',
         ]
-    ]
+    ],
+    
+    
+    // 淘宝 试用
+    'tryout' => [
+        'table_name' => 'tryout',
+        'table_field' => [
+            'id' => 'id',
+            'itemId'=>'itemId',
+            'reportId'=>'reportId',
+            'data' => 'data',
+        ]
+    ],
 ];
 
 ?>

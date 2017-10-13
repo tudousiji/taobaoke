@@ -12,10 +12,12 @@ class Daren  extends BaseController{
         
         $daRen = new \app\api\model\DaRenModel();
         $nextData = $daRen->getDaRen($id);
+        //print_r ($nextData);
         if($nextData!=null){
+            $nextData['data']=json_decode($nextData['data'],true);
             $array=[
-                'url'=>$nextData['darenUrl'],
-                'userId'=>$nextData['userId'],
+                'url'=>$nextData['data']['darenUrl'],
+                'userId'=>$nextData['data']['userId'],
             ];
             $data=[
                 $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
@@ -80,4 +82,8 @@ class Daren  extends BaseController{
         }
         #echo $data;
     }
+    
+    
+    
+    
 }
