@@ -72,6 +72,7 @@ class Tryout extends BaseController{
         
         $data=json_decode($json,true);
         $itemId=$data['itemId'];
+        $cate=$data['cate'];
         $reportId=$data['reportId'];
         if(empty($itemId) || empty($reportId) || $itemId=="0" || $reportId=="0"){
             $data=[
@@ -87,6 +88,7 @@ class Tryout extends BaseController{
         $array=[
             'itemId'=>$itemId,
             'reportId'=>$reportId,
+            'cate'=>$cate,
             'data'=>json_encode($data['data']),
         ];
         $table =new  \app\tableUtils\tryoutUtils();

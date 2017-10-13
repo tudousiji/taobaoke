@@ -105,8 +105,8 @@ return [
     
     
     // 淘宝 试用
-    'tryout' => [
-        'table_name' => 'tryout',
+    'taobao_try_item' => [
+        'table_name' => 'taobao_try_item',
         'table_field' => [
             'id' => 'id',
             'itemId'=>'itemId',
