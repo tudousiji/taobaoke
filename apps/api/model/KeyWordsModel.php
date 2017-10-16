@@ -4,6 +4,7 @@ use app\base\BaseModel;
 use app\keyWords\model;
 use think\Db;
 use app\utils\TableUtils;
+use app\tableUtils\keywordsUtils;
 
 class KeyWordsModel extends BaseModel{
     public function getData($id=1,$page=1,$isCollection=true){
@@ -29,6 +30,16 @@ class KeyWordsModel extends BaseModel{
         where(TableUtils::getTableDetails('keywords', 'id'),'>', $keyWord[TableUtils::getTableDetails('keywords', 'id')])->order(TableUtils::getTableDetails('keywords', 'id'),"asc")
         ->find();
         return $keyWord;
+    }
+    
+    public function addHotKeyWords($data){
+        $daren=new keywordsUtils();
+        return $daren->addHotKeyWords($data);
+    }
+    
+    public function findHotKeyWords($keyWord){
+        $daren=new keywordsUtils();
+        return $daren->findHotKeyWords($keyWord);
     }
 }
 

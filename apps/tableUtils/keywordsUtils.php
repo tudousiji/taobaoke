@@ -27,5 +27,17 @@ class keywordsUtils{
         return Db::table(TableUtils::getTableDetails('keywords'))->order('rand()')
         ->limit(5)->select();
     }
+    
+    
+    public static function addHotKeyWords($data){
+        return $keywords_details = Db::table(TableUtils::getTableDetails('keywords'))
+        ->insert($data);
+    }
+    
+    public static function findHotKeyWords($keyWord){
+        return Db::table(TableUtils::getTableDetails('keywords'))->where(
+            TableUtils::getTableDetails('keywords', 'keyword'), $keyWord)
+            ->find();
+    }
 }
 ?>
