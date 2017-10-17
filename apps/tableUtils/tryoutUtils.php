@@ -20,4 +20,17 @@ class tryoutUtils{
         return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
                 select();
     }
+    
+    public function getTryOutCate($cateId){
+        return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
+        where(TableUtils::getTableDetails('taobao_try_cate', 'cate_id'), $cateId)
+        ->find();
+    }
+    
+    public function getTryOutData($id){
+        return Db::table(TableUtils::getTableDetails('taobao_try_item'))->
+        where(TableUtils::getTableDetails('taobao_try_item', 'id'), $id)
+        ->find();
+    }
 }
+    

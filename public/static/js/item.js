@@ -1,5 +1,6 @@
 $(function(){
 	$(".item").click(function(){
+		
 		var url = "/goods/getItemUrl/"+item;
 		$.get(url,function(data){
 			var obj = eval('(' + data + ')');
