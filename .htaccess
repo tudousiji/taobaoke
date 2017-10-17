@@ -9,6 +9,8 @@
   RewriteRule indexcate/getIndexCateUrl/([0-9]*)  /index.php/Index/Index/getIndexCateUrl?id=$1 [NC]
   
   RewriteRule try/([0-9]*).html  /index.php/tryOut/Articlecontroller/item?id=$1 [NC]
+  RewriteRule try/([0-9]*)_([0-9]*).html  /index.php/tryOut/Articlecontroller/lists?cateId=$1&page=$2 [NC]
+  
   #RewriteRule index.php?q=(.*)$  /index.php/keyWords/Keyword/q=$1
   #RewriteRule index.php(.?) /index.php/keyWords/Keyword/q 
 </IfModule>

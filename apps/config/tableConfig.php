@@ -109,6 +109,7 @@ return [
         'table_name' => 'taobao_try_item',
         'table_field' => [
             'id' => 'id',
+            'cate'=>'cate',
             'itemId'=>'itemId',
             'reportId'=>'reportId',
             'data' => 'data',

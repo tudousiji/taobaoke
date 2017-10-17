@@ -32,5 +32,20 @@ class tryoutUtils{
         where(TableUtils::getTableDetails('taobao_try_item', 'id'), $id)
         ->find();
     }
+    
+    public function getList($cateid, $page = 1,$pageSize=20)
+    {
+        $list = Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->where(TableUtils::getTableDetails('taobao_try_item', 'cate'), $cateid)
+        ->limit(($page-1)*$pageSize,$pageSize)
+        ->select();
+        return $list;
+    }
+    
+    public function getCount()
+    {
+        $count = Db::table(TableUtils::getTableDetails('taobao_try_item'))->count();
+        return $count;
+    }
 }
     

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://miyu.qq.com/assets/result.html?tab=1&ADTAG=&kw=%E9%9B%B6%E9%A3%9F -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="keywords" content="{if isset($subKeyWords)}{$subKeyWords}{/if}">
+<meta name="description" content="更懂你的实时优惠播报站-让优惠触手可及">
+<title>{$cate.cate_name}_{$subtitle}</title>
+<link rel="dns-prefetch" href="{$host}">
+<link rel="stylesheet" href="/public/static/css/base.css">
+<link rel="stylesheet" href="/public/static/css/trylist.css">
+<script src="/public/static/js/jquery-3.2.1.min.js"></script>
+<script src="/public/static/js/goods_list.js"></script>
+</head>
+<body>
+	<div class="container">
+		<!--[if lte IE 7 ]>
+    <div id="J_BrowserUpdate" class="browser-update">
+    </div>
+    <![endif]-->
+		{include file="../../public/header" /}
+		<div class="row recommend-category-header-row">
+			<div class="main">
+				<div class="recommend-category-header" id="R-result-tabs">
+					<ul class="recommend-category-tabs pull-left">
+						<a class="result-nav-tab" href="javascript:void(0);"
+							link="/assets/couponsearch.html">券后价</a>
+						<a class="result-nav-tab active" tab="1"
+							href="javascript:void(0);" link="/assets/result.html?tab=1">神价直播</a>
+						<a class="result-nav-tab" tab="2" href="javascript:void(0);"
+							link="/assets/result.html?tab=2" _hover-ignore="1">白菜价</a>
+					</ul>
+					<div class="recommend-category-update pull-right">
+						为您找到<span id="R-search-keywords" class="font-weight"></span>的搜索结果，共<span
+							id="R-search-num" class="font-weight">{$count}</span>条
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		<div class="result-section">
+			<div class="main mt-15">
+				<div class="result-tab-container" id="R-result-content">
+					<div class="result-tab-content active" tab="1" id="R-god">
+						<div class="result-tab-pane">
+							<div class="feature-items">
+
+
+							{if is_array($list)}
+								{foreach $list as $vo}
+								
+								
+								<div class="feature-items-tr item" itemId="{$vo.itemId|urlIdcode=###,true}">
+									<div class="feature-items-td" index="0">
+										<a target="_blank"
+											href="/try/{$vo.id}.html"  itemId="{$vo.itemId|urlIdcode=###,true}"
+											><img
+											src="{$taobao_img_url}tfscom/{$vo.data.item.picUrl}" class="size-110" style="margin: 11px;"></a>
+
+									</div>
+									<div class="feature-items-td-right">
+										<div
+											class="feature-items-td-right-top">
+											
+											<div class="feature-items-td" index="1">
+												<div class="item_title">
+													 <a target="_blank"  itemId="{$vo.itemId|urlIdcode=###,true}"
+														href="/try/{$vo.id}.html"
+														 title="{$vo.data.item.title}">{$vo.data.item.title}</a>
+												</div>
+												
+										
+											</div>
+										
+										
+										
+										
+										
+										
+										
+										
+									</div>
+
+
+									
+								</div>
+
+
+
+							</div>
+
+							{/foreach}
+						{/if}
+
+						</div>
+						<div class="pagination-cont">
+							<ul class="pagination" id="R-pagination">
+								{if $page.startPage!=$page.nowPage}
+								<li class="prev disabled"><a
+									href="/try/{$cate.cate_id}_{$page.startPage}.html">&lt;</a></li>
+								{/if}
+								{foreach name="page.page" item="vo" }
+								<li class="page {if $vo==$page.nowPage} active {/if}"><a
+									href="/try/{$cate.cate_id}_{$vo}.html">{$vo}</a></li>
+								{/foreach}
+								{if $page.endPage!=$page.pageCount}
+								<li class="next"><a
+									href="/try/{$cate.cate_id}_{$page.pageCount}.html">&gt;</a></li>
+								{/if}
+							</ul>
+						</div>
+					</div>
+					<div class="feature-sidebar">
+						<div class="feature-hot temai-section-top-color mb-20">
+							<div class="feature-hot-title font-title-16 pl-10">热门推荐</div>
+							<ul class="feature-hot-items" id="M-temai"></ul>
+						</div>
+					</div>
+					<div class="fnClear"></div>
+				</div>
+				<div class="result-tab-content" tab="2" id="R-cbg">
+					<div class="result-tab-pane">
+						<div class="feature-items"></div>
+					</div>
+				</div>
+				<div class="fnClear"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+	{include file="../../public/footer" /}
+
+</body>
+
+</html>
