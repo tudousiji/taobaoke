@@ -4,7 +4,7 @@ use app\base\BaseModel;
 use app\keyWords\model;
 use app\tableUtils\tryoutUtils;
 
-class DaRenModel  extends BaseModel{
+class TryoutModel  extends BaseModel{
     public function insertTryout($data){
         $daren=new tryoutUtils();
         return $daren->addTryout($data);
@@ -13,5 +13,10 @@ class DaRenModel  extends BaseModel{
     public function getTryout($itemId=0,$reportId=0){
         $daren=new tryoutUtils();
         return $daren->getTryout($itemId,$reportId);
+    }
+    
+    public function getCate(){
+        $daren=new tryoutUtils();
+        return $daren->getCate();
     }
 }

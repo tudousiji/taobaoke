@@ -15,4 +15,9 @@ class tryoutUtils{
         where(TableUtils::getTableDetails('taobao_try_item', 'reportId'), $reportId)
         ->find();
     }
+    
+    public function getCate(){
+        return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
+                select();
+    }
 }

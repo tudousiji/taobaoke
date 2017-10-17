@@ -46,7 +46,7 @@ class Tryout extends BaseController{
             }
         }
         $arr=[
-            'isNextPage'=>$failCount>=5?false:true,
+            'isNextCate'=>$failCount>=5?True:False,
             'data'=>$successArr
         ];
         echo json_encode($arr);
@@ -110,4 +110,26 @@ class Tryout extends BaseController{
             
         }
     }
+    
+    
+    public function getCateId(){
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        $table =new  \app\tableUtils\tryoutUtils();
+        $cate = $table->getCate();
+        //print_r($cate);
+        $array=[];
+        for($i=0;$i<count($cate);$i++){
+            if($cate[$i]['cate_id']>0){
+                $array[]=$cate[$i]['cate_id'];
+            }
+        }
+        $arr=[
+            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+            $jsonKeyValConfig['Code']=>0,//
+            'data'=>$array
+        ];
+        echo json_encode($arr);
+    }
+    
 }

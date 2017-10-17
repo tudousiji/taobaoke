@@ -114,6 +114,18 @@ return [
             'data' => 'data',
         ]
     ],
+    
+    
+    // 淘宝 试用分类
+    'taobao_try_cate' => [
+        'table_name' => 'taobao_try_cate',
+        'table_field' => [
+            'id' => 'id',
+            'cate_id'=>'cate_id',
+            'cate_name'=>'cate_name',
+           
+        ]
+    ],
 ];
 
 ?>
