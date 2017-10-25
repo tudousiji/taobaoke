@@ -15,13 +15,15 @@ class Articlecontroller extends BaseController{
         $list=$articleModel->getList($cateId,$page);
         
         $count = $articleModel->getCount();
-        $this->assign('page', page($page, $count));
+        $this->assign('pageList', page($page, $count));
         for($i=0;$i<count($list);$i++){
             $list[$i]['data']=json_decode($list[$i]['data'],true);
         }
         $cate = $articleModel->getTryOutCate($cateId);
+        
         $this->assign('cate', $cate);
         $this->assign('list', $list);
+        $this->assign('cateId', $cateId);
         $this->assign('count', $count);
         return $this->fetch('list');
     }
