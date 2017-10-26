@@ -19,7 +19,7 @@ class BaseController extends \think\Controller
         $this->assign("keyWords",$this->keyConfig['keyWords']); 
         $this->assign("taobao_img_url",$this->keyConfig['taobao_img_url']);
         $this->assign("host",$this->keyConfig['host']);
-        
+        $this->assign("img_size",$this->keyConfig['img_size']);
         $this->indexCate();
         $this->randHeaderHotSearchWord();
     }

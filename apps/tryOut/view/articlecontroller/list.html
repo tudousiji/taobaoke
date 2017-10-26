@@ -12,11 +12,8 @@
 <title>{$cate.cate_name}_{$subtitle}</title>
 <link rel="dns-prefetch" href="{$host}">
 <link rel="stylesheet" href="/public/static/css/base.css">
-
 <link rel="stylesheet" href="/public/static/css/article_global.css">
 <link rel="stylesheet" href="/public/static/css/article_list.css">
-<script src="/public/static/js/jquery-3.2.1.min.js"></script>
-<script src="/public/static/js/goods_list.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -48,50 +45,39 @@
 			<div class="wrap_960">
 		<div class="fl_lt w648">
 			<div class="list_title">
-				<span><em>健康休闲</em></span><cite> <i>1/1</i>
+				<span><em>{$cate.cate_name}</em></span><cite> <i>{$page}/{$pageList.pageCount}</i>
 				</cite>
 			</div>
 			<div class="list_r">
+			
+				{if is_array($list)}
+					{foreach $list as $vo}
 				<dl>
 					<dd>
-						<a href="http://www.haoshsh.com/article/read/id/1738.html"
-							title="舒适帆布鞋，轻松穿出街头活力范" target="_blank"><img
-							src="./健康休闲_健康休闲_券买买_files/5983d3df88b23.jpg"
-							alt="舒适帆布鞋，轻松穿出街头活力范" width="160"></a>
+						<a href="/try/{$vo.id}.html"
+							title="{$vo.data.item.title}" target="_blank"><img
+							src="{$taobao_img_url}tfscom/{$vo.data.item.picUrl}{$img_size.small}"
+							alt="{$vo.data.item.title}" width="160"></a>
 					</dd>
 					<dt>
 						<span><a
-							href="http://www.haoshsh.com/article/read/id/1738.html"
-							title="舒适帆布鞋，轻松穿出街头活力范" target="_blank">舒适帆布鞋，轻松穿出街头活力范</a></span><cite>帆布鞋的好穿是众所周知的，除了寒冷的冬季之外，春夏秋三季都可穿搭。无论是男女，鞋柜里总不能好了一双好穿有好搭配的休闲帆布鞋，它可以让你时髦又充满街头感。<a
-							href="http://www.haoshsh.com/article/read/id/1738.html"
+							href="/try/{$vo.id}.html"
+							title="{$vo.data.item.title}" target="_blank">{$vo.data.item.title}</a></span><cite>
+							{$vo.introduction|chinesesubstr=###,0,630}<a
+							href="/try/{$vo.id}.html"
 							target="_blank">查看全文&gt;&gt;</a></cite>
 						<code>
 							<em>分类：</em><a
-								href="http://www.haoshsh.com/article/cate/id/4.html"
-								target="_blank" hidefocus="hidefocus">健康休闲</a><em>作者：</em>券买买<em>&nbsp;&nbsp;点击：</em>865<em>&nbsp;&nbsp;日期：</em>2017-08-04
+								href="/try/{$cateId}_{$page}.html"
+								target="_blank" hidefocus="hidefocus">{$cate.cate_name}</a><em>作者：</em>好券vip<em>&nbsp;&nbsp;日期：</em>{$vo.data.submitTime/1000|date="Y-m-d",###}
 						</code>
 					</dt>
 				</dl>
-				<dl>
-					<dd>
-						<a href="http://www.haoshsh.com/article/read/id/1737.html"
-							title="热出新高度！火炉里如何避免原地“爆炸”" target="_blank"><img
-							src="./健康休闲_健康休闲_券买买_files/5982c091b92d7.jpg"
-							alt="热出新高度！火炉里如何避免原地“爆炸”" width="160"></a>
-					</dd>
-					<dt>
-						<span><a
-							href="http://www.haoshsh.com/article/read/id/1737.html"
-							title="热出新高度！火炉里如何避免原地“爆炸”" target="_blank" _hover-ignore="1">热出新高度！火炉里如何避免原地“爆炸”</a></span><cite>能出门见面的都是真爱，毕竟出门以后我们都是行走的“五花肉”，小编目睹邻居家的空调更新换代，原来没有的立马装上了，老旧的空调也立马换新了，这种天气没有空调真的是要被活活蒸熟的节奏，活脱脱的带动了一波“家电换新潮”。前几日小编家的冰箱阵亡了，为了吃到冰镇的西瓜，小编可是花了大心思找到了完美的新成员，好东西当然要给大家分享啦！<a
-							href="http://www.haoshsh.com/article/read/id/1737.html"
-							target="_blank">查看全文&gt;&gt;</a></cite>
-						<code>
-							<em>分类：</em><a
-								href="http://www.haoshsh.com/article/cate/id/4.html"
-								target="_blank" hidefocus="hidefocus">健康休闲</a><em>作者：</em>券买买<em>&nbsp;&nbsp;点击：</em>599<em>&nbsp;&nbsp;日期：</em>2017-08-03
-						</code>
-					</dt>
-				</dl>
+				
+					{/foreach}
+				{/if}
+				
+				{if is_array($list) && count($list)>0}
 				<div class="pagination-cont" style="margin-top:30px">
 							<ul class="pagination" id="R-pagination">
 								{if $pageList.startPage!=$pageList.nowPage}
@@ -102,15 +88,18 @@
 								<li class="page {if $vo==$pageList.nowPage} active {/if}"><a
 									href="/try/{$cateId}_{$vo}.html">{$vo}</a></li>
 								{/foreach}
-								{if $pageList.endPage!=$pageList.pageCount}
+								{if $pageList.endPage!=$pageList.nowPage}
 								<li class="next"><a
 									href="/try/{$cateId}_{$pageList.pageCount}.html">&gt;</a></li>
 								{/if}
 							</ul>
 						</div>
+					{/if}
 			</div>
 		</div>
 		<div class="fl_rt w300">
+		
+			{if isset($randTryList) && is_array($randTryList) && count($randTryList)>0}
 			<div class="rec-tuijian">
 				<div class="tuijian-tl">
 					<ul>
@@ -121,24 +110,30 @@
 				</div>
 				<div class="tuijian-txt">
 					<ul class="r-tops">
+						{volist name="randTryList" id="vo" }
+						{if $i==1}
 						<div class="top-ranks">
-							<a title="舒适帆布鞋，轻松穿出街头活力范"
-								href="http://www.haoshsh.com/article/read/id/1738.html"
+							<a title="{$vo.data.item.title}"
+								href="/try/{$vo.id}.html"
 								target="_blank"><img
-								src="./健康休闲_健康休闲_券买买_files/5983d3df88b23.jpg"><span
-									class="rank-cons"><b>舒适帆布鞋，轻松穿出街头活力范</b>
-										<p>帆布鞋的好穿是众所周知的，除了寒冷的冬季之外，春夏秋三季都可穿搭。无论是男女，鞋柜里总不能好了一双好穿有好搭配的休闲帆布鞋，它可以让你时髦又充满街头感。</p></span></a>
+								src="{$taobao_img_url}tfscom/{$vo.data.item.picUrl}{$img_size.small}"><span
+									class="rank-cons"><b>{$vo.data.item.title|chinesesubstr=###,0,36}</b>
+										<p>{$vo.introduction|chinesesubstr=###,0,350}</p></span></a>
 						</div>
-						<li><a title="热出新高度！火炉里如何避免原地“爆炸”"
-							href="http://www.haoshsh.com/article/read/id/1737.html"
-							target="_blank">热出新高度！火炉里如何避免原地“爆炸”</a></li>
+						{else /}
+						<li><a title="{$vo.data.item.title}"
+							href="/try/{$vo.id}.html"
+							target="_blank">{$vo.data.item.title|chinesesubstr=###,0,36}</a></li>
+						{/if}
+						{/volist}
 					</ul>
 				</div>
 				
 			</div>
+			{/if}
 			
 			
-			
+			{if isset($randGoodsList) && is_array($randGoodsList) && count($randGoodsList)>0}
 			
 			<div class="rec-tuijian">
 				<div class="tuijian-tl">
@@ -150,21 +145,27 @@
 				</div>
 				<div class="tuijian-txt">
 					<ul class="r-tops">
+					{volist name="randGoodsList" id="vo" }
+						{if $i==1}
 						<div class="top-ranks">
-							<a title="舒适帆布鞋，轻松穿出街头活力范"
-								href="http://www.haoshsh.com/article/read/id/1738.html"
+							<a title="{$vo.title}"
+								href="/goods/{$vo.itemId|urlIdcode=###,true}.html"
 								target="_blank"><img
-								src="./健康休闲_健康休闲_券买买_files/5983d3df88b23.jpg"><span
-									class="rank-cons"><b>舒适帆布鞋，轻松穿出街头活力范</b>
-										<p>帆布鞋的好穿是众所周知的，除了寒冷的冬季之外，春夏秋三季都可穿搭。无论是男女，鞋柜里总不能好了一双好穿有好搭配的休闲帆布鞋，它可以让你时髦又充满街头感。</p></span></a>
+								src="{$taobao_img_url}{$vo.pictUrl}{$img_size.small}"><span
+									class="rank-cons"><b>{$vo.title|strip_tags=###|chinesesubstr=###,0,36}</b>
+										<p>{$vo.reason|chinesesubstr=###,0,350}</p></span></a>
 						</div>
-						<li><a title="热出新高度！火炉里如何避免原地“爆炸”"
-							href="http://www.haoshsh.com/article/read/id/1737.html"
-							target="_blank">热出新高度！火炉里如何避免原地“爆炸”</a></li>
+						{else /}
+						<li><a title="{$vo.title}"
+							href="/goods/{$vo.itemId|urlIdcode=###,true}.html"
+							target="_blank">{$vo.title|strip_tags=###|chinesesubstr=###,0,36}</a></li>
+						{/if}
+					{/volist}
 					</ul>
 				</div>
 				
 			</div>
+			{/if}
 		</div>
 	</div>
 		</div>

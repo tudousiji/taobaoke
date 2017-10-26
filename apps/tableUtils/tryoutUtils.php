@@ -21,7 +21,13 @@ class tryoutUtils{
                 select();
     }
     
-    public function getTryOutCate($cateId){
+    public function getTryOutCate($id){
+        return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
+        where(TableUtils::getTableDetails('taobao_try_cate', 'id'), $id)
+        ->find();
+    }
+    
+    public function getTryOutCateId($cateId){
         return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
         where(TableUtils::getTableDetails('taobao_try_cate', 'cate_id'), $cateId)
         ->find();
@@ -42,10 +48,20 @@ class tryoutUtils{
         return $list;
     }
     
-    public function getCount()
+    public function getCount($cateId="")
     {
-        $count = Db::table(TableUtils::getTableDetails('taobao_try_item'))->count();
+        $tableObg = Db::table(TableUtils::getTableDetails('taobao_try_item'));
+        
+        if(is_numeric($cateId)){
+            $tableObg->where(TableUtils::getTableDetails('taobao_try_item', 'cate'), $cateId);
+        }
+        $count=$tableObg->count();
         return $count;
+    }
+    
+    public function getRandList($randCount=10){
+        return Db::table(TableUtils::getTableDetails('taobao_try_item'))->order('rand()')
+        ->limit($randCount)->select();
     }
 }
     

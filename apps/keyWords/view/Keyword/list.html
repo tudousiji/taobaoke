@@ -57,7 +57,7 @@
 										<a target="_blank"
 											href="/goods/{$vo.nid|urlIdcode=###,true}.html"  itemId="{$vo.nid|urlIdcode=###,true}"
 											><img
-											src="{$taobao_img_url}{$vo.pictUrl}" class="size-110" style="margin: 11px;"></a>
+											src="{$taobao_img_url}{$vo.pictUrl}{$img_size.small}" class="size-110" style="margin: 11px;"></a>
 
 									</div>
 									<div class="feature-items-td-right">
@@ -122,7 +122,7 @@
 								<li class="page {if $vo==$page.nowPage} active {/if}"><a
 									href="/goods/{$keyword_id}_{$vo}.html">{$vo}</a></li>
 								{/foreach}
-								{if $page.endPage!=$page.pageCount}
+								{if $page.endPage!=$page.nowPage}
 								<li class="next"><a
 									href="/goods/{$keyword_id}_{$page.pageCount}.html">&gt;</a></li>
 								{/if}

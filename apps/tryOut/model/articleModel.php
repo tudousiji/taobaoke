@@ -9,9 +9,14 @@ class articleModel extends BaseModel{
         return $table->getTryOutData($id);
     }
     
-    public function getTryOutCate($cateId){
+    public function getTryOutCate($id){
         $table = new tryoutUtils();
-        return $table->getTryOutCate($cateId);
+        return $table->getTryOutCate($id);
+    }
+    
+    public function getTryOutCateId($cateId){
+        $table = new tryoutUtils();
+        return $table->getTryOutCateId($cateId);
     }
     
     public function getList($cateId,$page = 1,$pageSize=20){
@@ -19,9 +24,14 @@ class articleModel extends BaseModel{
         return $table->getList($cateId,$page,$pageSize);
     }
     
-    public function getCount()
+    public function getCount($cateid)
     {
         $table = new tryoutUtils();
-        return $table->getCount();
+        return $table->getCount($cateid);
+    }
+    
+    public function getRandList($randCount=10){
+        $table = new tryoutUtils();
+        return $table->getRandList($randCount);
     }
 }

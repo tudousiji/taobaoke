@@ -46,6 +46,12 @@ class goodslistUtils{
             TableUtils::getTableDetails('goods_list', 'id'), $id)
             ->setField($data);
     }
+    
+    
+    public function getRandList($randCount=10){
+        return Db::table(TableUtils::getTableDetails('goods_list'))->order('rand()')
+        ->limit($randCount)->select();
+    }
 }
 
 ?>

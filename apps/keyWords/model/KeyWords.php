@@ -480,6 +480,11 @@ class KeyWords extends BaseModel
         $tableUtils = new \app\tableUtils\goodslistUtils();
         return $tableUtils->getItem($itemId);
     }
+    
+    public function getRandList($randCount=10){
+        $table = new \app\tableUtils\goodslistUtils();
+        return $table->getRandList($randCount);
+    }
 }
 
 ?>
