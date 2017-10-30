@@ -127,6 +127,22 @@ return [
            
         ]
     ],
+    
+    
+    // 淘宝 信息表
+    'taobao_item_info' => [
+        'table_name' => 'taobao_item_info',
+        'table_field' => [
+            'id' => 'id',
+            'itemId'=>'itemId',
+            'keywords'=>'keywords',
+            'reason'=>'reason',
+            'commentList'=>'commentList',
+            'askeverybodyList'=>'askeverybodyList',
+            'update_time'=>'update_time',
+            
+        ]
+    ],
 ];
 
 ?>
