@@ -10,6 +10,8 @@ class Taobaoinfo{
         
         $utils= new taobaoItemInfoUtils();
         $list = $utils->getTaobaoInfoList($page);
+        
+        
         echo json_encode($list);
     }
 }

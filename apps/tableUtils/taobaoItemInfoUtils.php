@@ -27,12 +27,15 @@ class taobaoItemInfoUtils
     {
         $table = Db::table(TableUtils::getTableDetails('taobao_item_info'));
         if ($isOr) {
-            $table->where(TableUtils::getTableDetails('taobao_item_info', 'reason') | TableUtils::getTableDetails('taobao_item_info', 'commentList') | TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList'), null);
+            /* $condition="\"".TableUtils::getTableDetails('taobao_item_info', 'reason') ."|".
+            TableUtils::getTableDetails('taobao_item_info', 'commentList') ."|".
+            TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList')."\"";
+            */
+            $table->where('keywords|reason|commentList|askeverybodyList', null);
         } else {
             $table->where(TableUtils::getTableDetails('taobao_item_info', 'reason'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'commentList'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList'), null);
         }
-        $table->limit(($page - 1) * $pageSize, $pageSize)->select();
-        
-        return $table;
+        $data=$table->limit(($page - 1) * $pageSize, $pageSize)->select();
+        return $data;
     }
 }
