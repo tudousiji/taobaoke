@@ -120,6 +120,12 @@ class Articlecontroller extends BaseController
         $id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
         $articleModel = new articleModel();
         $data = $articleModel->getTryOut($id);
+        
+        
+        if(empty($data['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
+            $utils=new \app\utils\taobaoItemInfoUtils();
+            $utils->autoItemId($data['itemId'],true);
+        }
         $content = json_decode($data['data'], true);
         
         $cate = $articleModel->getTryOutCateId($data['cate']);

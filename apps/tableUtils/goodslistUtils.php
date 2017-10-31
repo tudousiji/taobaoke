@@ -33,8 +33,15 @@ class goodslistUtils{
     
     
     public function getRandList($randCount=10){
-        return Db::table(TableUtils::getTableDetails('goods_list'))->order('rand()')
-        ->limit($randCount)->select();
+        $table= Db::table(TableUtils::getTableDetails('goods_list'))
+        ->alias('a')
+        ->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId') 
+        ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
+        $data=$table->order('rand()')->limit($randCount)->select();
+         
+        return $data;
     }
 }
 

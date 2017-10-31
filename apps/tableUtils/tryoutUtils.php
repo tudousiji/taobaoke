@@ -34,17 +34,28 @@ class tryoutUtils{
     }
     
     public function getTryOutData($id){
-        return Db::table(TableUtils::getTableDetails('taobao_try_item'))->
-        where(TableUtils::getTableDetails('taobao_try_item', 'id'), $id)
-        ->find();
+        $table= Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->alias('a')->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId') ->
+        where("taobao_try_item.".TableUtils::getTableDetails('taobao_try_item', 'id'), $id)
+        ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
+        $data=$table->find();
+        //echo $table->getLastSql();
+        return $data;
     }
     
     public function getList($cateid, $page = 1,$pageSize=20)
     {
-        $list = Db::table(TableUtils::getTableDetails('taobao_try_item'))
-        ->where(TableUtils::getTableDetails('taobao_try_item', 'cate'), $cateid)
-        ->limit(($page-1)*$pageSize,$pageSize)
-        ->select();
+        $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->alias('a')->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId') 
+        ->where("taobao_try_item.".TableUtils::getTableDetails('taobao_try_item', 'cate'), $cateid)
+        ->join('taobao_item_info w','a.itemId = w.itemId','LEFT')
+        ->limit(($page-1)*$pageSize,$pageSize);
+        $list=$table->select();
+        
         return $list;
     }
     
@@ -60,8 +71,15 @@ class tryoutUtils{
     }
     
     public function getRandList($randCount=10){
-        return Db::table(TableUtils::getTableDetails('taobao_try_item'))->order('rand()')
+        $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->alias('a')->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId') 
+        ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
+        $data = $table->order('rand()')
         ->limit($randCount)->select();
+        
+        return $data;
     }
 }
     
