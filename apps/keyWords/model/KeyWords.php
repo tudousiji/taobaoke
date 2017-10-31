@@ -138,7 +138,7 @@ class KeyWords extends BaseModel
                     
                     Db::table(TableUtils::getTableDetails('keywords_details'))->insert($data);
                 }
-                $this->addItemDb(true, $keyword_id, $jsonObj);
+                $this->addItemDb(false, $keyword_id, $jsonObj);
                 if ($this->isCollection) {
                     if ($this->pageSize == $size) {
                         return true;
