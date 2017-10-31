@@ -5,23 +5,7 @@ use app\utils\TableUtils;
 
 
 class goodslistUtils{
-    public  function updateAskeverybodyList($data,$id){
-        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
-            TableUtils::getTableDetails('askeverybodyList', 'id'), $id)
-            ->setField($data);
-    }
     
-    public  function updateReasonList($data,$id){
-        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
-            TableUtils::getTableDetails('goods_list', 'id'), $id)
-            ->setField($data);
-    }
-    
-    public  function updateCommentList($data,$id){
-        return Db::table(TableUtils::getTableDetails('goods_list'))->where(
-            TableUtils::getTableDetails('goods_list', 'id'), $id)
-            ->setField($data);
-    }
     
     public function getItem($itemId){
         return Db::table(TableUtils::getTableDetails('goods_list'))->where(

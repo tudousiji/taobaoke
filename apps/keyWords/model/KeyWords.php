@@ -182,6 +182,7 @@ class KeyWords extends BaseModel
         if (! isset($jsonObj) || $jsonObj == null || $jsonObj['data'] == null || $jsonObj['data']['data'] == null || $jsonObj['data']['data']['auctionList'] == null || $jsonObj['data']['data']['auctionList']['auctions'] == null || ! is_array($jsonObj['data']['data']['auctionList']['auctions']) || count($jsonObj['data']['data']['auctionList']['auctions']) <= 0) {
             return;
         }
+        $taobaoItemInfoUtils =new \app\utils\taobaoItemInfoUtils();
         for ($i = 0; $i < count($jsonObj['data']['data']['auctionList']['auctions']); $i ++) {
             $item = $jsonObj['data']['data']['auctionList']['auctions'][$i];
             
@@ -209,6 +210,8 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'update_time') => time()
             ];
             
+            $taobaoItemInfoUtils->autoItemId($item['nid']);//新增商品id
+            
             if ($isInsert) {
                 Db::table(TableUtils::getTableDetails('goods_list'))->insert($data);
             } else {
@@ -232,7 +235,20 @@ class KeyWords extends BaseModel
 
     public function getGoodsItems($itemId)
     {
-        $keywords_details = Db::table(TableUtils::getTableDetails('goods_list'))->where(TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)->find();
+        $tableName=[
+            TableUtils::getTableDetails('goods_list')=>'goods_list',
+            TableUtils::getTableDetails('taobao_item_info')=>'taobao_item_info',
+        ];
+        
+        $table= Db::field('goods_list.*,taobao_item_info.keywords
+            ,taobao_item_info.reason,taobao_item_info.commentList,
+            taobao_item_info.askeverybodyList')  ;
+        $table->table($tableName)
+        ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)
+        ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId')."=".'taobao_item_info.'+TableUtils::getTableDetails('taobao_item_info', 'itemId'));
+        
+        $keywords_details =$table->find();
+        //echo $table->getLastSql();
         return $keywords_details;
     }
 
@@ -415,8 +431,8 @@ class KeyWords extends BaseModel
                     'reason' => $arrayjson
                 ];
                 // var_dump($arrayjson);
-                $tableUtils = new \app\tableUtils\goodslistUtils();
-                $status = $tableUtils->updateReasonList($data, $id);
+                $tableUtils = new \app\utils\taobaoItemInfoUtils();
+                $status = $tableUtils->updateReasonList($data, $itemId);
                 return $array;
             } else {
                 return array();
@@ -461,8 +477,8 @@ class KeyWords extends BaseModel
                 $data = [
                     'commentList' => $arrayjson
                 ];
-                $tableUtils = new \app\tableUtils\goodslistUtils();
-                $status = $tableUtils->updateCommentList($data, $id);
+                $tableUtils = new \app\tableUtils\taobaoItemInfoUtils();
+                $status = $tableUtils->updateCommentList($data, $itemId);
                 // var_dump($status);
                 // var_dump("请求网络");
                 return $array;

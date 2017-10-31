@@ -6,6 +6,23 @@ use app\utils\TableUtils;
 
 class taobaoItemInfoUtils
 {
+    public  function updateAskeverybodyList($data,$itemId){
+        return Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(
+            TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)
+            ->setField($data);
+    }
+    
+    public  function updateReasonList($data,$itemId){
+        return Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(
+            TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)
+            ->setField($data);
+    }
+    
+    public  function updateCommentList($data,$itemId){
+        return Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(
+            TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)
+            ->setField($data);
+    }
 
     public function autoItemId($itemId, $isCheckExitItemId = true)
     {

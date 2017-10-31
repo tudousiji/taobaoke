@@ -13,4 +13,19 @@ class taobaoItemInfoUtils{
         $utils =  new \app\tableUtils\taobaoItemInfoUtils();
         return $utils->getTaobaoInfoList($page,$pageSize,$isOr);
     }
+    
+    public  function updateAskeverybodyList($data,$itemId){
+        $utils =  new \app\tableUtils\taobaoItemInfoUtils();
+        return $utils->updateAskeverybodyList($data,$itemId);
+    }
+    
+    public  function updateReasonList($data,$itemId){
+        $utils =  new \app\tableUtils\taobaoItemInfoUtils();
+        return $utils->updateReasonList($data,$itemId);
+    }
+    
+    public  function updateCommentList($data,$itemId){
+        $utils =  new \app\tableUtils\taobaoItemInfoUtils();
+        return $utils->updateCommentList($data,$itemId);
+    }
 }

@@ -63,7 +63,7 @@ class Keyword extends BaseController
         
         
         $reasonData=null;
-        if ( ($this->keyConfig['reason_list_cache_time'] != - 1) || empty($item['reason'])) {
+        if ($this->keyConfig['is_web_collector'] && (($this->keyConfig['reason_list_cache_time'] != - 1) || empty($item['reason'])) ) {
             if(empty($item['reason'])){
                 //var_dump("stmp 1");
                 $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
@@ -84,7 +84,7 @@ class Keyword extends BaseController
         
         
         $commentData=null;
-        if ( ($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) {
+        if ($this->keyConfig['is_web_collector'] &&  (($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) ) {
             if(empty($item['commentList'])){
                 $commentData = $KeyWords->getCommentList($itemId, $item['id']);
             }else{
@@ -128,23 +128,26 @@ class Keyword extends BaseController
             
         }
        
-        $titleKeyWords=array();
-        if(empty($item['keyWords'])){
-            $titleKeyWords = $KeyWords->getBaiDuPos($item['title'],$item['id']);
-        }else{
-            $titleKeyWords =json_decode( $item['keyWords'],true);
-        }
-        $keyWordsCount=count($titleKeyWords);
-        if($keyWordsCount>0){
-            $itemKeyWords="";
-            for($i=0;$i<$keyWordsCount;$i++){
-                $itemKeyWords.=$keyWordsCount[$i];
-                if($i<($keyWordsCount-1)){
-                    $itemKeyWords.=",";
-                }
+        if($this->keyConfig['is_web_collector']){
+            $titleKeyWords=array();
+            if(empty($item['keyWords'])){
+                $titleKeyWords = $KeyWords->getBaiDuPos($item['title'],$item['id']);
+            }else{
+                $titleKeyWords =json_decode( $item['keyWords'],true);
             }
-            $this->assign('itemKeyWords', $itemKeyWords);
+            $keyWordsCount=count($titleKeyWords);
+            if($keyWordsCount>0){
+                $itemKeyWords="";
+                for($i=0;$i<$keyWordsCount;$i++){
+                    $itemKeyWords.=$keyWordsCount[$i];
+                    if($i<($keyWordsCount-1)){
+                        $itemKeyWords.=",";
+                    }
+                }
+                $this->assign('itemKeyWords', $itemKeyWords);
+            }
         }
+        
         
         
         // $this->assign('askeverybodyList',$askeverybodyList);
