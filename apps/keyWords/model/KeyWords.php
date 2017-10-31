@@ -235,18 +235,25 @@ class KeyWords extends BaseModel
 
     public function getGoodsItems($itemId)
     {
-        $tableName=[
-            TableUtils::getTableDetails('goods_list')=>'goods_list',
-            TableUtils::getTableDetails('taobao_item_info')=>'taobao_item_info',
+        /*$tableName=[
+            TableUtils::getTableDetails('goods_list')=>'goods_list goods_list',
+            TableUtils::getTableDetails('taobao_item_info')=>'taobao_item_info taobao_item_info',
         ];
         
-        $table= Db::field('goods_list.*,taobao_item_info.keywords
+         $table= Db::field('goods_list.*,taobao_item_info.keywords
             ,taobao_item_info.reason,taobao_item_info.commentList,
-            taobao_item_info.askeverybodyList')  ;
+            taobao_item_info.askeverybodyList,taobao_item_info.itemId as taobao_item_info_itemId')  ;
         $table->table($tableName)
         ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)
-        ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId')."=".'taobao_item_info.'+TableUtils::getTableDetails('taobao_item_info', 'itemId'));
-        
+        ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId')."=".'taobao_item_info.'+TableUtils::getTableDetails('taobao_item_info', 'itemId'))
+        ->join("goods_list.itemId", "taobao_item_info.itemId");
+        $keywords_details =$table->find(); */
+        $table=Db::table(TableUtils::getTableDetails('goods_list'))->alias('a')
+        ->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId') 
+        ->where("goods_list.".TableUtils::getTableDetails('goods_list', 'itemId'), $itemId)
+        ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
         $keywords_details =$table->find();
         //echo $table->getLastSql();
         return $keywords_details;

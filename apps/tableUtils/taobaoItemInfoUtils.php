@@ -34,7 +34,8 @@ class taobaoItemInfoUtils
         }
         if ($status == null || ! $isCheckExitItemId) {
             $array = [
-                'itemId' => $itemId
+                'itemId' => $itemId,
+                'update_time'=>time(),
             ];
             Db::table(TableUtils::getTableDetails('taobao_item_info'))->insert($array);
         }
