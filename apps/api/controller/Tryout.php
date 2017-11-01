@@ -94,7 +94,7 @@ class Tryout extends BaseController{
         
         //新增taobaoid等信息
         $taobaoItemInfoUtils = new \app\utils\taobaoItemInfoUtils();
-        $taobaoItemInfoUtils->autoItemId($itemId,$this->keyConfig['keywords_from_table']['taobao_try_item']);
+        $taobaoItemInfoUtils->autoItemId($itemId,$data['data']['item']['title']);
         
         $table =new  \app\tableUtils\tryoutUtils();
         $status = $table->addTryout($array);

@@ -210,7 +210,7 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'update_time') => time()
             ];
             
-            $taobaoItemInfoUtils->autoItemId($item['nid'],$this->keyConfig['keywords_from_table']['goods_list']);//新增商品id
+            $taobaoItemInfoUtils->autoItemId($item['nid'],$item['title']);//新增商品id
             
             if ($isInsert) {
                 Db::table(TableUtils::getTableDetails('goods_list'))->insert($data);

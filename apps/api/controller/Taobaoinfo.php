@@ -13,9 +13,13 @@ class Taobaoinfo{
         $size=count($list);
         $data=[];
         for($i=0;$i<$size;$i++){
+            $keyWords=[
+                'status'=>empty($list[$i]['keywords'])?true:false,
+                'title'=>$list[$i]['title']
+            ];
             $array=[
                 'itemId'=>$list[$i]['itemId'],
-                'keywords'=>empty($list[$i]['keywords'])?true:false,
+                'keywords'=>$keyWords,
                 'reason'=>empty($list[$i]['reason'])?true:false,
                 'commentList'=>empty($list[$i]['commentList'])?true:false,
                 'askeverybodyList'=>empty($list[$i]['askeverybodyList'])?true:false,
@@ -28,7 +32,7 @@ class Taobaoinfo{
     
     
     public function addTaobaoItemInfo(){
-        $json = isset($_REQUEST['data']) && is_numeric($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        $json = isset($_REQUEST['data']) && !empty($_REQUEST['data']) ? $_REQUEST['data'] : "";
         if (empty($json)) {
             $array = [
                 'Code' => - 1,
@@ -43,6 +47,9 @@ class Taobaoinfo{
             $array=[];
             if($data[$i]['keywords']['status']){
                 $array['keywords']=$data[$i]['keywords']['data'];
+                if(count($data[$i]['keywords']['data'])>0){
+                    $array['title']=null;
+                }
             }
             if($data[$i]['reason']['status']){
                 $array['reason']=$data[$i]['reason']['data'];

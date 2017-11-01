@@ -60,7 +60,7 @@ class Keyword extends BaseController
         
         if(empty($item['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
             $utils=new \app\utils\taobaoItemInfoUtils();
-            $utils->autoItemId($item['itemId'],$this->keyConfig['keywords_from_table']['goods_list'],true);
+            $utils->autoItemId($item['itemId'],$item['title'],true);
         }
         
         $cate = $KeyWords->getIdForKeywords($item['keyword_id']);

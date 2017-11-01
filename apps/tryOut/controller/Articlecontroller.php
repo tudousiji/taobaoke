@@ -124,7 +124,7 @@ class Articlecontroller extends BaseController
         
         if(empty($data['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
             $utils=new \app\utils\taobaoItemInfoUtils();
-            $utils->autoItemId($data['itemId'],$this->keyConfig['keywords_from_table']['taobao_try_item'],true);
+            $utils->autoItemId($data['itemId'],$data['data']['item']['title'],true);
         }
         $content = json_decode($data['data'], true);
         
