@@ -55,11 +55,12 @@ class Keyword extends BaseController
     {
         $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) && is_numeric($_REQUEST['itemId']) ? urlIdcode($_REQUEST['itemId'], false) : "1";
         $KeyWords = new KeyWords();
+        
         $item = $KeyWords->getGoodsItems($itemId);
         
         if(empty($item['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
             $utils=new \app\utils\taobaoItemInfoUtils();
-            $utils->autoItemId($item['itemId'],true);
+            $utils->autoItemId($item['itemId'],$this->keyConfig['keywords_from_table']['goods_list'],true);
         }
         
         $cate = $KeyWords->getIdForKeywords($item['keyword_id']);
@@ -155,7 +156,11 @@ class Keyword extends BaseController
         
         
         // $this->assign('askeverybodyList',$askeverybodyList);
-        $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;
+        $discount=10;
+        if(!empty($item['zkFinalPriceWap']) && !empty($item['couponAmount']) ){
+            $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;
+        }
+        
         $this->assign('discount', $discount);
         $this->assign('item', $item);
         return $this->fetch('item');

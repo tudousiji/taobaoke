@@ -136,6 +136,7 @@ return [
             'id' => 'id',
             'itemId'=>'itemId',
             'keywords'=>'keywords',
+            'keywords_from_table'=>'keywords_from_table',
             'reason'=>'reason',
             'commentList'=>'commentList',
             'askeverybodyList'=>'askeverybodyList',

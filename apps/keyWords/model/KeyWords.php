@@ -202,7 +202,7 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'couponTotalCount') => $item['couponTotalCount'],
                 
                 TableUtils::getTableDetails('goods_list', 'couponEffectiveStartTime') => strlen($item['couponEffectiveStartTime']) > 11 ? $item['couponEffectiveStartTime'] / 1000 : $item['couponEffectiveStartTime'],
-                TableUtils::getTableDetails('goods_list', 'couponEffectiveEndTime') => strlen($item['couponEffectiveEndTime']) > 11 ? $item['couponEffectiveEndTime'] / 1000 : $item['c:ouponEffectiveEndTime'],
+                TableUtils::getTableDetails('goods_list', 'couponEffectiveEndTime') => strlen($item['couponEffectiveEndTime']) > 11 ? $item['couponEffectiveEndTime'] / 1000 : $item['couponEffectiveEndTime'],
                 TableUtils::getTableDetails('goods_list', 'provcity') => $item['provcity'],
                 TableUtils::getTableDetails('goods_list', 'nick') => $item['nick'],
                 
@@ -210,7 +210,7 @@ class KeyWords extends BaseModel
                 TableUtils::getTableDetails('goods_list', 'update_time') => time()
             ];
             
-            $taobaoItemInfoUtils->autoItemId($item['nid']);//新增商品id
+            $taobaoItemInfoUtils->autoItemId($item['nid'],$this->keyConfig['keywords_from_table']['goods_list']);//新增商品id
             
             if ($isInsert) {
                 Db::table(TableUtils::getTableDetails('goods_list'))->insert($data);

@@ -24,7 +24,7 @@ class taobaoItemInfoUtils
             ->setField($data);
     }
 
-    public function autoItemId($itemId, $isCheckExitItemId = true)
+    public function autoItemId($itemId,$keywords_from_table, $isCheckExitItemId = true)
     {
         if (empty($itemId) || ! is_numeric($itemId)) {
             return;
@@ -36,6 +36,7 @@ class taobaoItemInfoUtils
             $array = [
                 'itemId' => $itemId,
                 'update_time'=>time(),
+                'keywords_from_table'=>$keywords_from_table
             ];
             Db::table(TableUtils::getTableDetails('taobao_item_info'))->insert($array);
         }
@@ -56,4 +57,26 @@ class taobaoItemInfoUtils
         $data=$table->limit(($page - 1) * $pageSize, $pageSize)->select();
         return $data;
     }
+    
+    
+    public function getTaobaoInfoListForTime( $isOr = true,$count=20,$time=24*60*60)
+    {
+        $table = Db::table(TableUtils::getTableDetails('taobao_item_info'))->alias('a');
+        if ($isOr) {
+            $table->where('keywords|reason|commentList|askeverybodyList', null);
+        } else {
+            $table->where(TableUtils::getTableDetails('taobao_item_info', 'reason'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'commentList'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList'), null);
+        }
+        $table->where(TableUtils::getTableDetails('taobao_item_info', 'update_time'),"<=",time()-$time);
+        $data=$table->limit($count)->select();
+        return $data;
+    }
+    
+    
+    public  function updateTaobaoItemInfo($data,$itemId){
+        return Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(
+            TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)
+            ->setField($data);
+    }
+    
 }

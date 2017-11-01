@@ -3,15 +3,21 @@ namespace app\utils;
 
 
 class taobaoItemInfoUtils{
-    public function autoItemId($itemId,$isCheckExitItemId=true){
+    public function autoItemId($itemId,$keywords_from_table,$isCheckExitItemId=true){
         $table= new \app\tableUtils\taobaoItemInfoUtils();
-        return $table->autoItemId($itemId,$isCheckExitItemId);
+        return $table->autoItemId($itemId,$keywords_from_table,$isCheckExitItemId);
     }
     
     public function getTaobaoInfoList($page = 1, $pageSize = 20, $isOr = true)
     {
         $utils =  new \app\tableUtils\taobaoItemInfoUtils();
         return $utils->getTaobaoInfoList($page,$pageSize,$isOr);
+    }
+    
+    public function getTaobaoInfoListForTime($isOr = true)
+    {
+        $utils =  new \app\tableUtils\taobaoItemInfoUtils();
+        return $utils->getTaobaoInfoListForTime($isOr);
     }
     
     public  function updateAskeverybodyList($data,$itemId){
@@ -27,5 +33,10 @@ class taobaoItemInfoUtils{
     public  function updateCommentList($data,$itemId){
         $utils =  new \app\tableUtils\taobaoItemInfoUtils();
         return $utils->updateCommentList($data,$itemId);
+    }
+    
+    public  function updateTaobaoItemInfo($data,$itemId){
+        $utils =  new \app\tableUtils\taobaoItemInfoUtils();
+        return $utils->updateTaobaoItemInfo($data,$itemId);
     }
 }

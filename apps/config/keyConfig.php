@@ -5,6 +5,10 @@ return [
     'img_size'=>[
         'small'=> '_200x200.jpg'
     ],
+    'keywords_from_table'=>[
+        'goods_list'=>1,
+        'taobao_try_item'=>2,
+    ],
     'is_web_collector'=>true,//是否网页采集淘宝信息,true是，python爬虫一样可以采集，开启后网速变慢
     'title'=>"淘宝优惠券,天猫优惠券,淘宝内部优惠券,天猫内部优惠券,京东优惠券,好券vip",
     'subtitle'=>'淘宝优惠券,天猫优惠券,淘宝内部优惠券,天猫内部优惠券,京东优惠券',
