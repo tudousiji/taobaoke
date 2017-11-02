@@ -140,6 +140,7 @@ return [
             'reason'=>'reason',
             'commentList'=>'commentList',
             'askeverybodyList'=>'askeverybodyList',
+            'collectCount'=>'collectCount',
             'update_time'=>'update_time',
             
         ]

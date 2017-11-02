@@ -23,6 +23,7 @@ class Taobaoinfo{
                 'reason'=>empty($list[$i]['reason'])?true:false,
                 'commentList'=>empty($list[$i]['commentList'])?true:false,
                 'askeverybodyList'=>empty($list[$i]['askeverybodyList'])?true:false,
+                
             ];
             $data[$i]=$array;
         }
@@ -61,9 +62,15 @@ class Taobaoinfo{
                 $array['askeverybodyList']=$data[$i]['askeverybodyList']['data'];
             }
             $array['update_time']=time();
+            $array['collectCount']=array('exp', 'collectCount+1');;
             
             $itemId=$data[$i]['itemId'];
             $utils->updateTaobaoItemInfo($array, $itemId);
         }
+        $array = [
+            'Code' => 0,
+            'msg' => "成功"
+        ];
+        return json_encode($array);
     }
 }

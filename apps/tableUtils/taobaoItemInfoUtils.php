@@ -35,7 +35,7 @@ class taobaoItemInfoUtils
         if ($status == null || ! $isCheckExitItemId) {
             $array = [
                 'itemId' => $itemId,
-                'update_time'=>time(),
+                'update_time'=>0,
                 'title'=>strip_tags($keywords_title)
             ];
             Db::table(TableUtils::getTableDetails('taobao_item_info'))->insert($array);
@@ -59,7 +59,7 @@ class taobaoItemInfoUtils
     }
     
     
-    public function getTaobaoInfoListForTime( $isOr = true,$count=20,$time=0)
+    public function getTaobaoInfoListForTime( $isOr = true,$count=2,$time=24*60*60)
     {
         $table = Db::table(TableUtils::getTableDetails('taobao_item_info'))->alias('a');
         if ($isOr) {
@@ -68,15 +68,18 @@ class taobaoItemInfoUtils
             $table->where(TableUtils::getTableDetails('taobao_item_info', 'reason'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'commentList'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList'), null);
         }
         $table->where(TableUtils::getTableDetails('taobao_item_info', 'update_time'),"<=",time()-$time);
-        $data=$table->limit($count)->select();
+        $data=$table->limit($count)->order(TableUtils::getTableDetails('taobao_item_info', 'collectCount')." asc,id asc")->select();
         return $data;
     }
     
     
     public  function updateTaobaoItemInfo($data,$itemId){
-        return Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(
+        $table= Db::table(TableUtils::getTableDetails('taobao_item_info'));
+        $data=$table->where(
             TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)
             ->setField($data);
+        //echo $table->getLastSql();
+        return $data;
     }
     
 }
