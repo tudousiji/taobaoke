@@ -177,7 +177,7 @@ class KeyWords extends BaseModel
         return $json['body'];
     }
 
-    private function addItemDb($isInsert = false, $keyword_id, $jsonObj)
+    public function addItemDb($isInsert = false, $keyword_id, $jsonObj)
     {
         if (! isset($jsonObj) || $jsonObj == null || $jsonObj['data'] == null || $jsonObj['data']['data'] == null || $jsonObj['data']['data']['auctionList'] == null || $jsonObj['data']['data']['auctionList']['auctions'] == null || ! is_array($jsonObj['data']['data']['auctionList']['auctions']) || count($jsonObj['data']['data']['auctionList']['auctions']) <= 0) {
             return;

@@ -39,5 +39,10 @@ class keywordsUtils{
             TableUtils::getTableDetails('keywords', 'keyword'), $keyWord)
             ->find();
     }
+    
+    public static function getKeyWordsList($page=1,$pageSize=20){
+        return Db::table(TableUtils::getTableDetails('keywords'))
+        ->limit($pageSize*($page-1),$pageSize)->select();
+    }
 }
 ?>

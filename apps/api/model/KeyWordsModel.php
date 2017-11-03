@@ -41,6 +41,12 @@ class KeyWordsModel extends BaseModel{
         $daren=new keywordsUtils();
         return $daren->findHotKeyWords($keyWord);
     }
+    
+    public function getKeyWordsList($page=1,$pageSize=20){
+        $daren=new keywordsUtils();
+        return $daren->getKeyWordsList($page,$pageSize);
+    }
+    
 }
 
 ?>

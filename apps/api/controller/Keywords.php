@@ -172,6 +172,17 @@ class Keywords extends BaseController
         ];
         echo json_encode($data);
     }
+    
+    /*
+     * 获取关键词列表
+     */
+    public function getKeyWordsList(){
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : "1";
+        $pageSize = isset($_REQUEST['pageSize']) && is_numeric($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : "50";
+        $model = new KeyWordsModel();
+        $list = $model->getKeyWordsList($page,$pageSize);
+        echo json_encode($list);
+    }
 }
 
 ?>
