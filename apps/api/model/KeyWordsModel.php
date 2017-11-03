@@ -47,6 +47,17 @@ class KeyWordsModel extends BaseModel{
         return $daren->getKeyWordsList($page,$pageSize);
     }
     
+    public function getKeyWordsForSubKeyWordsNullList($page=1,$pageSize=20){
+        $daren=new keywordsUtils();
+        return $daren->getKeyWordsForSubKeyWordsNullList($page,$pageSize);
+    }
+    
+    public function updateSubKeyWords($id,$data){
+        $daren=new keywordsUtils();
+        return $daren->updateSubKeyWords($id,$data);
+        
+    }
+    
 }
 
 ?>

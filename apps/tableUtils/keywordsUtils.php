@@ -44,5 +44,17 @@ class keywordsUtils{
         return Db::table(TableUtils::getTableDetails('keywords'))
         ->limit($pageSize*($page-1),$pageSize)->select();
     }
+    
+    public static function getKeyWordsForSubKeyWordsNullList($page=1,$pageSize=20){
+        return Db::table(TableUtils::getTableDetails('keywords'))
+        ->where(TableUtils::getTableDetails('keywords', 'subKeyWords'), null)
+        ->limit($pageSize*($page-1),$pageSize)->order("subKeyWordsCount asc")->select();
+    }
+    
+    public  function updateSubKeyWords($id,$data){
+        return Db::table(TableUtils::getTableDetails('keywords'))->where(
+            TableUtils::getTableDetails('keywords', 'id'), $id)
+            ->setField($data);
+    }
 }
 ?>

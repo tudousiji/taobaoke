@@ -8,6 +8,7 @@ return [
             'id' => 'id',
             'keyword' => 'keyword',
             'subKeyWords'=>'subKeyWords',
+            'subKeyWordsCount'=>'subKeyWordsCount',
             'update_time' => 'update_time'
         ]
     ],

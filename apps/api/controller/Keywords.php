@@ -183,6 +183,53 @@ class Keywords extends BaseController
         $list = $model->getKeyWordsList($page,$pageSize);
         echo json_encode($list);
     }
+    
+    
+    /*
+     * 获取关键词的衍生关键词为空的列表
+     */
+    public function getKeyWordsForSubKeyWordsNullList(){
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : "1";
+        $pageSize = isset($_REQUEST['pageSize']) && is_numeric($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : "50";
+        $model = new KeyWordsModel();
+        $list = $model->getKeyWordsForSubKeyWordsNullList($page,$pageSize);
+        echo json_encode($list);
+    }
+    
+    /*
+     * 设置关键词衍生词为空的关键词
+     */
+    public function addKeyWordsForSubKeyWordsNull(){
+        $json = isset($_REQUEST['data']) && !empty($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        if (empty($json)) {
+            $array = [
+                'Code' => - 1,
+                'msg' => "data数据为空"
+            ];
+            return json_encode($array);
+        }
+        $data = json_decode($json, true);
+        if(count($data['data']['result'])>0){
+            $array=[
+                'subKeyWords'=>json_encode($data['data']['result']),
+                'subKeyWordsCount'=>array('exp', 'subKeyWordsCount+1')
+            ];
+            $model = new KeyWordsModel();
+            $model->updateSubKeyWords($data['id'], $array);
+            $array = [
+                'Code' => 0,
+                'msg' => "成功"
+            ];
+            return json_encode($array);
+        }else{
+            $array = [
+                'Code' => -1,
+                'msg' => "数据为空"
+            ];
+            return json_encode($array);
+        }
+        
+    }
 }
 
 ?>
