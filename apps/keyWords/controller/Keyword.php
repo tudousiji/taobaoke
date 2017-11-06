@@ -72,6 +72,7 @@ class Keyword extends BaseController
             if(empty($item['reason'])){
                 //var_dump("stmp 1");
                 $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
+                
             }else{
                 //var_dump("stmp 2");
                 $array = json_decode($item['reason'],true);
@@ -87,6 +88,7 @@ class Keyword extends BaseController
             $reasonData =json_decode( $item['reason'],true);
         }
         
+       
         
         $commentData=null;
         if ($this->keyConfig['is_web_collector'] &&  (($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) ) {
@@ -107,7 +109,7 @@ class Keyword extends BaseController
         
         //var_dump($reasonData);
         if(!empty($reasonData) && is_array($reasonData) && count($reasonData)>0){
-            $reasonList= $reasonData['data'];
+            $reasonList= $reasonData['impress'];
             //var_dump($reasonList);
             if(!empty($reasonList) && is_array($reasonList) && count($reasonList)>0){
                 $reason="只要".($item['zkFinalPriceWap']-$item['couponAmount']/100)."元超划算,大家觉得";
@@ -121,7 +123,7 @@ class Keyword extends BaseController
                     
                 };
                 if(!empty($commentData) && is_array($commentData) && count($commentData)>0){
-                    $commentList=$commentData['data'];
+                    $commentList=$commentData;
                     
                     if(!empty($commentList) && is_array($commentList) && count($commentList)>0){
                         $reason.="最近大家发表的评论觉得此宝贝:".$commentList[0]['rateContent'];
@@ -154,8 +156,11 @@ class Keyword extends BaseController
         }
         
         
+        if(!empty($item['askeverybodyList'])){
+            $this->assign('askeverybodyList',json_decode($item['askeverybodyList'],true));
+        }
         
-        // $this->assign('askeverybodyList',$askeverybodyList);
+        
         $discount=10;
         if(!empty($item['zkFinalPriceWap']) && !empty($item['couponAmount']) ){
             $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;

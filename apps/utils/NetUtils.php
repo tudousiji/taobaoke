@@ -26,8 +26,8 @@ class NetUtils
         $output = curl_exec($ch);
         //释放curl句柄
         //打印获得的数据
-        var_dump(curl_error($ch));
-        var_dump($output);
+        //var_dump(curl_error($ch));
+        //var_dump($output);
         curl_close($ch);
     } 
     

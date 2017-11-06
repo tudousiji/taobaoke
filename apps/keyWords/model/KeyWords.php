@@ -429,18 +429,18 @@ class KeyWords extends BaseModel
             // print_r($json['body']);
             
             if (! empty($jsonObj) && ! empty($jsonObj['data']) && is_array($jsonObj['data']) && count($jsonObj['data']) > 0 && ! empty($jsonObj['data']['impress']) && is_array($jsonObj['data']['impress']) && count($jsonObj['data']['impress']) > 0) {
-                $array = [
+               /*  $array = [
                     'time' => time(),
                     'data' => $jsonObj['data']['impress']
                 ];
-                $arrayjson = json_encode($array);
+                $arrayjson = json_encode($array); */
                 $data = [
-                    'reason' => $arrayjson
+                    'reason' => json_encode($jsonObj['data']),
                 ];
-                // var_dump($arrayjson);
+                
                 $tableUtils = new \app\utils\taobaoItemInfoUtils();
                 $status = $tableUtils->updateReasonList($data, $itemId);
-                return $array;
+                return $jsonObj['data'];
             } else {
                 return array();
             }
