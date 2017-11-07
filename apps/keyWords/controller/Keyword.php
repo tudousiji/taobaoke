@@ -1,6 +1,6 @@
 <?php
 namespace app\keyWords\controller;
-
+use app\tryOut\model\articleModel;
 use app\base\BaseController;
 use app\keyWords\model\KeyWords;
 use think\Request;
@@ -182,6 +182,53 @@ class Keyword extends BaseController
         if(!empty($item['zkFinalPriceWap']) && !empty($item['couponAmount']) ){
             $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;
         }
+        
+        $KeyWordsModel = new \app\keyWords\model\KeyWords(); //
+        $randGoodsList = $KeyWordsModel->getRandList(10); // 随机10个商品
+        
+        $articleModel = new articleModel();
+        $randTryList=$articleModel->getRandList(10);//随机10条试用
+        if($randTryList!=null){
+            for($i=0;$i<count($randTryList);$i++){
+                $randTryList[$i]['data']=json_decode($randTryList[$i]['data'],true);
+                $randTryList[$i]['introduction'] = "";
+                if (isset($randTryList[$i]['data']['overall']['content'])) {
+                    $randTryList[$i]['introduction'] = $randTryList[$i]['data']['overall']['content'];
+                }
+                if ($i == 0) {
+                    if (strlen($randTryList[$i]['introduction']) < 650) {
+                        if (isset($randTryList[$i]['data']['highlight']) && is_array($randTryList[$i]['data']['highlight']) && count($randTryList[$i]['data']['highlight']) > 0) {
+                            $size = count($randTryList[$i]['data']['highlight']);
+                            for ($j = 0; $j < $size; $j ++) {
+                                $randTryList[$i]['introduction'] .= $randTryList[$i]['data']['highlight'][$j]['content'];
+                                if (strlen($randTryList[$i]['introduction']) >= 650) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (strlen($randTryList[$i]['introduction']) < 650) {
+                        if (isset($randTryList[$i]['data']['conclusion']['cons'])) {
+                            $randTryList[$i]['introduction'] .= $randTryList[$i]['data']['conclusion']['cons'];
+                        }
+                    } else {
+                        continue;
+                    }
+                    if (strlen($randTryList[$i]['introduction']) < 650) {
+                        if (isset($randTryList[$i]['data']['conclusion']['pros'])) {
+                            $randTryList[$i]['introduction'] .= $randTryList[$i]['data']['conclusion']['pros'];
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+            }
+    
+        }
+       
+        
+        $this->assign('randTryList', $randTryList);
+        $this->assign('randGoodsList', $randGoodsList);
         
         $this->assign('discount', $discount);
         $this->assign('item', $item);

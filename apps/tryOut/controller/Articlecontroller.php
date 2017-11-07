@@ -3,7 +3,7 @@ namespace app\tryOut\controller;
 
 use app\base\BaseController;
 use app\tryOut\model\articleModel;
-use think\Request;
+
 require_once 'apps/utils/function.php';
 
 class Articlecontroller extends BaseController
@@ -55,7 +55,7 @@ class Articlecontroller extends BaseController
             }
         }
         
-        $KeyWordsModel = new \app\keyWords\model\KeyWords(); // 随机10条试用
+        $KeyWordsModel = new \app\keyWords\model\KeyWords(); // 
         $randGoodsList = $KeyWordsModel->getRandList(10); // 随机10个商品
         
         for ($i = 0; $i < count($list); $i ++) {

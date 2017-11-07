@@ -6,13 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="keywords" content="{if isset($itemKeyWords) && !empty($itemKeyWords)}{$itemKeyWords}{/if}">
-<meta name="description" content="欢迎来到好券vip领取{$item.title|strip_tags=###}的优惠券,此宝贝原价{$item.zkFinalPriceWap}，券后价{$item.zkFinalPriceWap-$item.couponAmount/100}元,最近30天销量{if
+<meta name="keywords"
+	content="{if isset($itemKeyWords) && !empty($itemKeyWords)}{$itemKeyWords}{/if}">
+<meta name="description"
+	content="欢迎来到好券vip领取{$item.title|strip_tags=###}的优惠券,此宝贝原价{$item.zkFinalPriceWap}，券后价{$item.zkFinalPriceWap-$item.couponAmount/100}元,最近30天销量{if
 									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件。好券vip,更多淘宝优惠券任你领取。">
 <title>{$item.title|strip_tags=###}_{$subtitle}</title>
 <link rel="dns-prefetch" href="{$host}">
 <link rel="stylesheet" href="/public/static/css/base.css">
 <link rel="stylesheet" href="/public/static/css/item.css">
+<link rel="stylesheet" href="/public/static/css/article_list.css">
 <script src="/public/static/js/jquery-3.2.1.min.js"></script>
 <script src="/public/static/js/item.js"></script>
 </head>
@@ -31,12 +34,10 @@ var item={$item.itemId|urlIdcode=###,true};
 				<div class="d-top-container">
 					<div class="d-top-layer">
 						<div class="crumbs-items pull-left" id="M-crumbs">
-							<a class="crumbs-item crumbs-item-0"
-								href="/"><span>当前位置：</span><span
+							<a class="crumbs-item crumbs-item-0" href="/"><span>当前位置：</span><span
 								class="crumbs-item-title">全部推荐</span></a> <a
 								class="crumbs-item crumbs-item-1"
-								href="/goods/{$cate['id']}_1.html"
-								target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
+								href="/goods/{$cate['id']}_1.html" target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
 								class="crumbs-item-title">{$cate['keyword']}</span></a>
 						</div>
 						<div class="d-top-layer-property pull-right">
@@ -59,7 +60,7 @@ var item={$item.itemId|urlIdcode=###,true};
 									class="item-promotion-orgprice d-goods-price-origin mr-10 nowprice">现价:{$item.zkFinalPriceWap}元</span>
 								<span class=" d-goods-price-now mr-10 sold">已售:{if
 									$item.biz30Day>9999}{$item.biz30Day/10000|round=###,2}万{else}{$item.biz30Day}{/if}件</span>
-							
+
 							</div>
 
 
@@ -79,18 +80,16 @@ var item={$item.itemId|urlIdcode=###,true};
 									<div class="icon-left">券</div>
 									<span>{$item.couponAmount/100 }元</span>
 								</div>
-								{if $discount<10}
-								<span class="item-promotion-thisprice d-goods-price-now mr-10" style="margin-left:10px">{$discount}折</span>
-								{/if}
-								
+								{if $discount<10} <span
+									class="item-promotion-thisprice d-goods-price-now mr-10"
+									style="margin-left: 10px">{$discount}折</span> {/if}
+
 							</div>
 
-							<a class="d-goods-redirect-link item"
-								
-								target="_blank" isconvert="1">领取内部优惠券</a> <a
-								class="d-goods-redirect-link-2 item"
-								
-								target="_blank" isconvert="1">直达商品链接</a>
+							<a class="d-goods-redirect-link item" target="_blank"
+								isconvert="1">领取内部优惠券</a> <a
+								class="d-goods-redirect-link-2 item" target="_blank"
+								isconvert="1">直达商品链接</a>
 
 							<div class="statement">
 								<p style="color: #999;">声明：商品的价格与折扣仅供参考，信息可能根据时间变化，商家调整而过期。敬请理解</p>
@@ -112,20 +111,23 @@ var item={$item.itemId|urlIdcode=###,true};
 						</div>
 						<div class="d-recommend-reason-content">
 							<div class="line1">{if isset($reason)}{$reason}{/if}</div>
-							
-							{if isset($reasonData) && !empty($reasonData) 
-							&& isset($reasonData.count) && !empty($reasonData.count) }
-							
+
+							{if isset($reasonData) && !empty($reasonData) &&
+							isset($reasonData.count) && !empty($reasonData.count) }
+
 							<div class="line2">
-								该商品共{$reasonData.count.total}个评价， 好评率：{$PraiseRate}%， 其中好评{$reasonData.count.good}， 中评{$reasonData.count.normal}， 差评{$reasonData.count.bad}， 追评{$reasonData.count.additional}，图片{$reasonData.count.pic} <span
+								该商品共{$reasonData.count.total}个评价， 好评率：{$PraiseRate}%，
+								其中好评{$reasonData.count.good}， 中评{$reasonData.count.normal}，
+								差评{$reasonData.count.bad}，
+								追评{$reasonData.count.additional}，图片{$reasonData.count.pic} <span
 									class="line-href item">查看全部&gt;</span>
 							</div>
 							{/if}
 						</div>
 					</div>
-					
+
 					{if condition="isset($commentData) && is_array($commentData) &&
-						count($commentData)>0"} 
+					count($commentData)>0"}
 					<div
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
@@ -134,10 +136,10 @@ var item={$item.itemId|urlIdcode=###,true};
 							<div class="clearfix"></div>
 						</div>
 
-<div class="d-comment-items">
-						{foreach $commentData as $vo}
+						<div class="d-comment-items">
+							{foreach $commentData as $vo}
 
-						
+
 							<div class="d-comment-item">
 								<div class="d-comment-item-top">
 									<div class="d-comment-nickname pull-left">{$vo.displayUserNick}</div>
@@ -145,31 +147,28 @@ var item={$item.itemId|urlIdcode=###,true};
 									<div class="d-comment-type pull-left">{$vo.auctionSku}</div>
 								</div>
 								<div class="d-comment-content">{$vo.rateContent}</div>
-								{if isset($vo.pics) && is_array($vo.pics) &&
-										count($vo.pics)>0} 
+								{if isset($vo.pics) && is_array($vo.pics) && count($vo.pics)>0}
 								<div class="d-comment-pictures">
 									<ul class="d-comment-pictures-items">
 										{foreach $vo.pics as $pic}
 										<li><img class="item" src="{$taobao_img_url}{$pic}_50x50"
-											large-src="{$taobao_img_url}{$pic}_50x50"> 
+											large-src="{$taobao_img_url}{$pic}_50x50">
 											<div class="d-comment-pictures-items-arrow-down"></div></li>
 										{/foreach}
 										<div class="fnClear"></div>
 									</ul>
-						
+
 								</div>
-								
-							{/if}
+
+								{/if}
 							</div>
-						
-						{/foreach} 
+
+							{/foreach}
 						</div>
 					</div>
-{/if}
-
-{if condition="isset($askeverybodyList) && is_array($askeverybodyList) &&
-						count($askeverybodyList)>0"}
-<link rel="stylesheet" href="/public/static/css/askeverybody.css">
+					{/if} {if condition="isset($askeverybodyList) &&
+					is_array($askeverybodyList) && count($askeverybodyList)>0"}
+					<link rel="stylesheet" href="/public/static/css/askeverybody.css">
 					<div
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
@@ -177,77 +176,148 @@ var item={$item.itemId|urlIdcode=###,true};
 							<span class="section-more pull-right item">更多说法&gt;</span>
 							<div class="clearfix"></div>
 						</div>
-						
-						 {foreach $askeverybodyList as $vo}
-							<div class="kg-rate-ct-review-item">
-				<div class="from-whom">
-					<img class="avatar"
-						src="/public/static/images/askbodyAveal.png_40x40.jpg">
-					<div>{$vo.nick}</div>
-				</div>
-				<div class="review-details kg-rate-wd-ask-around-detail">
-					<div class="q-or-a q">
-						<span class="icon-type">问</span>
-						<div class="detail-wrapper">
-							<div class="tb-tbcr-content heavier">{$vo.question}</div>
-							<div class="kg-rate-info-ops tb-tbcr-mt">
-								<div class="info-part">{$vo.gmtCreate}</div>
+
+						{foreach $askeverybodyList as $vo}
+						<div class="kg-rate-ct-review-item">
+							<div class="from-whom">
+								<img class="avatar"
+									src="/public/static/images/askbodyAveal.png_40x40.jpg">
+								<div>{$vo.nick}</div>
 							</div>
-						</div>
-					</div>
-					
-					{foreach $vo.answers as $item}
-	
-					<div class="q-or-a a">
-						<span class="icon-type">答</span>
-						<div class="detail-wrapper">
-							<div class="tb-tbcr-content">{$item.desc}</div>
-	
-							<div class="kg-rate-info-ops tb-tbcr-mt">
-								<div class="info-part">
-									<span class="mark-buyer-seller">已买的人</span> {$item.user.nick}
+							<div class="review-details kg-rate-wd-ask-around-detail">
+								<div class="q-or-a q">
+									<span class="icon-type">问</span>
+									<div class="detail-wrapper">
+										<div class="tb-tbcr-content heavier">{$vo.question}</div>
+										<div class="kg-rate-info-ops tb-tbcr-mt">
+											<div class="info-part">{$vo.gmtCreate}</div>
+										</div>
+									</div>
 								</div>
-								<div class="info-part">{$item.createTime}</div>
-								<ul class="ops">
-									<li><span class="J_KgRate_AskAround_Like op-btn">赞 </span> <span class="J_KgRate_AskAround_LikeNum tb-tbcr-num">({$item.totalLike})</span>
-									</li>
-								</ul>
+
+								{foreach $vo.answers as $item}
+
+								<div class="q-or-a a">
+									<span class="icon-type">答</span>
+									<div class="detail-wrapper">
+										<div class="tb-tbcr-content">{$item.desc}</div>
+
+										<div class="kg-rate-info-ops tb-tbcr-mt">
+											<div class="info-part">
+												<span class="mark-buyer-seller">已买的人</span>
+												{$item.user.nick}
+											</div>
+											<div class="info-part">{$item.createTime}</div>
+											<ul class="ops">
+												<li><span class="J_KgRate_AskAround_Like op-btn">赞
+												</span> <span class="J_KgRate_AskAround_LikeNum tb-tbcr-num">({$item.totalLike})</span>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								{/foreach}
+
+
+								<div class="q-or-a J_KgRate_AskAround_MoreAnswers more">
+									共 {$vo.count} 个回答 {if $vo.count>count($vo.answers)}<span
+										class="J_KgRate_AskAround_MoreAnswers_State state-more item">查看更多</span>{/if}
+								</div>
+
 							</div>
 						</div>
+						{/foreach}
+
 					</div>
-					{/foreach}
-					
-	
-					<div class="q-or-a J_KgRate_AskAround_MoreAnswers more">
-						共 {$vo.count} 个回答 {if $vo.count>count($vo.answers)}<span
-							class="J_KgRate_AskAround_MoreAnswers_State state-more item"
-							>查看更多</span>{/if}
-					</div>
-	
-				</div>
-			</div>
-					{/foreach} 
-						
-					</div>
-{/if}
+					{/if}
 
 
 
 				</div>
 				<div class="d-bottom-right">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					<div class="feature-sidebar">
-						<div class="feature-hot temai-section-top-color mb-20">
-							<div class="feature-hot-title font-title-16 pl-10">热门推荐</div>
-							<ul class="feature-hot-items" id="D-temai">
-							</ul>
+
+
+						{if isset($randTryList) && is_array($randTryList) &&
+						count($randTryList)>0}
+						<div class="rec-tuijian" style="margin-top: 0px">
+							<div class="tuijian-tl">
+								<ul>
+									<li class="cur" index="0"><a href="javascript:;">最新推荐</a><i
+										class="xia-icon"></i></li>
+
+								</ul>
+							</div>
+							<div class="tuijian-txt">
+								<ul class="r-tops">
+									{volist name="randTryList" id="vo" } {if $i==1}
+									<div class="top-ranks">
+										<a title="{$vo.data.item.title}" href="/try/{$vo.id}.html"
+											target="_blank"><img
+											src="{$taobao_img_url}tfscom/{$vo.data.item.picUrl}{$img_size.small}"><span
+											class="rank-cons"><b>{$vo.data.item.title|chinesesubstr=###,0,36}</b>
+												<p>{$vo.introduction|chinesesubstr=###,0,350}</p></span></a>
+									</div>
+									{else /}
+									<li><a title="{$vo.data.item.title}"
+										href="/try/{$vo.id}.html" target="_blank">{$vo.data.item.title|chinesesubstr=###,0,36}</a></li>
+									{/if} {/volist}
+								</ul>
+							</div>
+
 						</div>
-						<div class="feedback-section feedback-section-top-color"
-							id="M-feedback">
-							<div class="feedback-p1">问题反馈QQ群：666666</div>
-							<a class="feedback-p2" target="_blank"
-								href="#"
-								>加入反馈</a>
+						{/if} {if isset($randGoodsList) && is_array($randGoodsList) &&
+						count($randGoodsList)>0}
+
+						<div class="rec-tuijian">
+							<div class="tuijian-tl">
+								<ul>
+									<li class="cur" index="0"><a href="javascript:;">精彩推荐</a><i
+										class="xia-icon"></i></li>
+
+								</ul>
+							</div>
+							<div class="tuijian-txt">
+								<ul class="r-tops">
+									{volist name="randGoodsList" id="vo" } {if $i==1}
+									<div class="top-ranks">
+										<a title="{$vo.title}"
+											href="/goods/{$vo.itemId|urlIdcode=###,true}.html"
+											target="_blank"><img
+											src="{$taobao_img_url}{$vo.pictUrl}{$img_size.small}"><span
+											class="rank-cons"><b>{$vo.title|strip_tags=###|chinesesubstr=###,0,36}</b>
+												<p>{$vo.reason|chinesesubstr=###,0,350}</p></span></a>
+									</div>
+									{else /}
+									<li><a title="{$vo.title}"
+										href="/goods/{$vo.itemId|urlIdcode=###,true}.html"
+										target="_blank">{$vo.title|strip_tags=###|chinesesubstr=###,0,36}</a></li>
+									{/if} {/volist}
+								</ul>
+							</div>
+
 						</div>
+						{/if}
+
+
+						{include file="../../public/advertisement" /}
 					</div>
 				</div>
 				<div class="fnClear"></div>
