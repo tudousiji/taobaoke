@@ -1,5 +1,6 @@
 <?php
 namespace app\keyWords\controller;
+
 use app\tryOut\model\articleModel;
 use app\base\BaseController;
 use app\keyWords\model\KeyWords;
@@ -46,7 +47,7 @@ class Keyword extends BaseController
         $this->assign('subKeyWords', $subKeyWords);
         $count = $KeyWords->getCount();
         $this->assign('page', page($page, $count));
-        $this->assign('count', $count*$this->keyConfig['keyWordPageSize']);
+        $this->assign('count', $count * $this->keyConfig['keyWordPageSize']);
         $this->assign('keyWord', $keyWord['keyword']);
         return $this->fetch('list');
     }
@@ -55,142 +56,129 @@ class Keyword extends BaseController
     {
         $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) && is_numeric($_REQUEST['itemId']) ? urlIdcode($_REQUEST['itemId'], false) : "1";
         $KeyWords = new KeyWords();
-       
+        
         $item = $KeyWords->getGoodsItems($itemId);
         
-        if(empty($item['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
-            $utils=new \app\utils\taobaoItemInfoUtils();
-            $utils->autoItemId($item['itemId'],$item['title'],true);
+        if (empty($item['taobao_item_info_itemId'])) { // 往淘宝信息库里面插入itemid
+            $utils = new \app\utils\taobaoItemInfoUtils();
+            $utils->autoItemId($item['itemId'], $item['title'], true);
         }
         
         $cate = $KeyWords->getIdForKeywords($item['keyword_id']);
         $this->assign('cate', $cate);
         
-        
-        $reasonData=null;
-        if ($this->keyConfig['is_web_collector'] && (($this->keyConfig['reason_list_cache_time'] != - 1) || empty($item['reason'])) ) {
-            if(empty($item['reason'])){
-                //var_dump("stmp 1");
+        $reasonData = null;
+        if ($this->keyConfig['is_web_collector'] && (($this->keyConfig['reason_list_cache_time'] != - 1) || empty($item['reason']))) {
+            if (empty($item['reason'])) {
+                // var_dump("stmp 1");
                 $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
-                
-            }else{
-                //var_dump("stmp 2");
-                $array = json_decode($item['reason'],true);
-                //var_dump(( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) );
-                if (!$array || !isset($array['time']) ||  ( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) ) {
-                    //var_dump("stmp 3");
+            } else {
+                // var_dump("stmp 2");
+                $array = json_decode($item['reason'], true);
+                // var_dump(( $array['time'] <= (time() - $this->keyConfig['reason_list_cache_time'])) );
+                if (! $array || ! isset($array['time']) || ($array['time'] <= (time() - $this->keyConfig['reason_list_cache_time']))) {
+                    // var_dump("stmp 3");
                     $reasonData = $KeyWords->getReasonList($itemId, $item['id']);
                 }
             }
             
-            //$this->assign('reasonList', $reasonList);
-        }else{
-            $reasonData =json_decode( $item['reason'],true);
+            // $this->assign('reasonList', $reasonList);
+        } else {
+            $reasonData = json_decode($item['reason'], true);
         }
         $this->assign('reasonData', $reasonData);
-       
-        if (isset($reasonData) && !empty($reasonData)
-            && isset($reasonData['count']) && !empty($reasonData['count']) &&
-            isset($reasonData['count']['total']) && isset($reasonData['count']['bad']) && isset($reasonData['count']['normal']) && isset($reasonData['count']['good']) 
-            && $reasonData['count']['bad']!=0 && $reasonData['count']['normal']!=0 && $reasonData['count']['good']!=0
-            ){
-                $PraiseRate=(1-(($reasonData['count']['normal']+$reasonData['count']['bad'])/$reasonData['count']['good']))*100;
-                $this->assign('PraiseRate', $PraiseRate);
-                
-        }else{
+        
+        if (isset($reasonData) && ! empty($reasonData) && isset($reasonData['count']) && ! empty($reasonData['count']) && isset($reasonData['count']['total']) && isset($reasonData['count']['bad']) && isset($reasonData['count']['normal']) && isset($reasonData['count']['good']) && $reasonData['count']['bad'] != 0 && $reasonData['count']['normal'] != 0 && $reasonData['count']['good'] != 0) {
+            $PraiseRate = (1 - (($reasonData['count']['normal'] + $reasonData['count']['bad']) / $reasonData['count']['good'])) * 100;
+            $this->assign('PraiseRate', $PraiseRate);
+        } else {
             $this->assign('PraiseRate', 100);
         }
         
-        $commentData=null;
-        if ($this->keyConfig['is_web_collector'] &&  (($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) ) {
-            if(empty($item['commentList'])){
+        $commentData = null;
+        if ($this->keyConfig['is_web_collector'] && (($this->keyConfig['comment_list_cache_time'] != - 1) || empty($item['commentList']))) {
+            if (empty($item['commentList'])) {
                 $commentData = $KeyWords->getCommentList($itemId, $item['id']);
-            }else{
-                $array = json_decode($item['commentList'],true);
-                if (!$array || !isset($array['time']) ||  ( $array['time'] <= (time() - $this->keyConfig['comment_list_cache_time'])) ) {
+            } else {
+                $array = json_decode($item['commentList'], true);
+                if (! $array || ! isset($array['time']) || ($array['time'] <= (time() - $this->keyConfig['comment_list_cache_time']))) {
                     $commentData = $KeyWords->getCommentList($itemId, $item['id']);
                 }
             }
-        }else{
-            $commentData =json_decode( $item['commentList'],true);
+        } else {
+            $commentData = json_decode($item['commentList'], true);
         }
-        //var_dump($commentData);
-        //var_dump(isset($commentData) && is_array($commentData) && count($commentData)>0);
+        // var_dump($commentData);
+        // var_dump(isset($commentData) && is_array($commentData) && count($commentData)>0);
         $this->assign('commentData', $commentData);
         
-        //var_dump($reasonData);
-        if(!empty($reasonData) && is_array($reasonData) && count($reasonData)>0){
-            $reasonList= $reasonData['impress'];
-            //var_dump($reasonList);
-            if(!empty($reasonList) && is_array($reasonList) && count($reasonList)>0){
-                $reason="只要".($item['zkFinalPriceWap']-$item['couponAmount']/100)."元超划算,大家觉得";
-                for($i=0;$i<count($reasonList);$i++){
-                    $reason.=("【".$reasonList[$i]['title']);
-                    if($reasonList[$i]['count']>0){
-                        $reason.="(".$reasonList[$i]['count']."人)】";
-                    }else{
-                        $reason.="】  ";
+        // var_dump($reasonData);
+        if (! empty($reasonData) && is_array($reasonData) && count($reasonData) > 0) {
+            $reasonList = $reasonData['impress'];
+            // var_dump($reasonList);
+            if (! empty($reasonList) && is_array($reasonList) && count($reasonList) > 0) {
+                $reason = "只要" . ($item['zkFinalPriceWap'] - $item['couponAmount'] / 100) . "元超划算,大家觉得";
+                for ($i = 0; $i < count($reasonList); $i ++) {
+                    $reason .= ("【" . $reasonList[$i]['title']);
+                    if ($reasonList[$i]['count'] > 0) {
+                        $reason .= "(" . $reasonList[$i]['count'] . "人)】";
+                    } else {
+                        $reason .= "】  ";
                     }
+                }
+                ;
+                if (! empty($commentData) && is_array($commentData) && count($commentData) > 0) {
+                    $commentList = $commentData;
                     
-                };
-                if(!empty($commentData) && is_array($commentData) && count($commentData)>0){
-                    $commentList=$commentData;
-                    
-                    if(!empty($commentList) && is_array($commentList) && count($commentList)>0){
-                        $reason.="最近大家发表的评论觉得此宝贝:".$commentList[0]['rateContent'];
+                    if (! empty($commentList) && is_array($commentList) && count($commentList) > 0) {
+                        $reason .= "最近大家发表的评论觉得此宝贝:" . $commentList[0]['rateContent'];
                     }
                 }
                 
                 $this->assign('reason', $reason);
             }
-            
         }
-       
         
-            $titleKeyWords=array();
-            if($this->keyConfig['is_web_collector'] && empty($item['keywords'])){
-                $titleKeyWords = $KeyWords->getBaiDuPos($item['title'],$item['id']);
-            }
+        $titleKeyWords = array();
+        if ($this->keyConfig['is_web_collector'] && empty($item['keywords'])) {
+            $titleKeyWords = $KeyWords->getBaiDuPos($item['title'], $item['id']);
+        }
+        
+        if (! empty($item['keywords'])) {
+            $titleKeyWords = json_decode($item['keywords'], true);
             
-            if(!empty($item['keywords'])){
-                $titleKeyWords =json_decode( $item['keywords'],true);
-                
-                $keyWordsCount=count($titleKeyWords);
-                
-                if($keyWordsCount>0){
-                    $itemKeyWords="";
-                    for($i=0;$i<$keyWordsCount;$i++){
-                        $itemKeyWords.=$titleKeyWords[$i];
-                        if($i<($keyWordsCount-1)){
-                            $itemKeyWords.=",";
-                        }
+            $keyWordsCount = count($titleKeyWords);
+            
+            if ($keyWordsCount > 0) {
+                $itemKeyWords = "";
+                for ($i = 0; $i < $keyWordsCount; $i ++) {
+                    $itemKeyWords .= $titleKeyWords[$i];
+                    if ($i < ($keyWordsCount - 1)) {
+                        $itemKeyWords .= ",";
                     }
-                   
-                    $this->assign('itemKeyWords', $itemKeyWords);
                 }
+                
+                $this->assign('itemKeyWords', $itemKeyWords);
             }
-            
-        
-        
-        
-        if(!empty($item['askeverybodyList'])){
-            $this->assign('askeverybodyList',json_decode($item['askeverybodyList'],true));
         }
         
+        if (! empty($item['askeverybodyList'])) {
+            $this->assign('askeverybodyList', json_decode($item['askeverybodyList'], true));
+        }
         
-        $discount=10;
-        if(!empty($item['zkFinalPriceWap']) && !empty($item['couponAmount']) ){
-            $discount=number_format(($item['zkFinalPriceWap']-($item['couponAmount']/100))/$item['zkFinalPriceWap'],2)*10;
+        $discount = 10;
+        if (! empty($item['zkFinalPriceWap']) && ! empty($item['couponAmount'])) {
+            $discount = number_format(($item['zkFinalPriceWap'] - ($item['couponAmount'] / 100)) / $item['zkFinalPriceWap'], 2) * 10;
         }
         
         $KeyWordsModel = new \app\keyWords\model\KeyWords(); //
         $randGoodsList = $KeyWordsModel->getRandList(10); // 随机10个商品
         
         $articleModel = new articleModel();
-        $randTryList=$articleModel->getRandList(10);//随机10条试用
-        if($randTryList!=null){
-            for($i=0;$i<count($randTryList);$i++){
-                $randTryList[$i]['data']=json_decode($randTryList[$i]['data'],true);
+        $randTryList = $articleModel->getRandList(10); // 随机10条试用
+        if ($randTryList != null) {
+            for ($i = 0; $i < count($randTryList); $i ++) {
+                $randTryList[$i]['data'] = json_decode($randTryList[$i]['data'], true);
                 $randTryList[$i]['introduction'] = "";
                 if (isset($randTryList[$i]['data']['overall']['content'])) {
                     $randTryList[$i]['introduction'] = $randTryList[$i]['data']['overall']['content'];
@@ -223,9 +211,7 @@ class Keyword extends BaseController
                     }
                 }
             }
-    
         }
-       
         
         $this->assign('randTryList', $randTryList);
         $this->assign('randGoodsList', $randGoodsList);
@@ -292,35 +278,34 @@ class Keyword extends BaseController
             
             return $this->fetch('list');
         }
-        
     }
-    
-    
-    //js获取url并跳转
-    public function getItemUrl(){
+
+    // js获取url并跳转
+    public function getItemUrl()
+    {
         $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) && is_numeric($_REQUEST['itemId']) ? urlIdcode($_REQUEST['itemId'], false) : "";
-        if(empty($itemId)){
-            $array=[
-                'code'=>-1,
-                'msg'=>"itemId错误",
+        if (empty($itemId)) {
+            $array = [
+                'code' => - 1,
+                'msg' => "itemId错误"
             ];
             echo json_encode($array);
-            return ;
+            return;
         }
         
         $keywords = new KeyWords();
         $item = $keywords->getItemUrl($itemId);
-        if($item!=null){
-            $array=[
-                'code'=>0,
-                'msg'=>"成功",
-                'url'=>!empty($item['shareUrl'])?$item['shareUrl']:$item['clickUrl'],
+        if ($item != null) {
+            $array = [
+                'code' => 0,
+                'msg' => "成功",
+                'url' => ! empty($item['shareUrl']) ? $item['shareUrl'] : $item['clickUrl']
             ];
             echo json_encode($array);
-        }else{
-            $array=[
-                'code'=>-1,
-                'msg'=>"没有查到此id数据",
+        } else {
+            $array = [
+                'code' => - 1,
+                'msg' => "没有查到此id数据"
             ];
             echo json_encode($array);
         }

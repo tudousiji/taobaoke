@@ -13,6 +13,19 @@ return [
         ]
     ],
     
+    
+    // 关键词表临时缓存表
+    'keywords_cache' => [
+        'table_name' => 'keywords',
+        'table_field' => [
+            'id' => 'id',
+            'keyword' => 'keyword',
+            'subKeyWords'=>'subKeyWords',
+            'subKeyWordsCount'=>'subKeyWordsCount',
+            'update_time' => 'update_time'
+        ]
+    ],
+    
     // 关键词数据获取表
     'keywords_details' => [
         'table_name' => 'keywords_details',
@@ -143,7 +156,6 @@ return [
             'askeverybodyList'=>'askeverybodyList',
             'collectCount'=>'collectCount',
             'update_time'=>'update_time',
-            
         ]
     ],
 ];

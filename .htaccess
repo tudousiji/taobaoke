@@ -16,4 +16,5 @@
   
   RewriteCond %{QUERY_STRING} ^q=.+$
   RewriteRule ^index\.php$ /index.php/keyWords/Keyword/q [QSA,R]
+  RewriteRule ^index\.html$ /index.php
 </IfModule>
