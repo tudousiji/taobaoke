@@ -315,6 +315,15 @@
 	text-align: center;
 }
 
+.d-comment-type{
+	margin-left:20px;
+}
+
+.d-comment-item{
+	border-bottom: 1px solid #D4D4D4;
+	padding-bottom:20px;
+}
+
 .nowprice {
 	font-size: 30px;
 }

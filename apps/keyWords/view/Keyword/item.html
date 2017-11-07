@@ -112,12 +112,15 @@ var item={$item.itemId|urlIdcode=###,true};
 						</div>
 						<div class="d-recommend-reason-content">
 							<div class="line1">{if isset($reason)}{$reason}{/if}</div>
+							
+							{if isset($reasonData) && !empty($reasonData) 
+							&& isset($reasonData.count) && !empty($reasonData.count) }
+							
 							<div class="line2">
-								该商品共9607个评价， 好评率：99%， 其中好评9549， 中评42， 差评16 <span
-									class="line-href"><a
-									href="https://item.jd.com/10659967038.html#crumb-wrap#comment"
-									target="_blank" isconvert="1">查看全部&gt;</a></span>
+								该商品共{$reasonData.count.total}个评价， 好评率：{$PraiseRate}%， 其中好评{$reasonData.count.good}， 中评{$reasonData.count.normal}， 差评{$reasonData.count.bad}， 追评{$reasonData.count.additional}，图片{$reasonData.count.pic} <span
+									class="line-href item">查看全部&gt;</span>
 							</div>
+							{/if}
 						</div>
 					</div>
 					
@@ -127,20 +130,19 @@ var item={$item.itemId|urlIdcode=###,true};
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
 							<div class="section-title pull-left">图文评价</div>
-							<a class="section-more pull-right item"
-								target="_blank" isconvert="1">更多评价&gt;</a>
+							<span class="section-more pull-right item">更多评价&gt;</span>
 							<div class="clearfix"></div>
 						</div>
 
-
+<div class="d-comment-items">
 						{foreach $commentData as $vo}
 
-						<div class="d-comment-items">
+						
 							<div class="d-comment-item">
 								<div class="d-comment-item-top">
 									<div class="d-comment-nickname pull-left">{$vo.displayUserNick}</div>
 									<div class="d-comment-time pull-left">{$vo.rateDate}</div>
-									<div class="d-comment-time pull-left">{$vo.auctionSku}</div>
+									<div class="d-comment-type pull-left">{$vo.auctionSku}</div>
 								</div>
 								<div class="d-comment-content">{$vo.rateContent}</div>
 								{if isset($vo.pics) && is_array($vo.pics) &&
@@ -148,7 +150,7 @@ var item={$item.itemId|urlIdcode=###,true};
 								<div class="d-comment-pictures">
 									<ul class="d-comment-pictures-items">
 										{foreach $vo.pics as $pic}
-										<li><img src="{$taobao_img_url}{$pic}_50x50"
+										<li><img class="item" src="{$taobao_img_url}{$pic}_50x50"
 											large-src="{$taobao_img_url}{$pic}_50x50"> 
 											<div class="d-comment-pictures-items-arrow-down"></div></li>
 										{/foreach}
@@ -159,9 +161,9 @@ var item={$item.itemId|urlIdcode=###,true};
 								
 							{/if}
 							</div>
-						</div>
-						{/foreach} 
 						
+						{/foreach} 
+						</div>
 					</div>
 {/if}
 
@@ -172,7 +174,7 @@ var item={$item.itemId|urlIdcode=###,true};
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
 							<div class="section-title pull-left">大家说</div>
-							<a class="section-more pull-right item" target="_blank" isconvert="1">更多说法&gt;</a>
+							<span class="section-more pull-right item">更多说法&gt;</span>
 							<div class="clearfix"></div>
 						</div>
 						
@@ -180,8 +182,8 @@ var item={$item.itemId|urlIdcode=###,true};
 							<div class="kg-rate-ct-review-item">
 				<div class="from-whom">
 					<img class="avatar"
-						src="//wwc.alicdn.com/avatar/getAvatar.do?userIdStr=PCPIXH7evC7ePm9hMG*IPGxWXHQGPGHWO87HMm7eOFgT&amp;width=40&amp;height=40&amp;type=sns">
-					<div>8***8</div>
+						src="/public/static/images/askbodyAveal.png_40x40.jpg">
+					<div>{$vo.nick}</div>
 				</div>
 				<div class="review-details kg-rate-wd-ask-around-detail">
 					<div class="q-or-a q">
@@ -207,10 +209,7 @@ var item={$item.itemId|urlIdcode=###,true};
 								</div>
 								<div class="info-part">{$item.createTime}</div>
 								<ul class="ops">
-									<li><span class="J_KgRate_AskAround_Like op-btn"
-										data-kg-rate-ask-around-answer-meta="92899042886|92969684870|false">
-	
-											赞 </span> <span class="J_KgRate_AskAround_LikeNum tb-tbcr-num">(0)</span>
+									<li><span class="J_KgRate_AskAround_Like op-btn">赞 </span> <span class="J_KgRate_AskAround_LikeNum tb-tbcr-num">({$item.totalLike})</span>
 									</li>
 								</ul>
 							</div>
@@ -220,9 +219,9 @@ var item={$item.itemId|urlIdcode=###,true};
 					
 	
 					<div class="q-or-a J_KgRate_AskAround_MoreAnswers more">
-						共 8 个回答 <span
-							class="J_KgRate_AskAround_MoreAnswers_State state-more"
-							data-kg-rate-gl="stsq.1.6">查看更多</span>
+						共 {$vo.count} 个回答 {if $vo.count>count($vo.answers)}<span
+							class="J_KgRate_AskAround_MoreAnswers_State state-more item"
+							>查看更多</span>{/if}
 					</div>
 	
 				</div>
@@ -244,10 +243,10 @@ var item={$item.itemId|urlIdcode=###,true};
 						</div>
 						<div class="feedback-section feedback-section-top-color"
 							id="M-feedback">
-							<div class="feedback-p1">问题反馈QQ群：529334319</div>
+							<div class="feedback-p1">问题反馈QQ群：666666</div>
 							<a class="feedback-p2" target="_blank"
-								href="https://shang.qq.com/wpa/qunwpa?idkey=820ecd80532576e4e0e4ba4a2d3caf260f0c2272402d07a35dd042c413d296bd"
-								_hover-ignore="1">加入反馈</a>
+								href="#"
+								>加入反馈</a>
 						</div>
 					</div>
 				</div>

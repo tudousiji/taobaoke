@@ -55,7 +55,7 @@ class Keyword extends BaseController
     {
         $itemId = isset($_REQUEST['itemId']) && ! empty($_REQUEST['itemId']) && is_numeric($_REQUEST['itemId']) ? urlIdcode($_REQUEST['itemId'], false) : "1";
         $KeyWords = new KeyWords();
-        
+       
         $item = $KeyWords->getGoodsItems($itemId);
         
         if(empty($item['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
@@ -87,8 +87,19 @@ class Keyword extends BaseController
         }else{
             $reasonData =json_decode( $item['reason'],true);
         }
-        
+        $this->assign('reasonData', $reasonData);
        
+        if (isset($reasonData) && !empty($reasonData)
+            && isset($reasonData['count']) && !empty($reasonData['count']) &&
+            isset($reasonData['count']['total']) && isset($reasonData['count']['bad']) && isset($reasonData['count']['normal']) && isset($reasonData['count']['good']) 
+            && $reasonData['count']['bad']!=0 && $reasonData['count']['normal']!=0 && $reasonData['count']['good']!=0
+            ){
+                $PraiseRate=(1-(($reasonData['count']['normal']+$reasonData['count']['bad'])/$reasonData['count']['good']))*100;
+                $this->assign('PraiseRate', $PraiseRate);
+                
+        }else{
+            $this->assign('PraiseRate', 100);
+        }
         
         $commentData=null;
         if ($this->keyConfig['is_web_collector'] &&  (($this->keyConfig['comment_list_cache_time'] != - 1)  || empty($item['commentList'])) ) {
@@ -135,25 +146,31 @@ class Keyword extends BaseController
             
         }
        
-        if($this->keyConfig['is_web_collector']){
+        
             $titleKeyWords=array();
-            if(empty($item['keyWords'])){
+            if($this->keyConfig['is_web_collector'] && empty($item['keywords'])){
                 $titleKeyWords = $KeyWords->getBaiDuPos($item['title'],$item['id']);
-            }else{
-                $titleKeyWords =json_decode( $item['keyWords'],true);
             }
-            $keyWordsCount=count($titleKeyWords);
-            if($keyWordsCount>0){
-                $itemKeyWords="";
-                for($i=0;$i<$keyWordsCount;$i++){
-                    $itemKeyWords.=$keyWordsCount[$i];
-                    if($i<($keyWordsCount-1)){
-                        $itemKeyWords.=",";
+            
+            if(!empty($item['keywords'])){
+                $titleKeyWords =json_decode( $item['keywords'],true);
+                
+                $keyWordsCount=count($titleKeyWords);
+                
+                if($keyWordsCount>0){
+                    $itemKeyWords="";
+                    for($i=0;$i<$keyWordsCount;$i++){
+                        $itemKeyWords.=$titleKeyWords[$i];
+                        if($i<($keyWordsCount-1)){
+                            $itemKeyWords.=",";
+                        }
                     }
+                   
+                    $this->assign('itemKeyWords', $itemKeyWords);
                 }
-                $this->assign('itemKeyWords', $itemKeyWords);
             }
-        }
+            
+        
         
         
         if(!empty($item['askeverybodyList'])){
