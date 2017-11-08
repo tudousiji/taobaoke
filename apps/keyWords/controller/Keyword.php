@@ -49,6 +49,7 @@ class Keyword extends BaseController
         $this->assign('page', page($page, $count));
         $this->assign('count', $count * $this->keyConfig['keyWordPageSize']);
         $this->assign('keyWord', $keyWord['keyword']);
+        $this->assign('isDetails', true);//是否进入详情,true是进去，false是直接打开
         return $this->fetch('list');
     }
 
@@ -231,53 +232,17 @@ class Keyword extends BaseController
         $page = isset($_REQUEST['page']) && ! empty($_REQUEST['page']) ? $_REQUEST['page'] : "1";
         $pageSize = isset($_REQUEST['pageSize']) && ! empty($_REQUEST['pageSize']) ? $_REQUEST['pageSize'] : $keyConfig['keyWordPageSize'];
         
-        $time = isset($_REQUEST['time']) && ! empty($_REQUEST['time']) ? $_REQUEST['time'] : "";
-        $sign = isset($_REQUEST['sign']) && ! empty($_REQUEST['sign']) ? $_REQUEST['sign'] : "";
-        
-        $isCollection = false;
-        if (! empty($time) && ! empty($sign) && md5($time) == $sign) {
-            $pageSize = 1000;
-            $isCollection = true;
-        }
-        
+  
         $keywords = new KeyWords();
-        $return = $keywords->getData($keyWord, $page, $pageSize, $isCollection);
+        $return = $keywords->getDataForQ($keyWord, $page, 40);
         
-        if ($isCollection) {
-            $jsonKeyValConfig = require_once 'apps/utils/jsonKeyValConfig.php';
-            
-            if (isset($return) && ! empty($return)) {
-                if ($return) {
-                    $data = [
-                        $jsonKeyValConfig['Status'] => $jsonKeyValConfig['Success'],
-                        'code' => 0 // 还可以请求下一页
-                    ];
-                    echo json_encode($data);
-                } else {
-                    $data = [
-                        $jsonKeyValConfig['Status'] => $jsonKeyValConfig['Success'],
-                        'code' => 1 // 不可以请求下一页
-                    ];
-                    echo json_encode($data);
-                }
-            } else {
-                $data = [
-                    $jsonKeyValConfig['Status'] => $jsonKeyValConfig['Fail'],
-                    'code' => - 1 //
-                ];
-                echo json_encode($data);
-            }
-        } else {
-            
-            $this->assign('keyWord', $keyWord);
-            $this->assign('list', $return);
-            $count = $keywords->getCount();
-            $this->assign('page', page($page, $count));
-            
-            // $this->assign('myTime','1499097600');
-            
-            return $this->fetch('list');
-        }
+        $this->assign('keyWord', $keyWord);
+        $this->assign('nowPage', $page);
+        $this->assign('list', $return['data']);
+       
+        $this->assign('page', qPage($page, $return['isNextPage']));
+        $this->assign('isDetails', false);////是否进入详情,true是进去，false是直接打开
+        return $this->fetch('list');
     }
 
     // js获取url并跳转
@@ -309,10 +274,7 @@ class Keyword extends BaseController
             ];
             echo json_encode($array);
         }
-        
     }
-    
-    
 }
 
 ?>

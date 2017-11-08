@@ -16,7 +16,7 @@ return [
     
     // 关键词表临时缓存表
     'keywords_cache' => [
-        'table_name' => 'keywords',
+        'table_name' => 'keywords_cache',
         'table_field' => [
             'id' => 'id',
             'keyword' => 'keyword',
@@ -29,6 +29,19 @@ return [
     // 关键词数据获取表
     'keywords_details' => [
         'table_name' => 'keywords_details',
+        'table_field' => [
+            'id' => 'id',
+            'keyword_id' => 'keyword_id',
+            'json' => 'json',
+            'page' => 'page',
+            'page_size' => 'page_size',
+            'update_time' => 'update_time'
+        ]
+    ],
+    
+    // 关键词临时数据获取表
+    'keywords_details_cache' => [
+        'table_name' => 'keywords_details_cache',
         'table_field' => [
             'id' => 'id',
             'keyword_id' => 'keyword_id',

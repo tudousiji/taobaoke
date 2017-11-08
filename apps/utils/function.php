@@ -73,6 +73,14 @@ function randIP()
     return $headerArr;
 }
 
+function qPage($nowPage=1,$isNextpage=true){
+    $array=[
+        'isPrevPage'=>array("status"=>$nowPage==1?false:true,"page"=>$nowPage==1?$nowPage:$nowPage-1),
+        'isNextPage'=>array("status"=>$isNextpage,"page"=>$isNextpage?$nowPage+1:$nowPage),
+    ];
+    return $array;
+}
+
 function page($nowPage=1,$count=20,$pageSize=20){
     $startPage=0;
     if($nowPage>5){

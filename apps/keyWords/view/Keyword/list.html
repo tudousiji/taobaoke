@@ -15,7 +15,9 @@
 <link rel="stylesheet" href="/public/static/css/base.css">
 <link rel="stylesheet" href="/public/static/css/result.css">
 <script src="/public/static/js/jquery-3.2.1.min.js"></script>
+{if isset($isDetails) && $isDetails}
 <script src="/public/static/js/goods_list.js"></script>
+{/if}
 </head>
 <body>
 	<div class="container">
@@ -58,10 +60,13 @@
 
 								<div class="feature-items-tr item" itemId="{$vo.nid|urlIdcode=###,true}">
 									<div class="feature-items-td" index="0">
+										{if isset($isDetails) && $isDetails}
 										<a target="_blank"
 											href="/goods/{$vo.nid|urlIdcode=###,true}.html"  itemId="{$vo.nid|urlIdcode=###,true}"
-											><img
-											src="{$taobao_img_url}{$vo.pictUrl}{$img_size.small}" class="size-110" style="margin: 11px;"></a>
+											>{/if}<img
+											src="{$taobao_img_url}{$vo.pictUrl}{$img_size.small}" class="size-110" style="margin: 11px;">
+											{if isset($isDetails) && $isDetails}
+											</a>{/if}
 
 									</div>
 									<div class="feature-items-td-right">
@@ -70,9 +75,9 @@
 											<div class="
 											feature-items-td" index="1">
 											<div class="item_title">
-												 <a target="_blank"  itemId="{$vo.nid|urlIdcode=###,true}"
+												 {if isset($isDetails) && $isDetails}<a target="_blank"  itemId="{$vo.nid|urlIdcode=###,true}"
 													href="/goods/{$vo.nid|urlIdcode=###,true}.html"
-													 title="{$vo.title}">{$vo.title}</a>
+													 title="{$vo.title}">{/if}{$vo.title}{if isset($isDetails) && $isDetails}</a>{/if}
 											</div>
 
 										</div>
@@ -118,26 +123,37 @@
 						</div>
 						<div class="pagination-cont">
 							<ul class="pagination" id="R-pagination">
-								{if $page.startPage!=$page.nowPage}
-								<li class="prev"><a
-									href="/goods/{$keyword_id}_{$page.startPage}.html">&lt;</a></li>
+								{if isset($isDetails) && $isDetails}
+									{if $page.startPage!=$page.nowPage}
+									<li class="prev"><a
+										href="/goods/{$keyword_id}_{$page.startPage}.html">&lt;</a></li>
+									{/if}
+									{foreach name="page.page" item="vo" }
+									<li class="page {if $vo==$page.nowPage} active {/if}"><a
+										href="/goods/{$keyword_id}_{$vo}.html">{$vo}</a></li>
+									{/foreach}
+									{if $page.endPage!=$page.nowPage}
+									<li class="next"><a
+										href="/goods/{$keyword_id}_{$page.pageCount}.html">&gt;</a></li>
+									{/if}
+								{else}
+									{if $page.isPrevPage.status}
+										<li class="prev"><a
+										href="/index.php?q={$keyWord}&page={$page.isPrevPage.page}">&lt;</a></li>
+									{/if}
+										<li class="page  active"><a
+										href="/index.php?q={$keyWord}&page={$nowPage}">{$nowPage}</a></li>
+									{if $page.isNextPage.status}
+										<li class="next"><a
+										href="/index.php?q={$keyWord}&page={$page.isNextPage.page}">&gt;</a></li>
+									{/if}
 								{/if}
-								{foreach name="page.page" item="vo" }
-								<li class="page {if $vo==$page.nowPage} active {/if}"><a
-									href="/goods/{$keyword_id}_{$vo}.html">{$vo}</a></li>
-								{/foreach}
-								{if $page.endPage!=$page.nowPage}
-								<li class="next"><a
-									href="/goods/{$keyword_id}_{$page.pageCount}.html">&gt;</a></li>
-								{/if}
+								
 							</ul>
 						</div>
 					</div>
 					<div class="feature-sidebar">
-						<div class="feature-hot temai-section-top-color mb-20">
-							<div class="feature-hot-title font-title-16 pl-10">热门推荐</div>
-							<ul class="feature-hot-items" id="M-temai"></ul>
-						</div>
+						{include file="../../public/advertisement" /}
 					</div>
 					<div class="fnClear"></div>
 				</div>

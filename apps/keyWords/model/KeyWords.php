@@ -153,6 +153,74 @@ class KeyWords extends BaseModel
             }
         }
     }
+    
+    public function getDataForQ($keyWord, $page = 1, $pageSize = 100){
+        $this->keyWords = $keyWord;
+        $this->page = $page;
+        $this->pageSize = $pageSize;
+        
+        $key = Db::table(TableUtils::getTableDetails('keywords_cache'))->where(TableUtils::getTableDetails('keywords_cache', 'keyword'), $this->keyWords)->find();
+        $keyword_id = 0;
+        if ($key == null) {
+            $data = [
+                TableUtils::getTableDetails('keywords_cache', 'keyword') => $this->keyWords,
+                TableUtils::getTableDetails('keywords_cache', 'update_time') => time()
+            ];
+            Db::table(TableUtils::getTableDetails('keywords_cache'))->insert($data);
+            $keyword_id = Db::name(TableUtils::getTableDetails('keywords_cache'))->getLastInsID();
+        } else {
+            $keyword_id = $key['id'];
+        }
+        
+        $keywords_details = Db::table(TableUtils::getTableDetails('keywords_details_cache'))->where(TableUtils::getTableDetails('keywords_details_cache', 'keyword_id'), $keyword_id)
+        ->where(TableUtils::getTableDetails('keywords_details_cache', 'page'), $this->page)
+        ->find();
+        if ($keywords_details != null && $keywords_details[TableUtils::getTableDetails('keywords_details_cache', 'update_time')]<=time()+24*60*60){
+              
+            $array=[
+                'isNextPage'=>true,
+                'data'=>json_decode($keywords_details[TableUtils::getTableDetails('keywords_details_cache', 'json')], true)
+            ];
+            return $array;
+        }else{
+            $json = $this->netData();
+            $jsonObj = json_decode($json, true);
+            //$jsonArr = json_encode($jsonObj['data']['data']['auctionList']['auctions']);
+            $jsonArrChunk=array_chunk($jsonObj['data']['data']['auctionList']['auctions'],$pageSize/2);
+            if(count($jsonArrChunk)>0){
+                $json=$jsonArrChunk[0];
+                if ($jsonObj) {
+                    $data = [
+                        TableUtils::getTableDetails('keywords_details_cache', 'keyword_id') => $keyword_id,
+                        TableUtils::getTableDetails('keywords_details_cache', 'json') => json_encode($jsonArrChunk[0]),
+                        TableUtils::getTableDetails('keywords_details_cache', 'page') => $this->page,
+                        TableUtils::getTableDetails('keywords_details_cache', 'page_size') => $this->pageSize/2,
+                        TableUtils::getTableDetails('keywords_details_cache', 'update_time') => time()
+                    ];
+                    if($keywords_details != null){
+                        $tableUtils=new \app\tableUtils\keywordsDetailsCacheUtils();
+                        $tableUtils->updateKeywordsDetailsCache($data,$keywords_details[TableUtils::getTableDetails('keywords_details_cache', 'id')]);
+                    }else{//插入
+                        $tableUtils=new \app\tableUtils\keywordsDetailsCacheUtils();
+                        $tableUtils->addKeywordsDetailsCache($data);
+                    }
+                    
+                }
+                $array=[
+                    'isNextPage'=>isset($jsonArrChunk[1]) && count($jsonArrChunk[0])>0?true:false,
+                    'data'=>$jsonObj['data']['data']['auctionList']['auctions']
+                ];
+                return $array;
+            }else{
+                $array=[
+                    'isNextPage'=>false,
+                    'data'=>array(),
+                ];
+                return $array;
+            }
+        
+        }
+    }
 
     private function netData()
     {
