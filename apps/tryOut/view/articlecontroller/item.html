@@ -30,15 +30,13 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 				<div class="d-top-container">
 					<div class="d-top-layer">
 						<div class="crumbs-items pull-left" id="M-crumbs">
-							<a class="crumbs-item crumbs-item-0"
-								href="/"><span>当前位置：</span><span
+							<a class="crumbs-item crumbs-item-0" href="/"><span>当前位置：</span><span
 								class="crumbs-item-title">全部试用</span></a> <a
-								class="crumbs-item crumbs-item-1"
-								href="/try/{$cate.id}_1.html"
+								class="crumbs-item crumbs-item-1" href="/try/{$cate.id}_1.html"
 								target="_blank">&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span
 								class="crumbs-item-title">{$cate.cate_name}</span></a>
 						</div>
-						
+
 					</div>
 					<div class="d-top-content">
 						<div class="d-top-content-left item">
@@ -48,35 +46,30 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 
 						</div>
 						<div class="d-top-content-right">
-							<div class="d-goods-title" >{$item.item.title}</div>
+							<div class="d-goods-title">{$item.item.title}</div>
 							<div class="d-goods-price">
-								<span
-									class="d-goods-price-origin mr-10 nowprice">现价:{$item.item.price}元</span>
-								
-							
+								<span class="d-goods-price-origin mr-10 nowprice">现价:{$item.item.price}元</span>
 							</div>
-
-
 							<div class="d-goods-price">
 								<span class=" d-goods-price-now mr-10 sold">试用时间:{$item.submitTime/1000|date="Y-m-d",###}</span>
-								
 							</div>
 							<div class="d-goods-price">
 								<span class=" d-goods-price-now mr-10 sold">卖家:{$item.user.nick}</span>
 							</div>
 							<div class="d-goods-price">
-								<span class="d-goods-price-now mr-10 sold">试用情况:{foreach $item.score as $vo}{$vo.label}:{$vo.value}分;{/foreach}</span>
+								<span class="d-goods-price-now mr-10 sold">试用情况:{foreach
+									$item.score as $vo}{$vo.label}:{$vo.value}分;{/foreach}</span>
 							</div>
 							<div class="d-goods-price">
-								<span class="d-goods-price-now mr-10 sold">{foreach $item.personal as $vo}{$vo.label}:{$vo.value};{/foreach}</span>
-								
-								
-								
+								<span class="d-goods-price-now mr-10 sold">{foreach
+									$item.personal as $vo}{$vo.label}:{$vo.value};{/foreach}</span>
+
+
+
 							</div>
 
-							<a class="d-goods-redirect-link item"
-								
-								target="_blank" isconvert="1">直达商品链接</a>
+							<a class="d-goods-redirect-link item" target="_blank"
+								isconvert="1">直达商品链接</a>
 
 							<div class="statement">
 								<p style="color: #999;">声明：商品的价格与折扣仅供参考，信息可能根据时间变化，商家调整而过期。敬请理解</p>
@@ -98,65 +91,72 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 						</div>
 						<div class="d-recommend-reason-content">
 							<div class="content">{$item.overall.content}</div>
-							{if condition="isset($item.overall.pics) && is_array($item.overall.pics) &&
-						count($item.overall.pics)>0"} {foreach $item.overall.pics as $vo}
-							<div class="item"><img src="{$vo}"/></div>
-						{/foreach}{/if}
+							{if condition="isset($item.overall.pics) &&
+							is_array($item.overall.pics) && count($item.overall.pics)>0"}
+							{foreach $item.overall.pics as $vo}
+							<div class="item">
+								<img src="{$vo}" />
+							</div>
+							{/foreach}{/if}
 						</div>
-						
-						
+
+
 						<div class="d-recommend-reason-title border-bottom-e5">
 							<div class="section-title pull-left">亮点与细节</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="d-recommend-reason-content">
-						
-							{if condition="isset($item.highlight) && is_array($item.highlight) &&
-						count($item.highlight)>0"} {foreach $item.highlight as $vo}
+
+							{if condition="isset($item.highlight) &&
+							is_array($item.highlight) && count($item.highlight)>0"} {foreach
+							$item.highlight as $vo}
 							<div class="content">{$vo.content}</div>
-							<div class="item"><img src="{$vo.pic}"/></div>
-						{/foreach}{/if}
+							<div class="item">
+								<img src="{$vo.pic}" />
+							</div>
+							{/foreach}{/if}
 						</div>
-						
-						
+
+
 						<div class="d-recommend-reason-title border-bottom-e5">
 							<div class="section-title pull-left">试用过程与体验</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="d-recommend-reason-content">
-						
-							{if condition="isset($item.experience) && is_array($item.experience) &&
-						count($item.experience)>0"} {foreach $item.experience as $vo}
+
+							{if condition="isset($item.experience) &&
+							is_array($item.experience) && count($item.experience)>0"}
+							{foreach $item.experience as $vo}
 							<div class="content">{$vo.content}</div>
-							<div class="item"><img src="{$vo.pic}" /></div>
-						{/foreach}{/if}
+							<div class="item">
+								<img src="{$vo.pic}" />
+							</div>
+							{/foreach}{/if}
 						</div>
-						
+
 						<div class="d-recommend-reason-title border-bottom-e5">
 							<div class="section-title pull-left">试用心得</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="d-recommend-reason-content">
 							<div class="line1">优点:{$item.conclusion.pros}</div>
-							<div class="line2">
-								缺点:{$item.conclusion.cons}
-							</div>
+							<div class="line2">缺点:{$item.conclusion.cons}</div>
 						</div>
 					</div>
-					
+
 					{if condition="isset($commentData) && is_array($commentData) &&
-						count($commentData)>0"}
+					count($commentData)>0"}
 					<div
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
 							<div class="section-title pull-left">图文评价</div>
-							<a class="section-more pull-right item"
-								target="_blank" isconvert="1">更多评价&gt;</a>
+							<a class="section-more pull-right item" target="_blank"
+								isconvert="1">更多评价&gt;</a>
 							<div class="clearfix"></div>
 						</div>
 
 
-						 {foreach $commentData.data as $vo}
+						{foreach $commentData.data as $vo}
 
 						<div class="d-comment-items">
 							<div class="d-comment-item">
@@ -166,27 +166,26 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 									<div class="d-comment-time pull-left">{$vo.auctionSku}</div>
 								</div>
 								<div class="d-comment-content">{$vo.rateContent}</div>
-								{if isset($vo.pics) && is_array($vo.pics) &&
-										count($vo.pics)>0} 
+								{if isset($vo.pics) && is_array($vo.pics) && count($vo.pics)>0}
 								<div class="d-comment-pictures">
 									<ul class="d-comment-pictures-items">
 										{foreach $vo.pics as $pic}
 										<li><img src="{$taobao_img_url}{$pic}_50x50"
-											large-src="{$taobao_img_url}{$pic}_50x50"> 
+											large-src="{$taobao_img_url}{$pic}_50x50">
 											<div class="d-comment-pictures-items-arrow-down"></div></li>
 										{/foreach}
 										<div class="fnClear"></div>
 									</ul>
-						
+
 								</div>
-								
-							{/if}
+
+								{/if}
 							</div>
 						</div>
-						{/foreach} 
-						
+						{/foreach}
+
 					</div>
-{/if}
+					{/if}
 
 
 					<div
@@ -229,9 +228,8 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 
 				</div>
 				<div class="d-bottom-right">
-					<div class="feature-sidebar">
-						{include file="../../public/advertisement" /}
-					</div>
+					<div class="feature-sidebar">{include
+						file="../../public/advertisement" /}</div>
 				</div>
 				<div class="fnClear"></div>
 			</div>
