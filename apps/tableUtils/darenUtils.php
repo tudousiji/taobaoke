@@ -16,4 +16,9 @@ class darenUtils{
         where(TableUtils::getTableDetails('daren', 'id'),'>', $id)->order(TableUtils::getTableDetails('daren', 'id'),"asc")
         ->find();
     }
+    
+    public function getDaRenList($page=1,$pageSize=20){
+        return Db::table(TableUtils::getTableDetails('daren'))->order(TableUtils::getTableDetails('daren', 'id'),"asc")
+        ->limit(($page-1)*$pageSize,$pageSize)->select();
+    }
 }

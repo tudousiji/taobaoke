@@ -84,6 +84,20 @@ class Daren  extends BaseController{
     }
     
     
+    public function getDaRenList(){
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : "1";
+        $pagesize = isset($_REQUEST['pagesize']) && is_numeric($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : "20";
+        $daRen = new \app\api\model\DaRenModel();
+        $list = $daRen->getDaRenList($page,$pagesize);
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        $data=[
+            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+            'data'=>$list,
+            $jsonKeyValConfig['Code']=>0,//
+        ];
+        echo json_encode($data);
+    }
     
     
 }

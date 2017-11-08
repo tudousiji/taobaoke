@@ -14,4 +14,9 @@ class DaRenModel  extends BaseModel{
         $daren=new darenUtils();
         return $daren->getDaRen($id);
     }
+    
+    public function getDaRenList($page=1,$pageSize=20){
+        $daren=new darenUtils();
+        return $daren->getDaRenList($page,$pageSize);
+    }
 }

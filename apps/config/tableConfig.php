@@ -139,6 +139,7 @@ return [
             'cate'=>'cate',
             'itemId'=>'itemId',
             'reportId'=>'reportId',
+            'keywords'=>'keywords',
             'data' => 'data',
         ]
     ],

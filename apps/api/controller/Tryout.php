@@ -90,6 +90,7 @@ class Tryout extends BaseController{
             'reportId'=>$reportId,
             'cate'=>$cate,
             'data'=>json_encode($data['data']),
+            'keywords'=>$data['keywords'],
         ];
         
         //新增taobaoid等信息
