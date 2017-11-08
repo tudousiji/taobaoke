@@ -22,6 +22,7 @@ class BaseController extends \think\Controller
         $this->assign("img_size",$this->keyConfig['img_size']);
         $this->indexCate();
         $this->randHeaderHotSearchWord();
+        $this->getTryCateList();
     }
     
     private function indexCate(){
@@ -37,7 +38,12 @@ class BaseController extends \think\Controller
         $this->assign("randHeaderHotSearchWord",$list);
     }
     
-    
+    private function getTryCateList(){
+        $tableUtils = new \app\tableUtils\tryoutUtils();
+        $list = $tableUtils->getCate();
+        
+        $this->assign("headerTryCate",$list);
+    }
     
 }
 

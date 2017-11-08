@@ -30,12 +30,12 @@
 			<div class="main">
 				<div class="recommend-category-header" id="R-result-tabs">
 					<ul class="recommend-category-tabs pull-left">
-						<a class="result-nav-tab" href="javascript:void(0);"
-							link="/assets/couponsearch.html">券后价</a>
-						<a class="result-nav-tab active" tab="1"
-							href="javascript:void(0);" link="/assets/result.html?tab=1">神价直播</a>
-						<a class="result-nav-tab" tab="2" href="javascript:void(0);"
-							link="/assets/result.html?tab=2" _hover-ignore="1">白菜价</a>
+						{if isset($headerTryCate) && is_array($headerTryCate) && count($headerTryCate)>0}
+						{foreach $headerTryCate as $vo}
+						<a class="result-nav-tab" href="/try/{$vo.id}_1.html"
+							>{$vo.cate_name}</a>
+						{/foreach}
+						{/if}
 					</ul>
 					{if isset($count)}
 					<div class="recommend-category-update pull-right">
