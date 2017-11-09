@@ -126,14 +126,77 @@ class Articlecontroller extends BaseController
             $utils=new \app\utils\taobaoItemInfoUtils();
             $utils->autoItemId($data['itemId'],$data['data']['item']['title'],true);
         }
+        
         $content = json_decode($data['data'], true);
-        
+        $keyWordsArr= json_decode($data['keywords'], true);
         $cate = $articleModel->getTryOutCateId($data['cate']);
-        
+        $keyWords="";
+        $size=count($keyWordsArr);
+        for($i=0;$i<$size;$i++){
+            $keyWords.=$keyWordsArr[$i];
+            if($i!=$size-1){
+                $keyWords.=",";
+            }
+        };
+        $this->assign("description", $this->addHandleIntroduction($content));
+        $this->assign("keyWords", $keyWords);
         $this->assign("cate", $cate);
         $this->assign("item", $content);
         return $this->fetch("item");
     }
+    
+    public function addHandleIntroduction($data,$introductionLen=650){
+        $data=$this->getIntroduction($data,$introductionLen);
+        if(!empty($data)){
+            $data.="...";
+        }
+        return $data;
+    }
+    
+    public function getIntroduction($data,$introductionLen=650){
+        $introduction = "";
+        if (isset($data['overall']['content'])) {
+            $introduction = $data['overall']['content'];
+        }
+        $isLenMax = false;
+        if (strlen($introduction) < $introductionLen) {
+            if (isset($data['highlight']) && is_array($data['highlight']) && count($data['highlight']) > 0) {
+                $size = count($data['highlight']);
+                for ($j = 0; $j < $size; $j ++) {
+                    $introduction .= $data['highlight'][$j]['content'];
+                    if (strlen($introduction) >= $introductionLen) {
+                        return $introduction;
+                    }
+                }
+            }
+        }
+        if (strlen($introduction) < $introductionLen) {
+            if (isset($data['conclusion']['cons'])) {
+                $introduction .= $data['conclusion']['cons'];
+            }
+        } else {
+            return $introduction;
+        }
+        if (strlen($introduction) < $introductionLen) {
+            if (isset($data['conclusion']['pros'])) {
+                $introduction .= $data['conclusion']['pros'];
+            }
+        } else {
+            return $introduction;
+        }
+        if (strlen($introduction) < $introductionLen) {
+            if (isset($data['experience']) && is_array($data['experience']) && count($data['experience']) > 0) {
+                $size = count($data['experience']);
+                for ($j = 0; $j < $size; $j ++) {
+                    $introduction .= $data['experience'][$j]['content'];
+                    if (strlen($introduction) >= $introductionLen) {
+                        return $introduction;
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 ?>

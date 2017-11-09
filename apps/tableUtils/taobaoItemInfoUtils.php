@@ -24,7 +24,7 @@ class taobaoItemInfoUtils
             ->setField($data);
     }
 
-    public function autoItemId($itemId,$keywords_title, $isCheckExitItemId = true)
+    public function autoItemId($itemId,$keywords_title, $isCheckExitItemId = true,$keywords=null)
     {
         if (empty($itemId) || ! is_numeric($itemId)) {
             return;
@@ -33,10 +33,15 @@ class taobaoItemInfoUtils
             $status = Db::table(TableUtils::getTableDetails('taobao_item_info'))->where(TableUtils::getTableDetails('taobao_item_info', 'itemId'), $itemId)->find();
         }
         if ($status == null || ! $isCheckExitItemId) {
+            $title=null;
+            if(empty($keywords) ||  $keywords==null){
+                $title=strip_tags($keywords_title);
+            }
             $array = [
                 'itemId' => $itemId,
                 'update_time'=>0,
-                'title'=>strip_tags($keywords_title)
+                'title'=>$title,
+                'keywords'=>$keywords,
             ];
             Db::table(TableUtils::getTableDetails('taobao_item_info'))->insert($array);
         }

@@ -6,9 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="keywords" content="">
-<meta name="description" content="">
+
+<meta name="description" content="{if isset($description)}{$description}{/if}">
 <title>{$item.item.title}_{$subtitle}</title>
+<meta name="keywords" content="{if isset($keyWords)}{$keyWords}{/if}">
 <link rel="dns-prefetch" href="{$host}">
 <link rel="stylesheet" href="/public/static/css/base.css">
 <link rel="stylesheet" href="/public/static/css/tryout.css">

@@ -90,12 +90,12 @@ class Tryout extends BaseController{
             'reportId'=>$reportId,
             'cate'=>$cate,
             'data'=>json_encode($data['data']),
-            'keywords'=>$data['keywords'],
+            //'keywords'=>$data['keywords'],
         ];
         
         //新增taobaoid等信息
         $taobaoItemInfoUtils = new \app\utils\taobaoItemInfoUtils();
-        $taobaoItemInfoUtils->autoItemId($itemId,$data['data']['item']['title']);
+        $taobaoItemInfoUtils->autoItemId($itemId,$data['data']['item']['title'],true,$data['keywords']);
         
         $table =new  \app\tableUtils\tryoutUtils();
         $status = $table->addTryout($array);

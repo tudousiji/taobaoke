@@ -3,9 +3,9 @@ namespace app\utils;
 
 
 class taobaoItemInfoUtils{
-    public function autoItemId($itemId,$keywords_title,$isCheckExitItemId=true){
+    public function autoItemId($itemId,$keywords_title,$isCheckExitItemId=true,$keywords=null){
         $table= new \app\tableUtils\taobaoItemInfoUtils();
-        return $table->autoItemId($itemId,$keywords_title,$isCheckExitItemId);
+        return $table->autoItemId($itemId,$keywords_title,$isCheckExitItemId,$keywords);
     }
     
     public function getTaobaoInfoList($page = 1, $pageSize = 20, $isOr = true)
