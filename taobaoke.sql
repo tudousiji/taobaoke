@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-11-10 08:25:48
+-- Generation Time: 2017-11-10 09:18:21
 -- 服务器版本： 5.7.14
 -- PHP Version: 7.0.10
 
@@ -50,6 +50,21 @@ INSERT INTO `buyinventory_cate` (`id`, `psId`, `sceneId`, `cate_name`) VALUES
 (10, 53362, 77026, '潮玩'),
 (11, 53362, 8038, '海淘'),
 (12, 53362, 18036, '育儿');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `buyinventory_item_info`
+--
+
+CREATE TABLE `buyinventory_item_info` (
+  `id` int(11) NOT NULL,
+  `cate_id` int(11) NOT NULL,
+  `contentId` bigint(20) NOT NULL,
+  `keywords` varchar(1000) NOT NULL,
+  `data` text NOT NULL,
+  `update_time` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -5368,6 +5383,14 @@ ALTER TABLE `buyinventory_cate`
   ADD KEY `sceneId` (`sceneId`);
 
 --
+-- Indexes for table `buyinventory_item_info`
+--
+ALTER TABLE `buyinventory_item_info`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contentId` (`contentId`),
+  ADD KEY `cate_id` (`cate_id`);
+
+--
 -- Indexes for table `daren`
 --
 ALTER TABLE `daren`
@@ -5468,6 +5491,11 @@ ALTER TABLE `tbk_token`
 --
 ALTER TABLE `buyinventory_cate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- 使用表AUTO_INCREMENT `buyinventory_item_info`
+--
+ALTER TABLE `buyinventory_item_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `daren`
 --
