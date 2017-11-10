@@ -172,6 +172,20 @@ return [
             'update_time'=>'update_time',
         ]
     ],
-];
-
+    
+    
+    //必买清单分类
+    'buyinventory_cate' => [
+        'table_name' => 'buyinventory_cate',
+        'table_field' => [
+            'id' => 'id',
+            'psId'=>'psId',
+            'sceneId'=>'sceneId',
+            'cate_name'=>'cate_name',
+        ]
+    ]
+    
+    
+] 
 ?>
+    
