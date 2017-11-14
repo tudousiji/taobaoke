@@ -90,6 +90,7 @@ class Tryout extends BaseController{
             'reportId'=>$reportId,
             'cate'=>$cate,
             'data'=>json_encode($data['data']),
+            'update_time'=>time(),
             //'keywords'=>$data['keywords'],
         ];
         

@@ -141,6 +141,7 @@ return [
             'reportId'=>'reportId',
             'keywords'=>'keywords',
             'data' => 'data',
+            'update_time'=>'update_time',
         ]
     ],
     
