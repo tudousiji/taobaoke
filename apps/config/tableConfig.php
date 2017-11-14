@@ -183,7 +183,20 @@ return [
             'sceneId'=>'sceneId',
             'cate_name'=>'cate_name',
         ]
-    ]
+    ],
+    
+    //必买清单详情
+    'buyinventory_item_info' => [
+        'table_name' => 'buyinventory_item_info',
+        'table_field' => [
+            'id' => 'id',
+            'cate_id'=>'cate_id',
+            'contentId'=>'contentId',
+            'keywords'=>'keywords',
+            'data'=>'data',
+            'update_time'=>'update_time',
+        ]
+    ],
     
     
 ] 
