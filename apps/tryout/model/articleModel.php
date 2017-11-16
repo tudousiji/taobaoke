@@ -1,5 +1,5 @@
 <?php
-namespace app\tryOut\model;
+namespace app\tryout\model;
 use app\base\BaseModel;
 use app\tableUtils\tryoutUtils;
 

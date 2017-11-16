@@ -1,8 +1,8 @@
 <?php
-namespace app\tryOut\controller;
+namespace app\tryout\controller;
 
 use app\base\BaseController;
-use app\tryOut\model\articleModel;
+use app\tryout\model\articleModel;
 
 require_once 'apps/utils/function.php';
 

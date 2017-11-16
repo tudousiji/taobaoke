@@ -17,8 +17,10 @@ class tryoutUtils{
     }
     
     public function getCate(){
-        return Db::table(TableUtils::getTableDetails('taobao_try_cate'))->
-                select();
+        $table= Db::table(TableUtils::getTableDetails('taobao_try_cate'));
+        $data = $table->select();
+        //echo $table->getLastSql();
+        return $data;
     }
     
     public function getTryOutCate($id){

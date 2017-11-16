@@ -88,15 +88,16 @@ class Tryout extends BaseController{
         $array=[
             'itemId'=>$itemId,
             'reportId'=>$reportId,
-            'cate'=>$cate,
+            'cate'=>empty($cate)?1:$cate,//1是精选的分类
             'data'=>json_encode($data['data']),
             'update_time'=>time(),
             //'keywords'=>$data['keywords'],
         ];
         
+        
         //新增taobaoid等信息
         $taobaoItemInfoUtils = new \app\utils\taobaoItemInfoUtils();
-        $taobaoItemInfoUtils->autoItemId($itemId,$data['data']['item']['title'],true,$data['keywords']);
+        $taobaoItemInfoUtils->autoItemId($itemId,$data['data']['item']['title'],true,isset($data['keywords'])&&!empty($data['keywords'])?$data['keywords']:null);
         
         $table =new  \app\tableUtils\tryoutUtils();
         $status = $table->addTryout($array);
@@ -124,12 +125,12 @@ class Tryout extends BaseController{
         
         $table =new  \app\tableUtils\tryoutUtils();
         $cate = $table->getCate();
-        //print_r($cate);
+        
         $array=[];
         for($i=0;$i<count($cate);$i++){
-            if($cate[$i]['cate_id']>0){
+            //if($cate[$i]['cate_id']>0){
                 $array[]=$cate[$i]['cate_id'];
-            }
+           //}
         }
         $arr=[
             $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
