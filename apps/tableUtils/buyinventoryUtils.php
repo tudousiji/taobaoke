@@ -9,6 +9,11 @@ class buyinventoryUtils{
         ->select();
     }
     
+    public function getCateId($cateId){
+        return Db::table(TableUtils::getTableDetails('buyinventory_cate'))->where(TableUtils::getTableDetails('buyinventory_cate', 'id'),$cateId)
+        ->find();
+    }
+    
     public function checkEffectiveContentIdList($contentId){
         $table= Db::table(TableUtils::getTableDetails('buyinventory_item_info'))->
         where(TableUtils::getTableDetails('buyinventory_item_info', 'contentId'),"in",$contentId) 
@@ -30,4 +35,6 @@ class buyinventoryUtils{
         return $keywords_details = Db::table(TableUtils::getTableDetails('buyinventory_item_info'))
         ->insert($data);
     }
+    
+    
 }
