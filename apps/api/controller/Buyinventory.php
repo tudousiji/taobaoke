@@ -119,7 +119,7 @@ class Buyinventory  extends BaseController{
             if($item!=null){
                 $repeatCount++;
             }
-            if($repeatCount>=$maxRepeatCount){
+            if($repeatCount>=$this->maxRepeatCount){
                 $isNextpage=false;
                 break;
             }
