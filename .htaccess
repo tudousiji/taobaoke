@@ -14,7 +14,10 @@
   #RewriteRule index.php?q=(.*)$  /index.php/keyWords/Keyword/q=$1
   #RewriteRule index.php(.?) /index.php/keyWords/Keyword/q 
   
-  RewriteCond %{QUERY_STRING} ^q=.+$
-  RewriteRule ^index\.php$ /index.php/keyWords/Keyword/q [QSA,R]
+  #RewriteCond %{QUERY_STRING} ^q=.+$
+  #RewriteRule search.php\?q=(.*)$ /index.php/keyWords/Keyword/q=$1 
   RewriteRule ^index\.html$ /index.php
+  
+  RewriteCond %{QUERY_STRING} ^q=.+$
+  RewriteRule ^search\.php$ /index.php/keyWords/Keyword/q 
 </IfModule>
