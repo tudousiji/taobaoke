@@ -4,6 +4,7 @@ use app\tableUtils\buyinventoryUtils;
 use app\base\BaseController;
 
 class Buyinventory  extends BaseController{
+    private $maxRepeatCount=30;
     public function getCateList(){
         
         $utils= new buyinventoryUtils();
@@ -106,10 +107,11 @@ class Buyinventory  extends BaseController{
         $array=['data'=>$list,
             'isNextpage'=>$isNextpage,
         ];
-        echo json_encode($list);
+        echo json_encode($array);
     }
     
     private function isrepeatover($utils,$data){
+        
         $repeatCount=0;
         $isNextpage=true;
         for($i=0;$i<count($data);$i++){
@@ -117,12 +119,13 @@ class Buyinventory  extends BaseController{
             if($item!=null){
                 $repeatCount++;
             }
-            if($repeatCount>=0){
+            if($repeatCount>=$maxRepeatCount){
                 $isNextpage=false;
                 break;
             }
         }
-        return $isNextpage
+        
+        return $isNextpage;
     }
     
 }
