@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-11-27 14:26:37
+-- Generation Time: 2017-11-27 16:37:43
 -- 服务器版本： 5.7.18-log
 -- PHP Version: 7.0.21
 
@@ -46,26 +46,29 @@ CREATE TABLE `buyinventory_cate` (
   `id` int(11) NOT NULL,
   `psId` int(11) NOT NULL,
   `sceneId` int(11) NOT NULL,
-  `cate_name` varchar(100) NOT NULL
+  `cate_name` varchar(100) NOT NULL,
+  `page` int(11) NOT NULL,
+  `pagesize` int(11) NOT NULL,
+  `isrepeatover` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0是以page为准，1是超过指定数就停止'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `buyinventory_cate`
 --
 
-INSERT INTO `buyinventory_cate` (`id`, `psId`, `sceneId`, `cate_name`) VALUES
-(1, 51789, 0, '首页'),
-(2, 53362, 12015, '化妆'),
-(3, 53362, 23011, '爱吃'),
-(4, 53362, 8039, '送礼'),
-(5, 53362, 23013, '旅行'),
-(6, 53362, 12014, '置家'),
-(7, 53362, 23012, '耍帅'),
-(8, 53362, 8040, '穿搭'),
-(9, 53362, 31029, '运动'),
-(10, 53362, 77026, '潮玩'),
-(11, 53362, 8038, '海淘'),
-(12, 53362, 18036, '育儿');
+INSERT INTO `buyinventory_cate` (`id`, `psId`, `sceneId`, `cate_name`, `page`, `pagesize`, `isrepeatover`) VALUES
+(1, 51789, 0, '首页', 10, 500, 0),
+(2, 53362, 12015, '化妆', 10, 500, 0),
+(3, 53362, 23011, '爱吃', 10, 500, 0),
+(4, 53362, 8039, '送礼', 10, 500, 0),
+(5, 53362, 23013, '旅行', 10, 500, 0),
+(6, 53362, 12014, '置家', 10, 500, 0),
+(7, 53362, 23012, '耍帅', 10, 500, 0),
+(8, 53362, 8040, '穿搭', 10, 500, 0),
+(9, 53362, 31029, '运动', 10, 500, 0),
+(10, 53362, 77026, '潮玩', 10, 500, 0),
+(11, 53362, 8038, '海淘', 10, 500, 0),
+(12, 53362, 18036, '育儿', 10, 500, 0);
 
 -- --------------------------------------------------------
 
@@ -5522,7 +5525,7 @@ ALTER TABLE `daren`
 -- 使用表AUTO_INCREMENT `goods_list`
 --
 ALTER TABLE `goods_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1272743;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36234;
 --
 -- 使用表AUTO_INCREMENT `index_cate`
 --
@@ -5532,7 +5535,7 @@ ALTER TABLE `index_cate`
 -- 使用表AUTO_INCREMENT `keywords`
 --
 ALTER TABLE `keywords`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22549;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14378;
 --
 -- 使用表AUTO_INCREMENT `keywords_cache`
 --
@@ -5552,12 +5555,12 @@ ALTER TABLE `keywords_details_cache`
 -- 使用表AUTO_INCREMENT `proxy_ip`
 --
 ALTER TABLE `proxy_ip`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `taobao_item_info`
 --
 ALTER TABLE `taobao_item_info`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1295435;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36234;
 --
 -- 使用表AUTO_INCREMENT `taobao_try_cate`
 --
@@ -5567,7 +5570,7 @@ ALTER TABLE `taobao_try_cate`
 -- 使用表AUTO_INCREMENT `taobao_try_item`
 --
 ALTER TABLE `taobao_try_item`
-  MODIFY `id` bigint(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39295;
+  MODIFY `id` bigint(25) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `tbk_token`
 --

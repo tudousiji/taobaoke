@@ -201,7 +201,17 @@ return [
         ]
     ],
     
-    
+    //资讯id 必买清单（
+    'article_contentid' => [
+        'table_name' => 'article_contentid',
+        'table_field' => [
+            'id' => 'id',
+            'status'=>'status',
+            'contentId'=>'contentId',
+            'collectCount'=>'collectCount',
+            'update_time'=>'update_time',
+        ]
+    ],
 ] 
 ?>
     

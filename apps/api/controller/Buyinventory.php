@@ -1,7 +1,9 @@
 <?php
 namespace app\api\controller;
 use app\tableUtils\buyinventoryUtils;
+
 use app\base\BaseController;
+use app\api\model\articleModel;
 
 class Buyinventory  extends BaseController{
     private $maxRepeatCount=30;
@@ -111,7 +113,7 @@ class Buyinventory  extends BaseController{
     }
     
     private function isrepeatover($utils,$data){
-        
+       
         $repeatCount=0;
         $isNextpage=true;
         for($i=0;$i<count($data);$i++){
@@ -126,6 +128,52 @@ class Buyinventory  extends BaseController{
         }
         
         return $isNextpage;
+    }
+    
+    /**
+     * 添加ContentId
+     */
+    public function addContentId(){
+        $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        if(empty($json)){
+            $data=[
+                $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                $jsonKeyValConfig['msg']=>":数据为空",
+                $jsonKeyValConfig['Code']=>-1,//
+            ];
+            //var_dump(isset($_POST['data']));
+            echo json_encode($data);
+            return ;
+        }
+        $jsonObj = json_decode($json,true);
+        $size=count($jsonObj);
+        $utils=new articleModel();
+        if($size>0){
+            $ids="";
+            for($i=0;$i<$size;$i++){
+                $ids.=$jsonObj[$i];
+                if($i!=$size-1){
+                    $ids.=",";
+                }
+            }
+           
+            $list = $utils->checkRepeatContentId($ids);
+            $jsonObj =array_diff($jsonObj, $list);
+        }
+        $count=count($jsonObj);
+        for($i=0;$i<$size;$i++){
+            $contentId=$jsonObj[$i];
+            $array=['contentId'=>$contentId];
+            $utils->addContentId($array);
+        }
+        $data=[
+            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+            $jsonKeyValConfig['msg']=>"成功",
+            $jsonKeyValConfig['Code']=>0,//
+        ];
+        echo json_encode($array);
     }
     
 }
