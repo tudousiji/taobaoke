@@ -37,9 +37,9 @@ class KeyWordsModel extends BaseModel{
         return $daren->addHotKeyWords($data);
     }
     
-    public function findHotKeyWords($keyWord){
+    public function findHotKeyWordsMd5($keyWordMd5){
         $daren=new keywordsUtils();
-        return $daren->findHotKeyWords($keyWord);
+        return $daren->findHotKeyWordsMd5($keyWordMd5);
     }
     
     public function getKeyWordsList($page=1,$pageSize=20){
@@ -56,6 +56,16 @@ class KeyWordsModel extends BaseModel{
         $daren=new keywordsUtils();
         return $daren->updateSubKeyWords($id,$data);
         
+    }
+    
+    
+    public function updateKeywordCollectCount($id,$data){
+        $table= Db::table(TableUtils::getTableDetails('keywords'));
+        $data=$table->where(
+            TableUtils::getTableDetails('keywords', 'id'), $id)
+            ->setField($data);
+            //echo $table->getLastSql();
+        return $data;
     }
     
 }

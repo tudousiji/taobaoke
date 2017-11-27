@@ -18,6 +18,15 @@ class Addgoods extends BaseController{
         
         $keywords = new \app\keyWords\model\KeyWords();
         $keywords->addItemDb(false,$data['keyword_id'], $data['data']);
+        
+        
+        $collectCountArray=[
+            'collectCount'=>array('exp', 'collectCount+1'),
+        ];
+        $keywords = new  \app\api\model\KeyWordsModel();
+        $keywords->updateKeywordCollectCount($data['keyword_id'], $collectCountArray);
+        
+        
         $array = [
             'Code' => 0,
             'msg' => "成功"

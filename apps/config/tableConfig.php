@@ -7,6 +7,7 @@ return [
         'table_field' => [
             'id' => 'id',
             'keyword' => 'keyword',
+            'kw_md5'=>'kw_md5',
             'subKeyWords'=>'subKeyWords',
             'subKeyWordsCount'=>'subKeyWordsCount',
             'update_time' => 'update_time'
@@ -20,6 +21,7 @@ return [
         'table_field' => [
             'id' => 'id',
             'keyword' => 'keyword',
+            'kw_md5'=>'kw_md5',
             'subKeyWords'=>'subKeyWords',
             'subKeyWordsCount'=>'subKeyWordsCount',
             'update_time' => 'update_time'

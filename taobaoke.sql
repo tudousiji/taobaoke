@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-11-25 17:23:58
+-- Generation Time: 2017-11-27 14:26:37
 -- 服务器版本： 5.7.18-log
 -- PHP Version: 7.0.21
 
@@ -5224,6 +5224,7 @@ CREATE TABLE `index_cate` (
 CREATE TABLE `keywords` (
   `id` int(11) NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  `kw_md5` varchar(32) DEFAULT NULL COMMENT '关键词md5',
   `subKeyWords` text,
   `subKeyWordsCount` int(11) NOT NULL DEFAULT '0',
   `collectCount` int(11) NOT NULL DEFAULT '0',
@@ -5239,6 +5240,7 @@ CREATE TABLE `keywords` (
 CREATE TABLE `keywords_cache` (
   `id` int(11) NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  `kw_md5` varchar(32) DEFAULT NULL,
   `subKeyWords` text,
   `subKeyWordsCount` int(11) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL
@@ -5426,7 +5428,8 @@ ALTER TABLE `keywords`
   ADD KEY `keyword` (`keyword`),
   ADD KEY `time` (`update_time`),
   ADD KEY `keyword_2` (`keyword`),
-  ADD KEY `collectCount` (`collectCount`);
+  ADD KEY `collectCount` (`collectCount`),
+  ADD KEY `kw_md5` (`kw_md5`);
 
 --
 -- Indexes for table `keywords_cache`
@@ -5435,7 +5438,8 @@ ALTER TABLE `keywords_cache`
   ADD PRIMARY KEY (`id`),
   ADD KEY `keyword` (`keyword`),
   ADD KEY `time` (`update_time`),
-  ADD KEY `keyword_2` (`keyword`);
+  ADD KEY `keyword_2` (`keyword`),
+  ADD KEY `kw_md5` (`kw_md5`);
 
 --
 -- Indexes for table `keywords_details`

@@ -34,15 +34,16 @@ class keywordsUtils{
         ->insert($data);
     }
     
-    public static function findHotKeyWords($keyWord){
+    public static function findHotKeyWordsMd5($keyWordMd5){
         return Db::table(TableUtils::getTableDetails('keywords'))->where(
-            TableUtils::getTableDetails('keywords', 'keyword'), $keyWord)
+            TableUtils::getTableDetails('keywords', 'kw_md5'), $keyWordMd5)
             ->find();
     }
     
     public static function getKeyWordsList($page=1,$pageSize=20){
         return Db::table(TableUtils::getTableDetails('keywords'))
-        ->limit($pageSize*($page-1),$pageSize)->select();
+        ->limit($pageSize*($page-1),$pageSize)
+        ->order("collectCount asc,update_time asc,id asc")->select();
     }
     
     public static function getKeyWordsForSubKeyWordsNullList($page=1,$pageSize=20){

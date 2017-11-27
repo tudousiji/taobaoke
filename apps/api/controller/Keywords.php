@@ -153,13 +153,16 @@ class Keywords extends BaseController
         $repeatCount=0;
         for ($i = 0; $i < count($data); $i ++) {
             $model = new KeyWordsModel();
-            $findData = $model->findHotKeyWords($data[$i]);
+            $kwMd5=md5($data[$i]);
+            $findData = $model->findHotKeyWordsMd5($kwMd5);
             if ($findData != null && is_array($findData) && count($findData) > 0) {
                 $repeatCount++;
             } else {
                 $array = [
                     'keyword' => $data[$i],
-                    'update_time' => time()
+                    'update_time' => time(),
+                    'kw_md5'=>$kwMd5,
+                    
                 ];
                 
                 $model->addHotKeyWords($array);

@@ -159,11 +159,12 @@ class KeyWords extends BaseModel
         $this->page = $page;
         $this->pageSize = $pageSize;
         
-        $key = Db::table(TableUtils::getTableDetails('keywords_cache'))->where(TableUtils::getTableDetails('keywords_cache', 'keyword'), $this->keyWords)->find();
+        $key = Db::table(TableUtils::getTableDetails('keywords_cache'))->where(TableUtils::getTableDetails('keywords_cache', 'kw_md5'), md5($this->keyWords))->find();
         $keyword_id = 0;
         if ($key == null) {
             $data = [
                 TableUtils::getTableDetails('keywords_cache', 'keyword') => $this->keyWords,
+                TableUtils::getTableDetails('keywords_cache', 'kw_md5') => md5($this->keyWords),
                 TableUtils::getTableDetails('keywords_cache', 'update_time') => time()
             ];
             Db::table(TableUtils::getTableDetails('keywords_cache'))->insert($data);
@@ -576,6 +577,9 @@ class KeyWords extends BaseModel
         $table = new \app\tableUtils\goodslistUtils();
         return $table->getRandList($randCount);
     }
+    
+    
+    
 }
 
 ?>
