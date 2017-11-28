@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-11-27 16:37:43
+-- Generation Time: 2017-11-28 19:18:45
 -- 服务器版本： 5.7.18-log
 -- PHP Version: 7.0.21
 
@@ -30,7 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `article_contentid` (
   `id` int(11) NOT NULL,
-  `contentid` int(11) NOT NULL,
+  `contentid` bigint(20) NOT NULL,
+  `cateId` int(11) NOT NULL,
+  `page` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `collectCount` int(11) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL
@@ -47,7 +49,7 @@ CREATE TABLE `buyinventory_cate` (
   `psId` int(11) NOT NULL,
   `sceneId` int(11) NOT NULL,
   `cate_name` varchar(100) NOT NULL,
-  `page` int(11) NOT NULL,
+  `maxpage` int(11) NOT NULL,
   `pagesize` int(11) NOT NULL,
   `isrepeatover` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0是以page为准，1是超过指定数就停止'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -56,7 +58,7 @@ CREATE TABLE `buyinventory_cate` (
 -- 转存表中的数据 `buyinventory_cate`
 --
 
-INSERT INTO `buyinventory_cate` (`id`, `psId`, `sceneId`, `cate_name`, `page`, `pagesize`, `isrepeatover`) VALUES
+INSERT INTO `buyinventory_cate` (`id`, `psId`, `sceneId`, `cate_name`, `maxpage`, `pagesize`, `isrepeatover`) VALUES
 (1, 51789, 0, '首页', 10, 500, 0),
 (2, 53362, 12015, '化妆', 10, 500, 0),
 (3, 53362, 23011, '爱吃', 10, 500, 0),
@@ -5525,7 +5527,7 @@ ALTER TABLE `daren`
 -- 使用表AUTO_INCREMENT `goods_list`
 --
 ALTER TABLE `goods_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36234;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=651548;
 --
 -- 使用表AUTO_INCREMENT `index_cate`
 --
@@ -5560,7 +5562,7 @@ ALTER TABLE `proxy_ip`
 -- 使用表AUTO_INCREMENT `taobao_item_info`
 --
 ALTER TABLE `taobao_item_info`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36234;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=651548;
 --
 -- 使用表AUTO_INCREMENT `taobao_try_cate`
 --

@@ -57,7 +57,10 @@ class tryoutUtils{
         ->join('taobao_item_info w','a.itemId = w.itemId','LEFT')
         ->limit(($page-1)*$pageSize,$pageSize);
         $list=$table->select();
-        
+        //echo $table->getLastSql();
+        /***
+         * SELECT `a`.*,`w`.`keywords`,`w`.`reason`,`w`.`commentList`,`w`.`askeverybodyList`,w.itemId as taobao_item_info_itemId FROM `taobao_try_item` `a` LEFT JOIN `taobao_item_info` `w` ON `a`.`itemId`=`w`.`itemId` WHERE `a`.`cate` = 0 AND `a`.`id`>=(SELECT `id` FROM `taobao_try_item` LIMIT 0,1 ) LIMIT 20
+         */
         return $list;
     }
     

@@ -147,31 +147,65 @@ class Buyinventory  extends BaseController{
             echo json_encode($data);
             return ;
         }
+        
         $jsonObj = json_decode($json,true);
-        $size=count($jsonObj);
+        $dataObj=$jsonObj['data'];
+        $cateId=$jsonObj['cateId'];
+        $page=$jsonObj['page'];
+        
+        $size=count($dataObj);
         $utils=new articleModel();
         if($size>0){
             $ids="";
             for($i=0;$i<$size;$i++){
-                $ids.=$jsonObj[$i];
+                $ids.=$dataObj[$i];
                 if($i!=$size-1){
                     $ids.=",";
                 }
             }
-           
+            
             $list = $utils->checkRepeatContentId($ids);
-            $jsonObj =array_diff($jsonObj, $list);
+            
+            $listnew = [];
+            $listSize=count($list);
+            for($i=0;$i<$listSize;$i++){
+                $listnew[$i]=strval($list[$i]['contentId']);
+            }
+            //array_column($list, 'contentId');
+           
+            $dataObj =array_diff($dataObj, $listnew);
+           
         }
-        $count=count($jsonObj);
-        for($i=0;$i<$size;$i++){
-            $contentId=$jsonObj[$i];
-            $array=['contentId'=>$contentId];
+       
+        
+        foreach ($dataObj as  $value){
+            //$contentId=$dataObj[$i];
+           
+            $array=['contentId'=>$value,'cateId'=>$cateId,'page'=>$page];
             $utils->addContentId($array);
         }
-        $data=[
-            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
-            $jsonKeyValConfig['msg']=>"成功",
-            $jsonKeyValConfig['Code']=>0,//
+
+        
+        $utils= new buyinventoryUtils();
+        $cate = $utils->getCateId($cateId);
+        $isNextpage=false;
+        if($cate['isrepeatover']==0 && $cate['maxpage']<=0){
+            $isNextpage=$this->isrepeatover($utils, $data);
+        }else if($cate['isrepeatover']==1){//超过指定数就停止
+            $isNextpage=$this->isrepeatover($utils, $data);
+        }else if($cate['maxpage']>0){
+            if($page>=$cate['maxpage']){
+                $isNextpage=false;
+            }else {
+                $isNextpage=true;
+            }
+        }else{
+            $isNextpage=false;
+        }
+        
+        
+        $array=[
+            'isNextpage'=>$isNextpage,
         ];
         echo json_encode($array);
     }
