@@ -55,7 +55,7 @@ class Articlecontroller extends BaseController
             }
         }
         
-        $KeyWordsModel = new \app\keyWords\model\KeyWords(); // 
+        $KeyWordsModel = new \app\keywords\model\KeyWords(); // 
         $randGoodsList = $KeyWordsModel->getRandList(10); // 随机10个商品
         
         for ($i = 0; $i < count($list); $i ++) {
@@ -120,14 +120,14 @@ class Articlecontroller extends BaseController
         $id = isset($_REQUEST['id']) && is_numeric($_REQUEST['id']) ? $_REQUEST['id'] : "0";
         $articleModel = new articleModel();
         $data = $articleModel->getTryOut($id);
-        
+        $data['data']=json_decode($data['data'],true);
         
         if(empty($data['taobao_item_info_itemId'])){//往淘宝信息库里面插入itemid
             $utils=new \app\utils\taobaoItemInfoUtils();
             $utils->autoItemId($data['itemId'],$data['data']['item']['title'],true);
         }
         
-        $content = json_decode($data['data'], true);
+        $content = $data['data'];
         $keyWordsArr= json_decode($data['keywords'], true);
         $cate = $articleModel->getTryOutCateId($data['cate']);
         $keyWords="";

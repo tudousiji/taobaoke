@@ -1,5 +1,5 @@
 <?php
-namespace app\keyWords\model;
+namespace app\keywords\model;
 
 use app\utils\NetUtils;
 use think\Db;
@@ -301,6 +301,14 @@ class KeyWords extends BaseModel
             ->find();
         return $keywords_details;
     }
+    
+    public function getGoodsList($keyword_id, $page = 1)
+    {
+        $sql="SELECT * FROM ".TableUtils::getTableDetails('goods_list')." WHERE keyword_id =".$keyword_id." and id <= (SELECT id FROM ".TableUtils::getTableDetails('goods_list')." where keyword_id =".$keyword_id." order by id desc LIMIT ".(($page-1)*($this->keyConfig['keyWordPageSize'])).", 1) order by id desc LIMIT ".($this->keyConfig['keyWordPageSize']);
+        //echo $sql;
+        $keywords_details = Db::query($sql);
+        return $keywords_details;
+    }
 
     public function getGoodsItems($itemId)
     {
@@ -331,6 +339,13 @@ class KeyWords extends BaseModel
     public function getCount()
     {
         $count = Db::table(TableUtils::getTableDetails('keywords_details'))->count();
+        return $count;
+    }
+    
+    public function getGoodsCount($keyword_id)
+    {
+        $count = Db::table(TableUtils::getTableDetails('goods_list'))
+        ->where(TableUtils::getTableDetails('goods_list', 'keyword_id'),$keyword_id)->count();
         return $count;
     }
 

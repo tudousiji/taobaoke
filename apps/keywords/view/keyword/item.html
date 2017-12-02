@@ -103,6 +103,10 @@ var item={$item.itemId|urlIdcode=###,true};
 			</div>
 			<div class="d-bottom">
 				<div class="d-bottom-left">
+					
+					{if isset($reasonData) && !empty($reasonData) &&
+							isset($reasonData.count) && !empty($reasonData.count) }
+					
 					<div
 						class="d-recommend-reason today-section-top-color color-bg-white">
 						<div class="d-recommend-reason-title border-bottom-e5">
@@ -112,9 +116,7 @@ var item={$item.itemId|urlIdcode=###,true};
 						<div class="d-recommend-reason-content">
 							<div class="line1">{if isset($reason)}{$reason}{/if}</div>
 
-							{if isset($reasonData) && !empty($reasonData) &&
-							isset($reasonData.count) && !empty($reasonData.count) }
-
+							
 							<div class="line2">
 								该商品共{$reasonData.count.total}个评价， 好评率：{$PraiseRate}%，
 								其中好评{$reasonData.count.good}， 中评{$reasonData.count.normal}，
@@ -122,10 +124,10 @@ var item={$item.itemId|urlIdcode=###,true};
 								追评{$reasonData.count.additional}，图片{$reasonData.count.pic} <span
 									class="line-href item">查看全部&gt;</span>
 							</div>
-							{/if}
+							
 						</div>
 					</div>
-
+					{/if}
 					{if condition="isset($commentData) && is_array($commentData) &&
 					count($commentData)>0"}
 					<div
@@ -137,8 +139,9 @@ var item={$item.itemId|urlIdcode=###,true};
 						</div>
 
 						<div class="d-comment-items">
-							{foreach $commentData as $vo}
-
+							
+							{foreach $commentData.data as $vo}
+							
 
 							<div class="d-comment-item">
 								<div class="d-comment-item-top">
@@ -166,7 +169,8 @@ var item={$item.itemId|urlIdcode=###,true};
 							{/foreach}
 						</div>
 					</div>
-					{/if} {if condition="isset($askeverybodyList) &&
+					{/if} 
+					{if condition="isset($askeverybodyList) &&
 					is_array($askeverybodyList) && count($askeverybodyList)>0"}
 					<link rel="stylesheet" href="/public/static/css/askeverybody.css">
 					<div

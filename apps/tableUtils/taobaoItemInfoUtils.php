@@ -72,7 +72,7 @@ class taobaoItemInfoUtils
         } else {
             $table->where(TableUtils::getTableDetails('taobao_item_info', 'reason'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'commentList'), null)->$table->where(TableUtils::getTableDetails('taobao_item_info', 'askeverybodyList'), null);
         }
-        //$table->where(TableUtils::getTableDetails('taobao_item_info', 'update_time'),"<=",time()-$time);
+        $table->where(TableUtils::getTableDetails('taobao_item_info', 'update_time'),"<=",time()-$time);
         $data=$table->limit($count)->order(TableUtils::getTableDetails('taobao_item_info', 'collectCount')." asc,update_time asc,id asc")->select();
         return $data;
     }

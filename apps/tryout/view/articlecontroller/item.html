@@ -189,41 +189,70 @@ var item={$item.item.tryItemId|urlIdcode=###,true};
 					{/if}
 
 
+					{if condition="isset($askeverybodyList) &&
+					is_array($askeverybodyList) && count($askeverybodyList)>0"}
+					<link rel="stylesheet" href="/public/static/css/askeverybody.css">
 					<div
 						class="d-comment color-bg-white mt-15 featurenums-section-top-color">
 						<div class="d-comment-title border-bottom-e5">
 							<div class="section-title pull-left">大家说</div>
-							<a class="section-more pull-right"
-								href="https://item.jd.com/10659967038.html#crumb-wrap#comment"
-								target="_blank" isconvert="1">更多评价&gt;</a>
+							<span class="section-more pull-right item">更多说法&gt;</span>
 							<div class="clearfix"></div>
 						</div>
-						<div class="d-comment-items">
-							<div class="d-comment-item">
-								<div class="d-comment-item-top">
-									<div class="d-comment-nickname pull-left">jd_卜经意间</div>
-									<div class="d-comment-time pull-left">2017-08-29 17:37:57</div>
-								</div>
-								<div class="d-comment-content">上午下的单下午就送到了，物流超快，安装上去，手感不错，下次接着光顾</div>
-								<div class="d-comment-pictures">
-									<ul class="d-comment-pictures-items">
-										<li class="active"><img
-											src="/public/static/image/59a535f5N71fa4d8c_002.jpg"
-											large-src="//img30.360buyimg.com/n1/s760x500_jfs/t8131/14/293637043/271876/b31063ca/59a535f5N71fa4d8c.jpg">
-											<div class="d-comment-pictures-items-arrow-down"></div></li>
-										<div class="fnClear"></div>
-									</ul>
-									<div class="d-comment-picture-large">
-										<div class="d-comment-picture-large-container1">
-											<div class="d-comment-picture-large-container2">
-												<img src="/public/static/image/59a535f5N71fa4d8c.jpg">
-											</div>
+
+						{foreach $askeverybodyList as $vo}
+						<div class="kg-rate-ct-review-item">
+							<div class="from-whom">
+								<img class="avatar"
+									src="/public/static/images/askbodyAveal.png_40x40.jpg">
+								<div>{$vo.nick}</div>
+							</div>
+							<div class="review-details kg-rate-wd-ask-around-detail">
+								<div class="q-or-a q">
+									<span class="icon-type">问</span>
+									<div class="detail-wrapper">
+										<div class="tb-tbcr-content heavier">{$vo.question}</div>
+										<div class="kg-rate-info-ops tb-tbcr-mt">
+											<div class="info-part">{$vo.gmtCreate}</div>
 										</div>
 									</div>
 								</div>
+
+								{foreach $vo.answers as $item}
+
+								<div class="q-or-a a">
+									<span class="icon-type">答</span>
+									<div class="detail-wrapper">
+										<div class="tb-tbcr-content">{$item.desc}</div>
+
+										<div class="kg-rate-info-ops tb-tbcr-mt">
+											<div class="info-part">
+												<span class="mark-buyer-seller">已买的人</span>
+												{$item.user.nick}
+											</div>
+											<div class="info-part">{$item.createTime}</div>
+											<ul class="ops">
+												<li><span class="J_KgRate_AskAround_Like op-btn">赞
+												</span> <span class="J_KgRate_AskAround_LikeNum tb-tbcr-num">({$item.totalLike})</span>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								{/foreach}
+
+
+								<div class="q-or-a J_KgRate_AskAround_MoreAnswers more">
+									共 {$vo.count} 个回答 {if $vo.count>count($vo.answers)}<span
+										class="J_KgRate_AskAround_MoreAnswers_State state-more item">查看更多</span>{/if}
+								</div>
+
 							</div>
 						</div>
+						{/foreach}
+
 					</div>
+					{/if}
 
 
 
