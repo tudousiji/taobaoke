@@ -75,6 +75,11 @@ class tryoutUtils{
         return $count;
     }
     
+    /**
+     * 抛弃不用，性能不行
+     * @param number $randCount
+     * @return \think\Collection|\think\db\false|PDOStatement|string
+     */
     public function getRandList($randCount=10){
         $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
         ->alias('a')->field('a.*,w.keywords
@@ -85,6 +90,19 @@ class tryoutUtils{
         ->limit($randCount)->select();
         
         return $data;
+    }
+    
+    public function getPrveRandList($id,$randCount=10){
+        $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->alias('a')->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId')
+            ->join('taobao_item_info w','a.itemId = w.itemId','LEFT')
+            ->where("id","<",$id);;
+            $data = $table
+            ->limit($randCount)->select();
+            
+            return $data;
     }
 }
     

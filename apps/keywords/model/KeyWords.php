@@ -593,7 +593,10 @@ class KeyWords extends BaseModel
         return $table->getRandList($randCount);
     }
     
-    
+    public function getPrveList($id,$randCount=10){
+        $table = new \app\tableUtils\goodslistUtils();
+        return $table->getPrveList($id,$randCount);
+    }
     
 }
 

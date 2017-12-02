@@ -31,6 +31,11 @@ class goodslistUtils{
             ->setField($data);
     }
     
+    /**
+     * 抛弃不用，性能不行
+     * @param number $randCount
+     * @return \think\Collection|\think\db\false|PDOStatement|string
+     */
     
     public function getRandList($randCount=10){
         $table= Db::table(TableUtils::getTableDetails('goods_list'))
@@ -40,8 +45,22 @@ class goodslistUtils{
             w.askeverybodyList,w.itemId as taobao_item_info_itemId') 
         ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
         $data=$table->order('rand()')->limit($randCount)->select();
-         
+        //echo $table->getLastSql();
         return $data;
+    }
+    
+    
+    public function getPrveList($id=10,$randCount=10){
+        $table= Db::table(TableUtils::getTableDetails('goods_list'))
+        ->alias('a')
+        ->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId')
+            ->join('taobao_item_info w','a.itemId = w.itemId','LEFT')
+            ->where("id","<",$id);
+            $data=$table->limit($randCount)->select();
+            //echo $table->getLastSql();
+            return $data;
     }
 }
 

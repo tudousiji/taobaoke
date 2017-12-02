@@ -34,4 +34,10 @@ class articleModel extends BaseModel{
         $table = new tryoutUtils();
         return $table->getRandList($randCount);
     }
+    
+    public function getPrveRandList($id,$randCount=10){
+        $table = new tryoutUtils();
+        return $table->getPrveRandList($id,$randCount);
+    }
+    
 }
