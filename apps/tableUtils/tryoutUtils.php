@@ -80,7 +80,7 @@ class tryoutUtils{
      * @param number $randCount
      * @return \think\Collection|\think\db\false|PDOStatement|string
      */
-    public function getRandList($randCount=10){
+    /* public function getRandList($randCount=10){
         $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
         ->alias('a')->field('a.*,w.keywords
             ,w.reason,w.commentList,
@@ -89,6 +89,20 @@ class tryoutUtils{
         $data = $table->order('rand()')
         ->limit($randCount)->select();
         
+        return $data;
+    } */
+    public function getRandList($randCount=10){
+        //$table= Db::query("SELECT * FROM `".TableUtils::getTableDetails('taobao_try_item')."`  AS t1 JOIN (SELECT ROUND(RAND() * (SELECT MAX(id) FROM `".TableUtils::getTableDetails('taobao_try_item')."`)) AS id) AS t2 WHERE t1.id >= t2.id ORDER BY t1.id ASC LIMIT ".$randCount);
+        //echo $table->getLastSql();
+        
+        $table = Db::table(TableUtils::getTableDetails('taobao_try_item'))
+        ->alias('a')->field('a.*,w.keywords
+            ,w.reason,w.commentList,
+            w.askeverybodyList,w.itemId as taobao_item_info_itemId')
+            ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
+        $data = $table->order('rand()')
+            ->limit($randCount)->select();
+        //echo $table->getLastSql();
         return $data;
     }
     

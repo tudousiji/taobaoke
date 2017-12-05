@@ -1,7 +1,6 @@
 <?php
 namespace app\api\controller;
 use app\tableUtils\buyinventoryUtils;
-
 use app\base\BaseController;
 use app\api\model\articleModel;
 
@@ -15,7 +14,7 @@ class Buyinventory  extends BaseController{
     }
     
     
-    public function addbuyInventoryItem(){
+    /* public function addbuyInventoryItem(){
         $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
         $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
@@ -60,7 +59,7 @@ class Buyinventory  extends BaseController{
             //var_dump(isset($_POST['data']));
             echo json_encode($data);
         }
-    }
+    } */
     
     
     public function checkEffectiveContentIdList(){
@@ -209,5 +208,81 @@ class Buyinventory  extends BaseController{
         ];
         echo json_encode($array);
     }
+    
+    
+    
+    /**
+     * 获取未采集的ContentId
+     */
+    public function getContentIdList(){
+        $utils =new buyinventoryUtils();
+        $list = $utils->getContentIdList();
+        echo json_encode($list);
+    }
+    
+    /**
+     * 添加buyinventory_item_info
+     */
+    public function addBuyinventoryItem(){
+        $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        if(empty($json)){
+            $data=[
+                $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                $jsonKeyValConfig['msg']=>":数据为空",
+                $jsonKeyValConfig['Code']=>-1,//
+            ];
+            //var_dump(isset($_POST['data']));
+            echo json_encode($data);
+            return ;
+        }
+        
+        $jsonObj = json_decode($json,true);
+        $dataObj=$jsonObj['data'];
+        $cateId=$jsonObj['cate_id'];
+        $contentId=$jsonObj['contentId'];
+        //$keywords=$jsonObj['keywords'];
+        //$contentId=$jsonObj['contentId'];
+        $utils =new buyinventoryUtils();
+        
+        if(empty($dataObj)){
+            $utils->updateContentIdStatus($contentId,-1);
+        }else{
+            $utils= new buyinventoryUtils();
+            $item = $utils->getItemForContentId($contentId);
+            
+            if($item==null){
+                $utils->updateContentIdStatus($contentId,1);
+                $insertData=['update_time'=>time(),
+                    'data'=>json_encode($dataObj),
+                    'update_time'=>time(),
+                    'contentId'=>$contentId,
+                    'cate_id'=>$cateId,
+                ];
+                $utils->addBuyinventoryItem($insertData);
+            }else{
+                $data=[
+                    $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                    $jsonKeyValConfig['msg']=>"数据已经存在",
+                    $jsonKeyValConfig['Code']=>-1,//
+                ];
+                //var_dump(isset($_POST['data']));
+                echo json_encode($data);
+                return ;
+            }
+            
+        }
+        
+        $array=[
+            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+            $jsonKeyValConfig['msg']=>"成功",
+            $jsonKeyValConfig['Code']=>0,//
+        ];
+        //var_dump(isset($_POST['data']));
+        echo json_encode($array);
+        
+    }
+    
     
 }
