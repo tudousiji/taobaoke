@@ -225,6 +225,7 @@ class Buyinventory  extends BaseController{
      * 添加buyinventory_item_info
      */
     public function addBuyinventoryItem(){
+        
         $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
         $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
         
@@ -255,12 +256,42 @@ class Buyinventory  extends BaseController{
             
             if($item==null){
                 $utils->updateContentIdStatus($contentId,1);
-                $insertData=['update_time'=>time(),
-                    'data'=>json_encode($dataObj),
+                
+                $title=$dataObj['title'];
+                $subTitle=$dataObj['subTitle'];
+                $summary=$dataObj['summary'];
+                $gmtCreate=$dataObj['gmtCreate'];
+                $readCount=$dataObj['readCount'];
+                $richText=null;
+                $modules=null;
+                $type=0;//0是采集失败,1是richText有值，2是
+                if(isset($dataObj['richText'])){
+                    $richText=$dataObj['richText'];
+                    $type=1;
+                }
+                if(isset($dataObj['modules']) && !empty($dataObj['modules'])){
+                    $modules=$dataObj['modules'];
+                    $type=2;
+                }
+                
+                $insertData=[
+                    'title'=>$title,
+                    'subTitle'=>$subTitle,
+                    'summary'=>$summary,
+                    'gmtCreate'=>$gmtCreate,
+                    'readCount'=>$readCount,
+                    'type'=>$type,
                     'update_time'=>time(),
                     'contentId'=>$contentId,
                     'cate_id'=>$cateId,
                 ];
+                if(!empty($richText)){
+                    $insertData['richText']=json_encode($richText);
+                }
+                if(!empty($modules)){
+                    $insertData['modules']=json_encode($modules);
+                }
+                //print_r($json);return ;
                 $utils->addBuyinventoryItem($insertData);
             }else{
                 $data=[

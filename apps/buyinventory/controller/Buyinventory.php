@@ -25,6 +25,8 @@ class Buyinventory extends BaseController{
         $item = $utils->getItem($id);
         $item["data"]=json_decode($item['data'],true);
         
+        $this->assign("title",$item["data"]["title"]);
+        $this->assign("body",$item["data"]);
         $this->assign("item",$item);
         $this->fetch("item");
     }
