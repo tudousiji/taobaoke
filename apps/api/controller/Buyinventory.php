@@ -3,6 +3,7 @@ namespace app\api\controller;
 use app\tableUtils\buyinventoryUtils;
 use app\base\BaseController;
 use app\api\model\articleModel;
+use app\tableUtils\buyinventoryTagsUtils;
 
 class Buyinventory  extends BaseController{
     private $maxRepeatCount=30;
@@ -282,6 +283,60 @@ class Buyinventory  extends BaseController{
         //var_dump(isset($_POST['data']));
         echo json_encode($array);
         
+    }
+    
+    
+    public function addBuyinventoryTags(){
+        $json = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
+        $jsonKeyValConfig=require_once 'apps/config/jsonKeyValConfig.php';
+        
+        if(empty($json)){
+            $data=[
+                $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Fail'],
+                $jsonKeyValConfig['msg']=>":数据为空",
+                $jsonKeyValConfig['Code']=>-1,//
+            ];
+            //var_dump(isset($_POST['data']));
+            echo json_encode($data);
+            return ;
+        }
+        $jsonObj = json_decode($json,true);
+        $dataObj=$jsonObj['data'];
+        $cateId=$jsonObj['cateId'];
+        $contentId=$jsonObj['contentId'];
+        $page=$jsonObj['page'];
+        
+        
+        $size=count($dataObj);
+        $utils=new buyinventoryTagsUtils();
+        for($i=0;$i<$size;$i++){
+            $tagName=$dataObj[$i];
+            $tagsMd5=md5($tagName);
+            $md5=$utils->getBuyinventoryTagsMd5($tagsMd5);
+            
+             if($md5 == null){
+                $array=[
+                    'tag_name'=>$tagName,
+                    'md5'=>$tagsMd5,
+                    'page'=>$page,
+                    'contentId'=>$contentId,
+                    'cateId'=>$cateId,
+                    'update_time'=>time(),
+                ];
+                $utils->addBuyinventoryTags($array);
+            }else{
+                continue;
+            } 
+            
+        }
+        
+        $array=[
+            $jsonKeyValConfig['Status']=>$jsonKeyValConfig['Success'],
+            $jsonKeyValConfig['msg']=>"成功",
+            $jsonKeyValConfig['Code']=>0,//
+        ];
+        //var_dump(isset($_POST['data']));
+        echo json_encode($array);
     }
     
     

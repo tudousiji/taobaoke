@@ -212,6 +212,18 @@ return [
             'update_time'=>'update_time',
         ]
     ],
+    
+    
+    //必买清单tags
+    'buyinventory_tags' => [
+        'table_name' => 'buyinventory_tags',
+        'table_field' => [
+            'id' => 'id',
+            'tag_name'=>'tag_name',
+            'md5'=>'md5',
+            'update_time'=>'update_time',
+        ]
+    ],
 ] 
 ?>
     
