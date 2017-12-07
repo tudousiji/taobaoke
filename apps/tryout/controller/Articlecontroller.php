@@ -57,7 +57,7 @@ class Articlecontroller extends BaseController
         
         $KeyWordsModel = new \app\keywords\model\KeyWords(); // 
         $randGoodsList = $KeyWordsModel->getRandList(10); // 随机10个商品
-        print_r($randGoodsList);
+        //print_r($randGoodsList);
         for ($i = 0; $i < count($list); $i ++) {
             $list[$i]['data'] = json_decode($list[$i]['data'], true);
             

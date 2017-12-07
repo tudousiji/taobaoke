@@ -52,14 +52,21 @@ class goodslistUtils{
     public function getRandList($randCount=10){
         //$table= Db::query("SELECT * FROM `".TableUtils::getTableDetails('goods_list')."`  AS t1 JOIN (SELECT ROUND(RAND() * (SELECT MAX(id) FROM `".TableUtils::getTableDetails('goods_list')."`)) AS id) AS t2 WHERE t1.id >= t2.id ORDER BY t1.id ASC LIMIT ".$randCount);
             //echo $table->getLastSql();
+         
+        $tableCount= Db::table(TableUtils::getTableDetails('goods_list'));
+        $count=$tableCount->count();
+        $randId=rand(0,$count-$randCount);
+        
         $table= Db::table(TableUtils::getTableDetails('goods_list'))
         ->alias('a')
         ->field('a.*,w.keywords
             ,w.reason,w.commentList,
             w.askeverybodyList,w.itemId as taobao_item_info_itemId')
-            ->join('taobao_item_info w','a.itemId = w.itemId','LEFT');
-            $data=$table->order('rand()')->limit($randCount)->select();
-        return $table;
+            ->join('taobao_item_info w','a.itemId = w.itemId','LEFT')
+             ->where("a.id>=".$randId) ;
+        $data=$table/* ->order('rand()') */->limit($randCount)->select();
+        //echo $table->getLastSql();
+        return $data;
     }
     
     
