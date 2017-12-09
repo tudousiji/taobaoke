@@ -152,6 +152,8 @@ class Buyinventory  extends BaseController{
         $dataObj=$jsonObj['data'];
         $cateId=$jsonObj['cateId'];
         $page=$jsonObj['page'];
+        $contentId=$jsonObj['contentId'];
+        
         
         $size=count($dataObj);
         $utils=new articleModel();
@@ -181,7 +183,7 @@ class Buyinventory  extends BaseController{
         foreach ($dataObj as  $value){
             //$contentId=$dataObj[$i];
            
-            $array=['contentId'=>$value,'cateId'=>$cateId,'page'=>$page];
+            $array=['contentId'=>$value,'cateId'=>$cateId,'page'=>$page,'parentContentId'=>$contentId];
             $utils->addContentId($array);
         }
 
@@ -264,7 +266,8 @@ class Buyinventory  extends BaseController{
                 $readCount=$dataObj['readCount'];
                 $richText=null;
                 $modules=null;
-                $type=0;//0是采集失败,1是richText有值，2是
+                $products=null;
+                $type=0;//0是采集失败,1是richText有值，2是modules有值，3是商品列表（可能包含视频）
                 if(isset($dataObj['richText'])){
                     $richText=$dataObj['richText'];
                     $type=1;
@@ -272,6 +275,10 @@ class Buyinventory  extends BaseController{
                 if(isset($dataObj['modules']) && !empty($dataObj['modules'])){
                     $modules=$dataObj['modules'];
                     $type=2;
+                }
+                if(isset($dataObj['products']) && !empty($dataObj['products'])){
+                    $products=$dataObj['products'];
+                    $type=3;
                 }
                 
                 $insertData=[
@@ -285,11 +292,14 @@ class Buyinventory  extends BaseController{
                     'contentId'=>$contentId,
                     'cate_id'=>$cateId,
                 ];
-                if(!empty($richText)){
+                if(!empty($richText) && $richText!=null){
                     $insertData['richText']=json_encode($richText);
                 }
-                if(!empty($modules)){
+                if(!empty($modules) && $modules!=null){
                     $insertData['modules']=json_encode($modules);
+                }
+                if(!empty($products) && $products!=null){
+                    $insertData['products']=json_encode($products);
                 }
                 //print_r($json);return ;
                 $utils->addBuyinventoryItem($insertData);
