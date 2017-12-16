@@ -92,4 +92,23 @@ class buyinventoryUtils{
         //echo $table->getLastSql();
         return $data;
     }
+
+
+    public function getCate($cateId){
+        $table= Db::table(TableUtils::getTableDetails('buyinventory_cate'))
+            ->where(TableUtils::getTableDetails('buyinventory_cate', 'id'),$cateId);
+        $data=$table->find();
+        //echo $table->getLastSql();
+        return $data;
+    }
+
+    public function getCount($cateId){
+        $tableObg = Db::table(TableUtils::getTableDetails('buyinventory_item_info'));
+
+        if(is_numeric($cateId)){
+            $tableObg->where(TableUtils::getTableDetails('buyinventory_item_info', 'cate_id'), $cateId);
+        }
+        $count=$tableObg->count();
+        return $count;
+    }
 }

@@ -16,4 +16,16 @@ class buyinventoryModel  extends BaseModel{
         $table = new buyinventoryUtils();
         return $table->getItem($id);
     }
+
+
+    public function getCate($cateId){
+        $table = new buyinventoryUtils();
+        return $table->getCate($cateId);
+    }
+
+    public function getCount($cateId){
+    $table = new buyinventoryUtils();
+    return $table->getCount($cateId);
+}
+
 }
