@@ -63,11 +63,18 @@
 					<div class="navbar-items">
 						<a class="navbar-item" href="/">首页</a>
 						
-						{if isset($indexCate) && is_array($indexCate) && count($indexCate)>0}
+						{if isset($indexCate) && is_array($indexCate) && count($indexCate)>0 && false}
 						{foreach $indexCate as $vo}
 						<a class="navbar-item {if isset($indexCateId) && !empty($indexCateId) && is_numeric($indexCateId) && $indexCateId==$vo.id}active{/if}"
 							href="/indexcate/{$vo.id}.html">{$vo.cate_name}</a> 
 							{/foreach}
+						{/if}
+
+						{if isset($buyinventoryCate) && is_array($buyinventoryCate) && count($buyinventoryCate)>0 }
+						{foreach $buyinventoryCate as $vo}
+						<a class="navbar-item"
+						   href="/buyinventory/{$vo.id}_1.html">{$vo.cate_name}</a>
+						{/foreach}
 						{/if}
 							
 					</div>

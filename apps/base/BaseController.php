@@ -23,6 +23,7 @@ class BaseController extends \think\Controller
         $this->indexCate();
         $this->randHeaderHotSearchWord();
         $this->getTryCateList();
+        $this->buyinventoryCate();
     }
     
     private function indexCate(){
@@ -30,7 +31,13 @@ class BaseController extends \think\Controller
         $list = $tableUtils->getAll();
         $this->assign("indexCate",$list);
     }
-    
+
+    private function buyinventoryCate(){
+        $tableUtils = new \app\tableUtils\buyinventoryUtils();
+        $list = $tableUtils->getCateList();
+        $this->assign("buyinventoryCate",$list);
+    }
+
     
     private function randHeaderHotSearchWord(){
         $tableUtils = new \app\tableUtils\keywordsUtils();
